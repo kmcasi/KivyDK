@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<title>My first website</title>
+	<link rel="icon" type="image/x-icon" href="icon/wink.ico" />
+	
+	<style>
+		body { 
+			margin: 0; 
+		}
+
+		.workInProgress {
+			display: flex;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 0.5rem 2rem;
+			background-color: #32323288;
+			backdrop-filter: blur(10px) sepia(90%);
+			padding: 0px 1.5rem;
+			animation: glow_box 3s linear infinite;
+			-webkit-animation: glow_box 3s linear infinite;
+		}
+
+		.title-1 {
+			color: #DDDDDD;
+			font-family: 'Roboto Flex', sans-serif;
+			width: 100%;
+			font-size: 1.75rem;
+			font-weight: bold;
+			text-align: center;
+			text-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 1.0);
+			animation: glow_text 3s linear infinite;
+			-webkit-animation: glow_text 3s linear infinite;
+		}
+
+
+		@keyframes glow_box {
+		  0% { box-shadow: -1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		  25% { box-shadow: 0 -1rem 2rem rgba(255, 79, 122, 1.0); }
+		  50% { box-shadow: 1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		  75% { box-shadow: 0 1rem 2rem rgba(255, 79, 122, 1.0); }
+		  100% { box-shadow: -1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		}
+
+		@-webkit-keyframes glow_box {
+		  0% { -webkit-box-shadow: -1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		  25% { -webkit-box-shadow: 0 -1rem 2rem rgba(255, 79, 122, 1.0); }
+		  50% { -webkit-box-shadow: 1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		  75% { -webkit-box-shadow: 0 1rem 2rem rgba(255, 79, 122, 1.0); }
+		  100% { -webkit-box-shadow: -1rem 0 2rem rgba(16, 128, 229, 1.0); }
+		}
+
+		@keyframes glow_text {
+		  0% { text-shadow: 1rem 0 0.25rem rgba(255, 79, 122, 1.0); }
+		  25% { text-shadow: 0 1rem 0.25rem rgba(16, 128, 229, 1.0); color: #DDDDDD; }
+		  50% { text-shadow: -1rem 0 0.25rem rgba(255, 79, 122, 1.0); color: #DDDDDD00; }
+		  75% { text-shadow: 0 -1rem 0.25rem rgba(16, 128, 229, 1.0); color: #DDDDDD; }
+		  100% { text-shadow: 1rem 0 0.25rem rgba(255, 79, 122, 1.0); }
+		}
+
+		@-webkit-keyframes glow_text {
+		  0% { -webkit-text-shadow: 1rem 0 0.25rem rgba(255, 79, 122, 1.0); }
+		  25% { -webkit-text-shadow: 0 1rem 0.25rem rgba(16, 128, 229, 1.0); color: #DDDDDD; }
+		  50% { -webkit-text-shadow: -1rem 0 0.25rem rgba(255, 79, 122, 1.0); color: #DDDDDD00; }
+		  75% { -webkit-text-shadow: 0 -1rem 0.25rem rgba(16, 128, 229, 1.0); color: #DDDDDD; }
+		  100% { -webkit-text-shadow: 1rem 0 0.25rem rgba(255, 79, 122, 1.0); }
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="workInProgress">
+		<p class="title-1">Work in progress...</p>
+	</div>
+</body>
+</html>

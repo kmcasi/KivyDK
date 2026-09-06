@@ -1,0 +1,22 @@
+{{ DOC }}
+
+.. dropdown:: Technical details
+    :class-container: dk-default-value
+
+    This option is only relevant when using the :attr:`font_context` setting. The specified font
+    family will be requested from the active font context, but it may not exist, or multiple fonts
+    may share the same family name.
+
+    The value must be a family name (`string`) available in the selected font context—for example,
+    a system font in a ``system://`` context, or a custom font registered through
+    :class:`kivy.core.text.FontContextManager`.
+    If set to `None`, font selection is determined by the :attr:`font_name` attribute.
+
+    .. tip::
+        When referencing a custom font file via :attr:`font_name`, this attribute should remain `None`.
+        The family name is automatically managed in that case.
+
+    .. note::
+        This feature requires the Pango text provider.
+
+§ extract default value ¶

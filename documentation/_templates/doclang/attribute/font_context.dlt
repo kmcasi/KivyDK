@@ -1,0 +1,24 @@
+{{ DOC }}
+
+.. dropdown:: Technical details
+    :class-container: dk-default-value
+
+    The font context determines how font files are grouped and resolved. When set to `None`, the
+    font is used in isolation, guaranteeing that rendering uses the TTF file specified by
+    :attr:`font_name`. When a context name is provided, the font file is loaded into that context,
+    enabling fallback between all fonts registered within it.
+
+    When a font context is active, rendering is not guaranteed to use the specified TTF file for
+    every glyph. Pango may substitute glyphs from other fonts in the same context if it considers
+    them a better match.
+
+    If Kivy is linked against a system-wide installation of FontConfig, you can load system fonts
+    by using a context name that begins with the special prefix ``system://``. This loads the
+    system fontconfig configuration and then adds your application-specific fonts on top of it.
+    Be aware that this increases the risk of family-name collisions and Pango may choose a system
+    font instead of your custom font file.
+
+    .. note::
+        This feature requires the Pango text provider.
+
+§ extract default value ¶

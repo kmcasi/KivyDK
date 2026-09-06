@@ -1,0 +1,9 @@
+# Include data folder
+recursive-include kivydk/data *
+
+# Exclude documentation folder
+exclude documentation/*
+prune documentation
+
+# Include only actual package
+recursive-include kivydk *

@@ -1,0 +1,10 @@
+.. code-block::
+    :caption: Module path
+
+    {{ NAME }}
+
+§ section : overview ¶
+
+{{ DOC }}
+
+§ section : reference ¶

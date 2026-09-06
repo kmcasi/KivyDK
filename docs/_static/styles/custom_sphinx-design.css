@@ -1,0 +1,60 @@
+/* Customizations for `sphinx_design` extension. */
+.sd-tab-content {
+    background-color: var(--dk-tabs-background-color);
+    border-radius: var(--dk-border-radius);
+    box-shadow: var(--dk-box-shadow-medium);
+    border-bottom: 1px solid var(--color-background-border);
+    padding: 0.5rem;
+}
+.sd-tab-content > .sd-tab-set {
+    border-radius: var(--dk-border-radius);
+    box-shadow: var(--dk-box-shadow-in-medium);
+    border: 1px solid var(--color-background-secondary);
+    padding: 0.5rem;
+    background-color: var(--color-background-primary);
+}
+.sd-tab-set > label {
+    background-color: var(--dk-tabs-label-background-color);
+    padding: 0.5em 1em 0.25em;
+    margin-bottom: 0.375em;
+    border-bottom: 1px solid var(--sd-color-tabs-underline-inactive);
+
+    color: var(--sd-color-tabs-label-inactive);
+    cursor: pointer;
+    font-size: var(--sd-fontsize-tabs-label);
+    font-weight: 700;
+    transition: color 250ms;
+    width: auto;
+    z-index: 1;
+}
+.sd-tab-set > label:first-of-type {
+    border-radius: var(--dk-border-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-left: 1rem;
+}
+.sd-tab-set > label:last-of-type {
+    border-radius: var(--dk-border-radius);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.sd-tab-set > input:checked + label {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    margin-bottom: 0;
+    background-image: var(--dk-tabs-label-background-color--active);
+}
+details.sd-dropdown {
+    border-radius: var(--dl-border-radius);
+}
+details.sd-dropdown .sd-summary-content {
+}
+details.sd-dropdown summary.sd-summary-title {
+    border-radius: var(--dl-border-radius);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+details.sd-dropdown:not([open]) > .sd-card-header {
+    border-radius: var(--dl-border-radius);
+}

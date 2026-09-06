@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=82", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kivydk"
+version = "0.0.6.dev1"
+description = "Kivy Desktop Kit — A desktop-focused UI toolkit for Kivy"
+authors = [{ name = "ASI" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+keywords = [
+    "kivy",
+    "kivydk",
+    "desktop",
+    "kit",
+    "ui",
+    "uix",
+    "material",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: Science/Research",
+
+  "License :: OSI Approved :: MIT License",
+
+  "Natural Language :: English",
+
+  "Operating System :: OS Independent",
+  "Operating System :: Microsoft :: Windows",
+
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+
+  "Topic :: Artistic Software",
+  "Topic :: Games/Entertainment",
+  "Topic :: Multimedia :: Graphics :: 3D Rendering",
+  "Topic :: Multimedia :: Graphics :: Capture :: Digital Camera",
+  "Topic :: Multimedia :: Graphics :: Presentation",
+  "Topic :: Multimedia :: Graphics :: Viewers",
+  "Topic :: Multimedia :: Sound/Audio :: Players :: MP3",
+  "Topic :: Multimedia :: Video :: Display",
+  "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+  "Topic :: Scientific/Engineering :: Visualization",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: User Interfaces",
+]
+dependencies = [
+    "kivy>=2.3.1",
+    "Pygments>=2.19.2",
+    "pillow>=12.1.0",
+]
+
+[project.urls]
+Documentation = "https://kmcasi.github.io/KivyDK/"
+Source = "https://github.com/kmcasi/KivyDK"
+Issues = "https://github.com/kmcasi/KivyDK/issues"
+
+[tool.setuptools]
+#package-dir = {"" = "kivydk"}
+license-files = []
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["kivydk"]
+
+[tool.setuptools.package-data]
+kivydk = ["data/**/*"]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "sphinx-copybutton",
+    "sphinx_design",
+    "sphinx-doclang",
+    "sphinx-localtoc",
+    "furo",
+]

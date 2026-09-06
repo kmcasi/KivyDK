@@ -1,0 +1,79 @@
+#//|>-----------------------------------------------------------------------------------------------------------------<|
+#//| Copyright (c) 11 Feb 2026. All rights are reserved by ASI
+#//|>-----------------------------------------------------------------------------------------------------------------<|
+#//| ◆                        # Done
+#//| ▶                        # WIP (work in progress)
+#//|>--------------------------------------------------------<|
+
+KivyDK/
+│
+├── core/                     # Common framework layer
+│   ├── graphics/             # Atlas, glyphs, rendering helpers
+│   ├── window/               # New windows, popups
+│   ├── themes/               # Colors, fonts, styles
+│   ├─◆ resources/            # registrations, availability
+│   └── utils/                # Helpers, math, file utils
+│
+├── data/                     # Reusable data
+│   ├── atlas/                # borders, fonts, icons
+│   ├─◆ fonts/                # font files
+│   └─▶ mapping/              # icon names, cursor types
+│
+├── tools/                    # Debuggers framework
+│   ├─▶ monkey/               # monkey patches
+│   └── sandbox/              # virtual environments
+│
+├── uix/                      # Reusable UI framework layer
+│   ├─◆ behavior/             # click, hover
+│   ├── layouts/              # Custom layouts, splitters, docking
+│   ├─◆ manager/              # Custom managers (i.e. hover)
+│   ├─▶ widgets/              # tooltip, backgrounds, etc.
+│   └─◆ __init__.py           # expose all `widgets` for users comfort
+│
+├── editors/                  # All editors live here
+│   ├── audio_editor/
+│   │   ├── core/             # Waveform, FFT, editing logic
+│   │   ├── widgets/          # Timeline, spectrogram
+│   │   └── __init__.py
+│   │
+│   ├── image_editor/
+│   │   ├── core/             # Filters, layers, pixel ops
+│   │   ├── widgets/          # Canvas, toolbars
+│   │   └── __init__.py
+│   │
+│   ├── model_editor/
+│   │   ├── core/             # basic shapes, default shader, navigation
+│   │   ├── widgets/          # Hierarchy, details, uv
+│   │   ├── ui/               # Model view, tabs, search panel
+│   │   └── __init__.py
+│   │
+│   ├── node_editor/
+│   │   ├── core/             # Graph, nodes, connections, functions, events
+│   │   ├── widgets/          # Node view, minimap
+│   │   └── __init__.py
+│   │
+│   ├── text_editor/
+│   │   ├── core/             # Piece table, line index, wrapping logic
+│   │   ├── widgets/          # Line numbers, text view, scroll bar, gutter
+│   │   ├── ui/               # Status bar, tabs, search panel, directory tree, viewport
+│   │   └── __init__.py
+│   │
+│   └── ui_editor/
+│       ├── core/             # Events, variables, binds, slots
+│       ├── widgets/          # Palette, hierarchy, designer, details
+│       └── __init__.py
+│
+├─◆ logger.py                 # Basic logger for framework info
+└─◆ __init__.py
+
+#//|>-----------------------------------------------------------------------------------------------------------------<|
+
+Project/
+│
+├── KivyDK/
+├── cache/                    # Temporary hard disk cache for fast preload
+│   ├── indexing/
+│   ├── texture/
+│   └── hashing/
+│
+└── main.py                   # Entry point

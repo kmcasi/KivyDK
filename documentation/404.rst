@@ -1,0 +1,21 @@
+:orphan:
+:hide-toc:
+
+Page not found
+==============
+
+.. code-block:: doscon
+    :class: no-copybutton
+    :caption: Error
+
+    404
+
+~~~~
+
+Overview
+--------
+
+The page you're looking for doesn't exist.
+
+.. note::
+    Try using the search box or links from the sidebar to find what you are looking for.

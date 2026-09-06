@@ -1,0 +1,22 @@
+{{ DOC }}
+
+.. dropdown:: Technical details
+    :class-container: dk-default-value
+
+    The filename of the font to use. The path may be absolute or relative.
+    Relative paths are resolved using :func:`~kivy.resources.resource_find`.
+
+    .. warning::
+        Depending on the active text provider, the specified font file may be
+        ignored. In most cases, however, it works without issues.
+
+        If the selected font does not contain the glyphs required for the
+        language or symbols you are displaying, missing characters will appear
+        as blank box placeholders ('[]'). To avoid this, choose a font that
+        includes the necessary glyphs.
+
+    .. note::
+        When the default value is `None`, Kivy falls back to the ``Roboto`` font.
+        This default is taken from :class:`~kivy.config.Config`.
+
+§ extract default value ¶

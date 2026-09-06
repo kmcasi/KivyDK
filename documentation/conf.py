@@ -56,7 +56,7 @@ project_copyright = f"%Y. All rights are reserved by {author}."
 
 # The major project version.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.
-version = "0.0.6.dev1"
+version = "0.0.6.dev2"
 
 # The full project version, used also in the HTML templates.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.
@@ -267,10 +267,10 @@ html_theme_options = {
 # html_style = ()
 
 # Title for the navigation bar. If None, it defaults to "<project> <release> documentation".
-html_title = f"{project} {release} doc"
+html_title = f"{project} {release}"
 
 # A shorter title for the navigation bar. Default is the same as html_title.
-html_short_title = f"{project} doc"
+html_short_title = f"{project}"
 
 # A list of paths that contain custom static files (such as style sheets or script files).
 html_static_path = ["_static"]

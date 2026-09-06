@@ -14,6 +14,14 @@ a :class:`~kivy.uix.scrollview.ScrollView`.
 The LineNumber widget handles automatic sizing, vertical alignment and
 scroll synchronization, ensuring that the displayed line numbers always match
 the visible portion of the associated TextInput.
+
+§ section : example ¶
+
+Sample demonstrating how ``LineNumber`` can be used to draw the line numbers.
+
+§ show image : uix, TestLineNumber.gif ¶
+
+§ show code : uix, line_number.py ¶
 """
 __all__ = ("LineNumber",)
 
@@ -21,6 +29,7 @@ __all__ = ("LineNumber",)
 from os import cpu_count
 from concurrent.futures import ThreadPoolExecutor as Threads
 
+from kivy.clock import Clock
 from kivy.core.text import DEFAULT_FONT, Label
 from kivy.graphics import Color, Rectangle, BorderImage
 from kivy.graphics.texture import Texture
@@ -118,8 +127,20 @@ class LineNumber(Widget):
                   padding=self._update_line_numbers)
 
         self.__text_input.bind(parent=self._sync_scroll,
+                               pos=self._update_line_numbers,
                                size=self._update_line_numbers,
                                text=self._update_line_numbers)
+
+    def refresh(self, delay: int|float = -1) -> None:
+        """Schedule a re-render of the line numbers.
+
+        § parameters: delay = Delays the refresh by the given number of seconds. ¶
+
+        .. note::
+            A delay of ``0`` schedules the update for the next frame,
+            while a negative value triggers the update immediately within the current frame.
+        """
+        Clock.schedule_once(self._update_line_numbers, delay)
 
     def _sync_scroll(self, instance: TextInput, parent) -> None:
         """Used to bind the scroll event for updating the line numbers."""

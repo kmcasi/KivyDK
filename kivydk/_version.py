@@ -16,7 +16,7 @@ VERSION_STRING: str = f"{MAJOR}.{MINOR}.{MICRO}"
 
 #//| Development | Revision variables
 #//|>--------------------------------------------------------<|
-REVISION: int = 0
+REVISION: int = 2
 RELEASE: bool = False
 
 # If is not the stable release, update `VERSION_STRING` to reflect that

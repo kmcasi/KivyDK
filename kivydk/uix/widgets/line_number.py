@@ -72,8 +72,7 @@ class LineNumber(Widget):
     """Border used for :attr:`background_texture` graphics instruction.
     Can be used to define a custom background.
     
-    The border may be specified as one, two or four values.
-    These are expanded into a list of four values: ``[left, top, right, bottom]``."""
+    § variable list use ¶"""
 
     #:
     font_context: StringProperty = StringProperty(None, allownone=True)
@@ -92,9 +91,8 @@ class LineNumber(Widget):
 
     padding: VariableListProperty = VariableListProperty([4], length=2)
     """Horizontal padding applied to the line numbers.
-
-    The padding may be specified as one or two values.
-    These are expanded into a list of two values: ``[left, right]``."""
+    
+    § variable list use : H ¶"""
 
     width_min: NumericProperty = NumericProperty("18sp")
     """Minimum desired width of the widget.

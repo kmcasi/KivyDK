@@ -100,22 +100,40 @@ def cmd_parameters_item(*args, **kwargs) -> list[str]:
 
 
 # noinspection PyUnusedLocal
-@Command.new("alias property value")
-def cmd_alias_property_value(cls: str, value: str, *args, **kwargs) -> str:
+@Command.new("variable list use")
+def cmd_variable_list_use(use: str = "default", *args, **kwargs) -> str:
     """
-    Generates a description for the default value of a Kivy AliasProperty.
+    Generates a description for the use case of a Kivy VariableListProperty.
 
-    If any extra argument is provided, the property is marked as ``read-only``.
-    The actual value or number of arguments does not matter.
-    Providing an extra argument simply acts as a flag to request the ``read-only`` label.
+    The ``use`` option controls how the context is computed to inform the
+    amount of accepted values and the extended order of their use:
+        - ``h`` or ``horizontal``   ➜ two values [left, right]
+        - ``v`` or ``vertical``     ➜ two values [top, bottom]
+        - ``d`` or ``default``      ➜ four values [left, top, right, bottom]
 
     Usage:
-        - § alias property value : float, 1.0 ¶
-        - § alias property value : bool, False, _ ¶
+        - § variable list use ¶
+        - § variable list use : H ¶
+        - § variable list use : vertical ¶
     """
-    alias: str = f"{'read-only' if args else ''} :class:`~kivy.properties.AliasProperty`".lstrip(" ")
+    use_short: str = use.upper()
+    use_long: str = use.lower()
+    values: str = "one %s values"
+    expanded: str = "These are expanded into a list of %s values: ``[%s]``"
 
-    return f":attr:`{cmd_self_name()}` is a {alias} that returns a :class:`{cls}` and defaults to **{value}**."
+    if use_short == "D" or use_long == "default":
+        values = values % ", two or four"
+        expanded = expanded % ("four", "left, top, right, bottom")
+
+    elif use_short == "H" or use_long == "horizontal":
+        values = values % "or two"
+        expanded = expanded % ("two", "left, right")
+
+    elif use_short == "V" or use_long == "vertical":
+        values = values % "or two"
+        expanded = expanded % ("two", "top, bottom")
+
+    return f"The :attr:`{cmd_self_name()}` may be specified as {values}. {expanded}."
 
 
 # noinspection PyUnusedLocal
@@ -137,59 +155,26 @@ def cmd_default_value(value: str, *args, **kwargs) -> list[str]:
 
 
 # noinspection PyUnusedLocal
-@Command.new("extract default value2")
-def cmd_extract_default_value2(*args, **kwargs) -> str:
+@Command.new("alias property value")
+def cmd_alias_property_value(cls: str, value: str, *args, **kwargs) -> list[str]:
     """
-    Automatically extracts the default value of the current attribute.
+    Generates a description for the default value of a Kivy AliasProperty.
 
-    This command inspects the current object's attribute, detects the class type and retrieves its default value
-    directly from the attribute instance.
-
-    The Kivy AliasProperty is intentionally excluded, as its default value cannot be safely determined
-    during documentation generation.
+    If any extra argument is provided, the property is marked as ``read-only``.
+    The actual value or number of arguments does not matter.
+    Providing an extra argument simply acts as a flag to request the ``read-only`` label.
 
     Usage:
-        - § extract default value ¶
+        - § alias property value : float, 1.0 ¶
+        - § alias property value : bool, False, _ ¶
     """
-    # Import the class object
-    class_path: str = cmd_self_name("dotted name")
-    try:
-        module_name, class_name, attr_name = class_path.rsplit(".", 2)
-    except ValueError:
-        return ""
-    module = __import__(module_name, fromlist=[class_name])
-    cls: type = getattr(module, class_name)
+    alias: str = f"{'read-only' if args else ''} :class:`~kivy.properties.AliasProperty`".lstrip(" ")
 
-    # Retrieve the attribute object
-    prop = getattr(cls, attr_name, None)
-
-    # Skip missing attributes, also skip AliasProperty (its default value cannot be safely computed)
-    if prop is None or isinstance(prop, AliasProperty):
-        return ""
-
-    # If it's a Kivy OptionProperty
-    if isinstance(prop, OptionProperty):
-        options_prefix: str = f"\n{TAB}.. code-block:: Python3\n\n{TAB * 2}"
-        options: str = "".join([
-            f"{options_prefix}{f'"{option}"' if isinstance(option, str) else option}\n" for option in prop.options
-        ])
-        value: str = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
-        return (
-            f".. dropdown:: Options"
-            f"\n{TAB}:class-container: dk-default-value"
-            f"\n\n{TAB}Below are listed all the available options for this attribute."
-            f"\n{options}"
-            f"\n\n{cmd_default_value(value=value)}"
-        )
-
-    # If it's a Kivy Property (general class)
-    if isinstance(prop, Property):
-        value: str = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
-        return cmd_default_value(value=value)
-
-    # If it's a normal Python attribute
-    value: str = f'"{prop}"' if isinstance(prop, str) else str(prop)
-    return cmd_default_value(value=value, cls=prop.__class__.__name__)
+    return [
+        f":attr:`{cmd_self_name()}` is a {alias} that returns a :class:`{cls}`.",
+        "",
+        *cmd_default_value(value)
+    ]
 
 
 # noinspection PyUnusedLocal, PyBroadException

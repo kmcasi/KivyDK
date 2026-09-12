@@ -1,12 +1,26 @@
 #// IMPORT
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.codeinput import CodeInput
+from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
+
+from kivy.properties import NumericProperty
 
 from kivydk.uix import LineNumber
 
+from kivy.uix.button import Button
+from kivydk.uix.behavior.HoverBehavior import HoverBehavior
+
 
 #// LOGIC
+class HoverButton(HoverBehavior, Button):
+    def on_hovered(self, instance, value):
+        if value:
+            self.background_color = (1, 0, 0, 1)
+        else:
+            self.background_color = (1, 1, 1, 1)
+
+
 class TestLineNumber(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -38,12 +52,40 @@ class TestLineNumber(BoxLayout):
         self.line_number.refresh()
 
 
+class Debug(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.layout = BoxLayout(orientation="vertical", size_hint_x=None, width=128)
+        self.txt_ln = TestLineNumber()
+
+        self.debug_font_size = TextInput(text=str(self.txt_ln.text_input.font_size), size_hint_y=None, height="32sp")
+
+        self.layout.add_widget(self.debug_font_size)
+        self.add_widget(self.txt_ln)
+        self.add_widget(self.layout)
+
+        self.debug_font_size.bind(text=self._debug_font_size_change)
+
+        for i in range(1000):
+            self.txt_ln.text_input.text += "Line number %.4d\n" % (i + 1)
+
+    def _debug_font_size_change(self, *_):
+        try:
+            font_size = int(self.debug_font_size.text.strip())
+            if font_size > 0:
+                self.txt_ln.text_input.font_size = font_size
+        except ValueError: pass
+
+
 #// RUN FILE
 if __name__ == "__main__":
     from kivy.app import App
 
     class Example(App):
         def build(self):
-            return TestLineNumber()
+            # return TestLineNumber()
+            # return Debug()
+            return HoverButton(text="HoverButton", size_hint_y=None, height=128)
 
     Example().run()

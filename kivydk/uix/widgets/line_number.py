@@ -113,21 +113,32 @@ class LineNumber(Widget):
         self._update_font()
 
     def __bind(self) -> None:
-        self.bind(align=self._update_line_numbers,
-                  background_color=self._update_line_numbers,
-                  background_texture=self._update_line_numbers,
-                  background_border=self._update_line_numbers,
-                  font_context=self._update_font,
-                  font_family=self._update_font,
-                  font_name=self._update_font,
-                  font_size=self._update_font,
-                  foreground_color=self._update_line_numbers,
-                  padding=self._update_line_numbers)
+        self.bind(
+            align=self._update_line_numbers,
+            background_color=self._update_line_numbers,
+            background_texture=self._update_line_numbers,
+            background_border=self._update_line_numbers,
+            font_context=self._update_font,
+            font_family=self._update_font,
+            font_name=self._update_font,
+            font_size=self._update_font,
+            foreground_color=self._update_line_numbers,
+            padding=self._update_line_numbers,
+        )
 
-        self.__text_input.bind(parent=self._sync_scroll,
-                               pos=self._update_line_numbers,
-                               size=self._update_line_numbers,
-                               text=self._update_line_numbers)
+        self.__text_input.bind(
+            do_wrap=self._update_line_numbers,
+            font_context=self._update_line_numbers,
+            font_family=self._update_line_numbers,
+            font_name=self._update_line_numbers,
+            font_size=self._update_line_numbers,
+            line_spacing=self._update_line_numbers,
+            padding=self._update_line_numbers,
+            parent=self._sync_scroll,
+            pos=self._update_line_numbers,
+            size=self._update_line_numbers,
+            text=self._update_line_numbers,
+        )
 
     def refresh(self, delay: int|float = -1) -> None:
         """Schedule a re-render of the line numbers.

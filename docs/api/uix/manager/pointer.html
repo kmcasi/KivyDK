@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Hover - KivyDK 0.0.6.dev2</title>
+        <title>Pointer - KivyDK 0.0.7.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.0.6.dev2</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.0.7.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.6.dev2</span>
+  <span class="sidebar-brand-text">KivyDK 0.0.7.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -232,7 +232,7 @@
 </ul>
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../manager.html">Manager</a><input aria-label="Toggle navigation of Manager" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">Hover</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">Pointer</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -278,61 +278,54 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-kivydk.uix.manager.hover">
-<span id="hover"></span><h1>Hover<a class="headerlink" href="#module-kivydk.uix.manager.hover" title="Link to this heading">&#10070;</a></h1>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kivydk</span><span class="o">.</span><span class="n">uix</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">hover</span>
+          <section id="module-kivydk.uix.manager.pointer">
+<span id="pointer"></span><h1>Pointer<a class="headerlink" href="#module-kivydk.uix.manager.pointer" title="Link to this heading">&#10070;</a></h1>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id1" title="Link to this code">&#10070;</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kivydk</span><span class="o">.</span><span class="n">uix</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">pointer</span>
 </pre></div>
 </div>
 </div>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">&#10070;</a></h2>
-<p>This manager coordinates hover detection by keeping a registry of widgets that support hover interactions
-and performing optimized checks to determine which one is currently under the cursor. This centralized approach
-eliminates redundant per‑widget computations and ensures that only the relevant widgets are evaluated until a hover
-target is identified.</p>
+<p>PointerManager provides a centralized, lightweight system for detecting which widget is currently under
+the mouse cursor. Instead of relying on per‑widget polling or Kivy’s raw motion events, this module
+implements a unified pointer routing layer that tracks hover transitions, dispatches enter/leave events
+and maintains a single authoritative hovered widget.</p>
+<p>Widgets that participate in pointer detection register themselves with the manager, allowing KiviDK to
+evaluate only the relevant widgets and avoid redundant collision checks. This design ensures consistent
+hover behavior across the entire UI, enables higher‑level features such as tooltips and forms the
+foundation for future pointer‑driven interactions.</p>
 </section>
 <hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">&#10070;</a></h2>
 </section>
 <dl class="py data">
-<dt class="sig sig-object py" id="kivydk.uix.manager.hover.HoverManager">
-<span class="sig-name descname"><span class="pre">HoverManager</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#kivydk.uix.manager.hover.HoverManagerBase" title="kivydk.uix.manager.hover.HoverManagerBase"><span class="pre">HoverManagerBase</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;kivydk.uix.manager.hover.HoverManagerBase</span> <span class="pre">object&gt;</span></span><a class="headerlink" href="#kivydk.uix.manager.hover.HoverManager" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Global manager responsible for efficient hover detection.</p>
+<dt class="sig sig-object py" id="kivydk.uix.manager.pointer.PointerManager">
+<span class="sig-name descname"><span class="pre">PointerManager</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#kivydk.uix.manager.pointer.PointerManagerBase" title="kivydk.uix.manager.pointer.PointerManagerBase"><span class="pre">PointerManagerBase</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;kivydk.uix.manager.pointer.PointerManagerBase</span> <span class="pre">object&gt;</span></span><a class="headerlink" href="#kivydk.uix.manager.pointer.PointerManager" title="Link to this definition">&#10070;</a></dt>
+<dd><p>Global manager responsible for efficient pointer detection.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="kivydk.uix.manager.hover.HoverManagerBase">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">HoverManagerBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivydk.uix.manager.hover.HoverManagerBase" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></p>
-<p>Centralized manager responsible for efficient hover detection across all widgets that inherit from
-<code class="xref py py-class docutils literal notranslate"><span class="pre">HoverBehavior</span></code>.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<ul class="simple">
-<li><p>Sort system need to be implemented. Usually the last registered widgets have high chance to be hovered ones.</p></li>
-<li><dl class="simple">
-<dt>Some system to group widgets in chunks and to check them first.</dt><dd><ul>
-<li><p>Tree system will be faster if the UIX become more complex.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
+<dt class="sig sig-object py" id="kivydk.uix.manager.pointer.PointerManagerBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PointerManagerBase</span></span><a class="headerlink" href="#kivydk.uix.manager.pointer.PointerManagerBase" title="Link to this definition">&#10070;</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Central component responsible for tracking the widget currently under the mouse cursor.</p>
+<p>It maintains a registry of participating widgets and dispatches pointer enter/leave
+callbacks whenever the hovered target changes. This class provides the low‑level
+infrastructure used by higher‑level hover, tooltip and other pointer‑driven behaviors.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="kivydk.uix.manager.hover.HoverManagerBase.register">
-<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HoverBehavior</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.manager.hover.HoverManagerBase.register" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Register a specific widget for hovering detection system.</p>
+<dt class="sig sig-object py" id="kivydk.uix.manager.pointer.PointerManagerBase.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="(in Kivy v2.3.1)"><span class="pre">Widget</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.manager.pointer.PointerManagerBase.register" title="Link to this definition">&#10070;</a></dt>
+<dd><p>Register a specific widget for pointer detection system.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kivydk.uix.manager.hover.HoverManagerBase.unregister">
-<span class="sig-name descname"><span class="pre">unregister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">HoverBehavior</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.manager.hover.HoverManagerBase.unregister" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Unregister a specific widget from hovering detection system.</p>
+<dt class="sig sig-object py" id="kivydk.uix.manager.pointer.PointerManagerBase.unregister">
+<span class="sig-name descname"><span class="pre">unregister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="(in Kivy v2.3.1)"><span class="pre">Widget</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.manager.pointer.PointerManagerBase.unregister" title="Link to this definition">&#10070;</a></dt>
+<dd><p>Unregister a specific widget from pointer detection system.</p>
 </dd></dl>
 
 </dd></dl>
@@ -398,13 +391,13 @@ target is identified.</p>
 <div class="toc-tree-container toc-scroll">
   <div class="toc-tree">
     <ul>
-<li><a class="reference internal" href="#">Hover</a><ul>
+<li><a class="reference internal" href="#">Pointer</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#reference">Reference</a></li>
-<li><a class="reference internal" href="#kivydk.uix.manager.hover.HoverManager"><span class="slt-type slt-obj-data"></span><code class="docutils literal notranslate"><span class="pre">HoverManager</span></code></a></li>
-<li><a class="reference internal" href="#kivydk.uix.manager.hover.HoverManagerBase"><span class="slt-type slt-obj-class"></span><code class="docutils literal notranslate"><span class="pre">HoverManagerBase</span></code></a><ul>
-<li><a class="reference internal" href="#kivydk.uix.manager.hover.HoverManagerBase.register"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">register</span></code></a></li>
-<li><a class="reference internal" href="#kivydk.uix.manager.hover.HoverManagerBase.unregister"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">unregister</span></code></a></li>
+<li><a class="reference internal" href="#kivydk.uix.manager.pointer.PointerManager"><span class="slt-type slt-obj-data"></span><code class="docutils literal notranslate"><span class="pre">PointerManager</span></code></a></li>
+<li><a class="reference internal" href="#kivydk.uix.manager.pointer.PointerManagerBase"><span class="slt-type slt-obj-class"></span><code class="docutils literal notranslate"><span class="pre">PointerManagerBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivydk.uix.manager.pointer.PointerManagerBase.register"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">register</span></code></a></li>
+<li><a class="reference internal" href="#kivydk.uix.manager.pointer.PointerManagerBase.unregister"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">unregister</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -418,7 +411,7 @@ target is identified.</p>
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=7a94d4a9"></script>
+</div><script src="../../../_static/documentation_options.js?v=c7819cab"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

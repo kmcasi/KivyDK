@@ -56,7 +56,7 @@ project_copyright = f"%Y. All rights are reserved by {author}."
 
 # The major project version.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.
-version = "0.0.6.dev3"
+version = "0.0.7.dev1"
 
 # The full project version, used also in the HTML templates.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.

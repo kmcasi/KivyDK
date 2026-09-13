@@ -36,5 +36,5 @@ __all__ = ("ClickBehavior", "HoverBehavior")
 
 
 #// IMPORT
-from kivydk.uix.behavior.click import ClickBehavior
-from kivydk.uix.behavior.hover import HoverBehavior
+from .click import ClickBehavior
+from .hover import HoverBehavior

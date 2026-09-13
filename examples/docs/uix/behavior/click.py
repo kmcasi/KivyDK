@@ -10,37 +10,38 @@ class TestClick(ClickBehavior, Label):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # Local variables to count the clicks
+        # Local variables
         self.count_click = 0
         self.count_double_click = 0
+        self.last_button_click = "-"
+        self.last_button_double_click = "-"
 
         # Initialize the label with default information
         self.update_text()
 
-        # Register event to update the text for press/release
-        # `state` is classic kivy property
-        self.bind(state=self.update_text)
-
-    def on_click(self):
+    def on_click(self, button, modifiers):
         self.count_click += 1
+        self.last_button_click = button
         self.update_text()
 
-    def on_double_click(self):
+    def on_double_click(self, button, modifiers):
         self.count_double_click += 1
+        self.last_button_double_click = button
         self.update_text()
 
     def update_text(self, *args):
         """
-        Update the label text to display the current click state.
+        Update the label text to display the current click information.
 
         :type args:     tuple[Any, ...]
         :param args:    Unused arguments from event callbacks.
         """
-        state = "Click state: %s" % ("press" if self.state == "down" else "release")
         single_click = f"Click's amount: %.2d" % self.count_click
         double_click = f"Double click's amount: %.2d" % self.count_double_click
+        last_single_click = f"Last clicked button: %s" % self.last_button_click
+        last_double_click = f"Last double clicked button: %s" % self.last_button_double_click
 
-        self.text = f"{single_click}\n{double_click}\n\n{state}"
+        self.text = f"{single_click}\n{double_click}\n\n{last_single_click}\n{last_double_click}"
 
 
 #// RUN FILE

@@ -18,12 +18,13 @@ __all__ = ("HoverBehavior",)
 
 #// IMPORT
 from kivy.properties import AliasProperty, BooleanProperty
+from kivy.uix.widget import Widget
 
-from kivydk.uix.manager.hover import HoverManager
+from kivydk.uix.manager.pointer import PointerManager
 
 
 #// LOGIC
-class HoverBehavior(object):
+class HoverBehavior:
     """A mixin that adds lightweight hover detection to any widget."""
 
     _hover_state: BooleanProperty = BooleanProperty(False)
@@ -38,8 +39,9 @@ class HoverBehavior(object):
     § alias property value : bool, False, _ ¶
     """
 
-    __events__ = ["on_hover", "on_hover_start", "on_hover_end"]
+    __events__ = ["on_hover", "on_hover_enter", "on_hover_leave"]
 
+    # noinspection PyUnresolvedReferences
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
@@ -48,29 +50,39 @@ class HoverBehavior(object):
 
     def on_hover(self, state: bool) -> None:
         """
-        Called when the cursor enters and leaves the widget's bounds.
+        Called when the cursor enters or leaves the widget's bounds.
 
         § parameters : state = ``True`` when the cursor is currently hovering over the widget and ``False`` otherwise. ¶
 
         This method is dispatched every time the hover state changes, allowing widgets to react
-        to both hover‑start and hover‑end transitions.
+        to both :meth:`on_hover_enter` and :meth:`on_hover_leave` transitions.
         """
         pass
 
-    def on_hover_start(self) -> None:
+    def on_hover_enter(self) -> None:
         """Called when the cursor enters the widget's bounds."""
         pass
 
-    def on_hover_end(self) -> None:
+    def on_hover_leave(self) -> None:
         """Called when the cursor leaves the widget's bounds."""
         pass
 
-    def _auto_register(self, instance, parent) -> None:
-        if parent is not None:
-            HoverManager.register(self)
+    @staticmethod
+    def _auto_register(instance:Widget, parent:Widget|None) -> None:
+        if parent is None:
+            PointerManager.unregister(instance)
         else:
-            HoverManager.unregister(self)
+            PointerManager.register(instance)
 
+    # noinspection PyTypeChecker
+    def _do_pointer_enter(self) -> None:
+        self._hover_state = True
+
+    # noinspection PyTypeChecker
+    def _do_pointer_leave(self) -> None:
+        self._hover_state = False
+
+    # noinspection PyUnusedLocal, PyUnresolvedReferences
     def _dispatch_hover(self, *args) -> None:
         self.dispatch("on_hover", self._hover_state)
-        self.dispatch("on_hover_start" if self._hover_state else "on_hover_end")
+        self.dispatch(f"on_hover_{'enter' if self._hover_state else 'leave'}")

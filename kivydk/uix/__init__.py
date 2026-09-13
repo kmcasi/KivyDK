@@ -16,9 +16,5 @@ within the KivyDK ecosystem. They are designed to be flexible, composable and co
 """
 
 #// IMPORT
-# Expose public widgets to not force the users to adapt to a totally new workflow
-# Example valid imports for the same module:
-#   from kivydk.uix import LineNumber                       # kivy style
-#   from kivydk.uix.widgets import LineNumber               # module path
-#   from kivydk.uix.widgets.line_number import LineNumber   # full path
+# This is exposing public widgets to not force the users to adapt to a totally new workflow
 from .widgets import *

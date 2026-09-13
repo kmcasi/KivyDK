@@ -10,20 +10,20 @@ __all__ = (
 #//|>--------------------------------------------------------<|
 MAJOR: int = 0
 MINOR: int = 0
-MICRO: int = 6
+MICRO: int = 7
 VERSION_STRING: str = f"{MAJOR}.{MINOR}.{MICRO}"
 
 
 #//| Development | Revision variables
 #//|>--------------------------------------------------------<|
-REVISION: int = 3
+REVISION: int = 0
 RELEASE: bool = False
 
 # If is not the stable release, update `VERSION_STRING` to reflect that
 if not RELEASE:
-    VERSION_STRING.join(f".dev{max(1, REVISION)}")
+    VERSION_STRING = f"{VERSION_STRING}.dev{max(1, REVISION)}"
 elif REVISION:
-    VERSION_STRING.join(f".rev{REVISION}")
+    VERSION_STRING = f"{VERSION_STRING}.rev{REVISION}"
 
 
 #//| exec'd from setup.py ?

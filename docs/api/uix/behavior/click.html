@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Click - KivyDK 0.0.6.dev2</title>
+        <title>Click - KivyDK 0.0.7.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.0.6.dev2</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.0.7.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.6.dev2</span>
+  <span class="sidebar-brand-text">KivyDK 0.0.7.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -232,7 +232,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../manager.html">Manager</a><input aria-label="Toggle navigation of Manager" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../manager/hover.html">Hover</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../manager/pointer.html">Pointer</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -289,13 +289,9 @@
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">&#10070;</a></h2>
-<p>This behavior encapsulates mouse click detection for widgets. It listens for press and release events,
-tracks the click state and triggers callbacks when a valid click occurs. This behavior removes the need for manual
-input handling and provides a consistent, reusable pattern for widgets that respond to user clicks.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Click detection is based on touch events, so finger presses on touch‑enabled monitors are treated as clicks.</p>
-</div>
+<p>Provides a pointer‑based click detection behavior for widgets. ClickBehavior listens to
+pointer release events routed through <a class="reference internal" href="../manager/pointer.html#kivydk.uix.manager.pointer.PointerManager" title="kivydk.uix.manager.pointer.PointerManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointerManager</span></code></a>
+and implements a consistent model for single‑click and double‑click recognition.</p>
 </section>
 <hr class="docutils" />
 <section id="example">
@@ -314,48 +310,49 @@ input handling and provides a consistent, reusable pattern for widgets that resp
 <span class="linenos">10</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="linenos">11</span>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="linenos">12</span>
-<span class="linenos">13</span>        <span class="c1"># Local variables to count the clicks</span>
+<span class="linenos">13</span>        <span class="c1"># Local variables</span>
 <span class="linenos">14</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_click</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_double_click</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="linenos">16</span>
-<span class="linenos">17</span>        <span class="c1"># Initialize the label with default information</span>
-<span class="linenos">18</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">()</span>
-<span class="linenos">19</span>
-<span class="linenos">20</span>        <span class="c1"># Register event to update the text for press/release</span>
-<span class="linenos">21</span>        <span class="c1"># `state` is classic kivy property</span>
-<span class="linenos">22</span>        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">)</span>
-<span class="linenos">23</span>
-<span class="linenos">24</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="linenos">25</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_click</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="linenos">26</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">()</span>
-<span class="linenos">27</span>
-<span class="linenos">28</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_double_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="linenos">29</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_double_click</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">16</span>        <span class="bp">self</span><span class="o">.</span><span class="n">last_button_click</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
+<span class="linenos">17</span>        <span class="bp">self</span><span class="o">.</span><span class="n">last_button_double_click</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>        <span class="c1"># Initialize the label with default information</span>
+<span class="linenos">20</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">()</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+<span class="linenos">23</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_click</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">24</span>        <span class="bp">self</span><span class="o">.</span><span class="n">last_button_click</span> <span class="o">=</span> <span class="n">button</span>
+<span class="linenos">25</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">()</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_double_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+<span class="linenos">28</span>        <span class="bp">self</span><span class="o">.</span><span class="n">count_double_click</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">29</span>        <span class="bp">self</span><span class="o">.</span><span class="n">last_button_double_click</span> <span class="o">=</span> <span class="n">button</span>
 <span class="linenos">30</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_text</span><span class="p">()</span>
 <span class="linenos">31</span>
 <span class="linenos">32</span>    <span class="k">def</span><span class="w"> </span><span class="nf">update_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="linenos">33</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="linenos">34</span><span class="sd">        Update the label text to display the current click state.</span>
+<span class="linenos">34</span><span class="sd">        Update the label text to display the current click information.</span>
 <span class="linenos">35</span>
 <span class="linenos">36</span><span class="sd">        :type args:     tuple[Any, ...]</span>
 <span class="linenos">37</span><span class="sd">        :param args:    Unused arguments from event callbacks.</span>
 <span class="linenos">38</span><span class="sd">        &quot;&quot;&quot;</span>
-<span class="linenos">39</span>        <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;Click state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;press&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span> <span class="k">else</span> <span class="s2">&quot;release&quot;</span><span class="p">)</span>
-<span class="linenos">40</span>        <span class="n">single_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Click&#39;s amount: %.2d&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_click</span>
-<span class="linenos">41</span>        <span class="n">double_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Double click&#39;s amount: %.2d&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_double_click</span>
-<span class="linenos">42</span>
-<span class="linenos">43</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">single_click</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">double_click</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="linenos">44</span>
+<span class="linenos">39</span>        <span class="n">single_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Click&#39;s amount: %.2d&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_click</span>
+<span class="linenos">40</span>        <span class="n">double_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Double click&#39;s amount: %.2d&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_double_click</span>
+<span class="linenos">41</span>        <span class="n">last_single_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Last clicked button: %s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_button_click</span>
+<span class="linenos">42</span>        <span class="n">last_double_click</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Last double clicked button: %s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_button_double_click</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">single_click</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">double_click</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">last_single_click</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">last_double_click</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="linenos">45</span>
-<span class="linenos">46</span><span class="c1">#// RUN FILE</span>
-<span class="linenos">47</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="linenos">48</span>    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
-<span class="linenos">49</span>
-<span class="linenos">50</span>    <span class="k">class</span><span class="w"> </span><span class="nc">Example</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-<span class="linenos">51</span>        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="linenos">52</span>            <span class="k">return</span> <span class="n">TestClick</span><span class="p">(</span><span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
-<span class="linenos">53</span>
-<span class="linenos">54</span>    <span class="n">Example</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="c1">#// RUN FILE</span>
+<span class="linenos">48</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">49</span>    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>    <span class="k">class</span><span class="w"> </span><span class="nc">Example</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="linenos">52</span>        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">53</span>            <span class="k">return</span> <span class="n">TestClick</span><span class="p">(</span><span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>    <span class="n">Example</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -366,10 +363,14 @@ input handling and provides a consistent, reusable pattern for widgets that resp
 <dl class="py class">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.click.ClickBehavior">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ClickBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivydk.uix.behavior.click.ClickBehavior" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior" title="(in Kivy v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonBehavior</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A mixin that adds lightweight click and double click detection to any widget.</p>
-<p>This extends <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior" title="(in Kivy v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonBehavior</span></code></a>, so the standard <code class="docutils literal notranslate"><span class="pre">on_press</span></code> and <code class="docutils literal notranslate"><span class="pre">on_release</span></code>
-events remain available.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This behavior does not fire <code class="docutils literal notranslate"><span class="pre">on_press</span></code> or <code class="docutils literal notranslate"><span class="pre">on_release</span></code> events.
+If you require those callbacks, inherit them from Kivy’s
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior" title="(in Kivy v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonBehavior</span></code></a>.</p>
+</div>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Events</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
@@ -395,15 +396,53 @@ events remain available.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.click.ClickBehavior.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.click.ClickBehavior.on_click" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.click.ClickBehavior.on_click" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Called when the widget is pressed and released.</p>
-</dd></dl>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Parameters</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text">Name</p></td>
+<td><p class="sd-card-text">Description</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">button</p></td>
+<td><p class="sd-card-text">The name of the pointer button that triggered the event.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">modifiers</p></td>
+<td><p class="sd-card-text">A list of active modifier keys (e.g. <code class="docutils literal notranslate"><span class="pre">alt</span></code>, <code class="docutils literal notranslate"><span class="pre">ctrl</span></code>, <code class="docutils literal notranslate"><span class="pre">shift</span></code>, <code class="docutils literal notranslate"><span class="pre">numlock</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.click.ClickBehavior.on_double_click">
-<span class="sig-name descname"><span class="pre">on_double_click</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.click.ClickBehavior.on_double_click" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">on_double_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.click.ClickBehavior.on_double_click" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Called when the widget is pressed and released two times.</p>
-</dd></dl>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Parameters</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text">Name</p></td>
+<td><p class="sd-card-text">Description</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">button</p></td>
+<td><p class="sd-card-text">The name of the pointer button that triggered the event.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">modifiers</p></td>
+<td><p class="sd-card-text">A list of active modifier keys (e.g. <code class="docutils literal notranslate"><span class="pre">alt</span></code>, <code class="docutils literal notranslate"><span class="pre">ctrl</span></code>, <code class="docutils literal notranslate"><span class="pre">shift</span></code>, <code class="docutils literal notranslate"><span class="pre">numlock</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details></dd></dl>
 
 </dd></dl>
 
@@ -489,7 +528,7 @@ events remain available.</p>
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=7a94d4a9"></script>
+</div><script src="../../../_static/documentation_options.js?v=c7819cab"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

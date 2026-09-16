@@ -11,6 +11,7 @@ import os
 TITLE: dict[str, str] = {
     "api": "API Reference",
     "uix": "UIX",
+    "abc": "ABC",
 }
 
 

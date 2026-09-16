@@ -1,4 +1,4 @@
-{{ DOC }}
+Font context used to render the {{ DOC }}.
 
 .. dropdown:: Technical details
     :class-container: dk-default-value

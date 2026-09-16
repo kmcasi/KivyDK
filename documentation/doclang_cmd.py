@@ -3,12 +3,12 @@
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 
 #// IMPORT
-import inspect
+import inspect, importlib
 
 from kivy.properties import Property, AliasProperty, OptionProperty, VariableListProperty
 from types import ModuleType, FunctionType, MethodType
 
-from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, cmd_self_obj
+from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, cmd_self_obj, _Template
 
 
 #// GLOBAL VARIABLES
@@ -96,7 +96,7 @@ def cmd_parameters_item(*args, **kwargs) -> list[str]:
         - § parameters ¶
         - § param : param_A = Description for A., param_B = Description for B. ¶
     """
-    return [f"{TAB * 2}* - {f"\n{TAB * 2}  - ".join(kw)}" for kw in kwargs.items()]
+    return [f"{TAB * 2}* - {f'\n{TAB * 2}  - '.join(kw)}{'' if kw[1].endswith('.') else '.'}" for kw in kwargs.items()]
 
 
 # noinspection PyUnusedLocal
@@ -274,7 +274,7 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
     #------------------------------------------------------------
     try:
         module_name, class_name = class_path.rsplit(".", 1)
-        module: ModuleType = __import__(module_name, fromlist=[class_name])
+        module: ModuleType = importlib.import_module(module_name)
         cls: type = getattr(module, class_name)
     except Exception:
         return []
@@ -282,7 +282,7 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
     #------------------------------------------------------------
     # 3. Read __events__ from the class
     #------------------------------------------------------------
-    available_events: list[str] | tuple[str] = getattr(cls, "__events__", [])
+    available_events: list[str] | tuple[str] = cls.__dict__.get("__events__", [])
 
     if not isinstance(available_events, (list, tuple)):
         return []
@@ -300,7 +300,7 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
         doc: str = inspect.getdoc(method) or ""
         first_sentence: str = doc.split(".", 1)[0].strip()
 
-        if not first_sentence.endswith("."):
+        if first_sentence and not first_sentence.endswith("."):
             first_sentence += "."
 
         events[event_name] = first_sentence
@@ -313,8 +313,33 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
             f".. dropdown:: {title}",
             f"{TAB}:class-container: dk-default-value",
             "",
+            f"{TAB}.. TODO::",
+            f"{TAB * 2}The current event implementation relies on ``__events__`` being defined as a class attribute.",
+            f"{TAB * 2}This works for now, but it overrides inherited Kivy events.",
+            "",
+            f"{TAB * 2}When revisiting the event system, consider migrating to ``register_event_type()``",
+            f"{TAB * 2}and updating the DocLang command to support dynamically registered events.",
+            "",
             *[f"{TAB}:meth:`{f"`\n{TAB * 2}".join(event)}" for event in events.items()]
         ]
 
     # Return an empty list if no events was found
     return []
+
+
+@Command.new("dropdown")
+def cmd_dropdown(title: str = "Dropdown", *args, **kwargs) -> str:
+    return f".. dropdown:: {title}\n{TAB}:class-container: dk-default-value"
+
+
+@Command.new("evaluate")
+def cmd_evaluate(*args, _end_: str="", **kwargs) -> list[str]:
+    arguments: str = ', '.join([*args, *[f"{k}={w}" for k,w in kwargs.items()]])
+    sim = eval(f"OBJ({arguments})", {"OBJ": _Template.OBJ})
+    # return f"\n{cmd_self_name()}({arguments})\n# {sim}\n"
+    return [
+        ".. code-block:: Python3",
+        "",
+        f"{TAB}{cmd_self_name()}({arguments})",
+        f"{TAB}# {sim}{TAB if _end_ else ''}{_end_}",
+    ]

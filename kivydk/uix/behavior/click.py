@@ -56,7 +56,7 @@ class ClickBehavior:
 
     def on_click(self, button:str, modifiers:list[str]) -> None:
         """
-        Called when the widget is pressed and released.
+        Called when the widget receives a valid pointer click.
 
         § parameters : button = The name of the pointer button that triggered the event. ¶
         § param : modifiers = A list of active modifier keys (e.g. ``alt``|, ``ctrl``|, ``shift``|, ``numlock``). ¶
@@ -65,7 +65,7 @@ class ClickBehavior:
 
     def on_double_click(self, button:str, modifiers:list[str]) -> None:
         """
-        Called when the widget is pressed and released two times.
+        Called when two consecutive pointer clicks occur within :attr:`click_interval`.
 
         § parameters : button = The name of the pointer button that triggered the event. ¶
         § param : modifiers = A list of active modifier keys (e.g. ``alt``|, ``ctrl``|, ``shift``|, ``numlock``). ¶

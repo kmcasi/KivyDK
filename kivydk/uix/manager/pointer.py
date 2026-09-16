@@ -93,6 +93,7 @@ class PointerManagerBase:
         if hasattr(widget, "on_pointer_leave"):
             widget.on_pointer_leave()
 
+    # noinspection PyUnusedLocal
     def _do_pointer_press(self, instance:Window, x:float, y:float, button:str, modifiers:list[str]) -> None:
         if self.__last_widget:
             if hasattr(self.__last_widget, "_do_pointer_press"):
@@ -101,6 +102,7 @@ class PointerManagerBase:
             if hasattr(self.__last_widget, "on_pointer_press"):
                 self.__last_widget.on_pointer_press(button, modifiers)
 
+    # noinspection PyUnusedLocal
     def _do_pointer_release(self, instance:Window, x:float, y:float, button:str, modifiers:list[str]) -> None:
         if self.__last_widget:
             if hasattr(self.__last_widget, "_do_pointer_release"):

@@ -1,4 +1,4 @@
-{{ DOC }}
+Font name or file used to render the {{ DOC }}.
 
 .. dropdown:: Technical details
     :class-container: dk-default-value

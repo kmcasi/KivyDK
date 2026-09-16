@@ -1,53 +1,68 @@
 #// IMPORT
-from kivy.uix.label import Label
-from kivy.graphics import Color, Rectangle
+from kivy.core.window import Window
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.button import Button
 
-from kivydk.uix.behavior import ClickBehavior
+from kivydk.uix.behavior.hover import HoverBehavior
+from kivydk.uix.behavior.tooltip import TooltipBehavior
+from kivydk.uix.widgets.tooltip import Tooltip
 
 
 #// LOGIC
-class TestClick(ClickBehavior, Label):
+class CustomButton(HoverBehavior, TooltipBehavior, Button):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+class TestTooltip(FloatLayout):
     """Each event updates the label text to reflect the current click state."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         # Local variables
-        self.count_click = 0
-        self.count_double_click = 0
-        self.last_button_click = "-"
-        self.last_button_double_click = "-"
+        self.tooltip_w = None
+        self.anchors = {
+            "top-left":      (0.25, 0.75),
+            "top-center":    (0.50, 0.75),
+            "top-right":     (0.75, 0.75),
+            "center-left":   (0.25, 0.50),
+            "center":        (0.50, 0.50),
+            "center-right":  (0.75, 0.50),
+            "bottom-left":   (0.25, 0.25),
+            "bottom-center": (0.50, 0.25),
+            "bottom-right":  (0.75, 0.25),
+        }
 
-        # Initialize the label with default information
-        self.update_text()
+        # Create the buttons
+        for name, (ax, ay) in self.anchors.items():
+            btn = CustomButton(
+                text=name,
+                size_hint=(None, None),
+                size=(120, 40),
+                tooltip_widget=Tooltip,
+                tooltip_text=f"Tooltip of the {name!r}.",
+                pos_hint={"center_x": ax, "center_y": ay},
+            )
+            btn.bind(on_hover=lambda i,s:self._handle_tooltip(i,s))
+            self.add_widget(btn)
 
-    def on_click(self, button, modifiers):
-        self.count_click += 1
-        self.last_button_click = button
-        self.update_text()
+    def _handle_tooltip(self, instance:CustomButton, show):
+        if not self.tooltip_w:
+            self.tooltip_w:Tooltip = instance.tooltip_widget()
+        self.tooltip_w.update_text(instance.tooltip_text)
+        self.tooltip_w.update_size()
+        self.tooltip_w.update_position(
+            instance.x + instance.width // 2 - self.tooltip_w.width // 2,
+            instance.y + instance.height + 4
+        )
 
-    def on_double_click(self, button, modifiers):
-        self.count_double_click += 1
-        self.last_button_double_click = button
-        self.update_text()
-
-    def update_text(self, *args):
-        """
-        Update the label text to display the current click information.
-
-        :type args:     tuple[Any, ...]
-        :param args:    Unused arguments from event callbacks.
-        """
-        single_click = f"Click's amount: %.2d" % self.count_click
-        double_click = f"Double click's amount: %.2d" % self.count_double_click
-        last_single_click = f"Last clicked button: %s" % self.last_button_click
-        last_double_click = f"Last double clicked button: %s" % self.last_button_double_click
-
-        self.text = f"{single_click}\n{double_click}\n\n{last_single_click}\n{last_double_click}"
-
-        with self.canvas.before:
-            self.canvas.before.clear()
-            Color(0.4, 0.3, 0.2, 1.0)
-            Rectangle(pos=(self.x, self.height-3), size=(512, 3))
+        if show:
+            if self.tooltip_w not in Window.children:
+                self.tooltip_w.on_show()
+                Window.add_widget(self.tooltip_w)
+        else:
+            if self.tooltip_w in Window.children:
+                Window.remove_widget(self.tooltip_w)
 
 
 #// RUN FILE
@@ -61,6 +76,6 @@ if __name__ == "__main__":
             Window.size = 512, 512-32
 
         def build(self):
-            return TestClick(size_hint_y=None, height=256)
+            return TestTooltip()
 
     Example().run()

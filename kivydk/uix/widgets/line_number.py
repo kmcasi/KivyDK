@@ -30,7 +30,7 @@ from os import cpu_count
 from concurrent.futures import ThreadPoolExecutor as Threads
 
 from kivy.clock import Clock
-from kivy.core.text import DEFAULT_FONT, Label
+from kivy.core.text import Label, DEFAULT_FONT
 from kivy.graphics import Color, Rectangle, BorderImage
 from kivy.graphics.texture import Texture
 from kivy.uix.widget import Widget
@@ -65,41 +65,47 @@ class LineNumber(Widget):
     background_color: ColorProperty = ColorProperty()
     """Tint color applied to the :attr:`background_texture`."""
 
-    background_texture: StringProperty = StringProperty('atlas://data/images/defaulttheme/textinput')
+    background_texture: StringProperty = StringProperty("atlas://data/images/defaulttheme/textinput")
     """Background image applied to the entire widget."""
 
     background_border: VariableListProperty = VariableListProperty([4])
-    """Border used for :attr:`background_texture` graphics instruction.
-    Can be used to define a custom background.
+    """
+    Border definition used when rendering :attr:`background_texture`.
+    This controls how the texture is sliced, allowing custom backgrounds to be applied.
     
-    § variable list use ¶"""
+    § variable list use ¶
+    """
 
-    #:
+    #: line numbers
+    foreground_color: ColorProperty = ColorProperty([0.0, 0.0, 0.0, 1.0])
+
+    #: line numbers
     font_context: StringProperty = StringProperty(None, allownone=True)
 
-    #:
+    #: line numbers
     font_family: StringProperty = StringProperty(None, allownone=True)
 
-    #:
+    #: line numbers
     font_name: StringProperty = StringProperty(DEFAULT_FONT, allownone=True)
 
+    #: line numbers
     font_size: NumericProperty = NumericProperty("15sp")
-    """Font size of the line numbers."""
-
-    foreground_color: ColorProperty = ColorProperty([0.0, 0.0, 0.0, 1.0])
-    """Color used to render the line numbers, in RGBA format."""
 
     padding: VariableListProperty = VariableListProperty([4], length=2)
-    """Horizontal padding applied to the line numbers.
+    """
+    Horizontal padding applied to the line numbers.
     
-    § variable list use : H ¶"""
+    § variable list use : H ¶
+    """
 
     width_min: NumericProperty = NumericProperty("18sp")
-    """Minimum desired width of the widget.
+    """
+    Minimum desired width of the widget.
 
     The actual width is computed automatically based on :attr:`padding`,
     :attr:`font_size`, the active font and the current line‑number context.
-    This property ensures that the computed width is never smaller than the specified minimum."""
+    This property ensures that the computed width is never smaller than the specified minimum.
+    """
 
     def __init__(self, text_input: TextInput, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -118,11 +124,11 @@ class LineNumber(Widget):
             background_color=self._update_line_numbers,
             background_texture=self._update_line_numbers,
             background_border=self._update_line_numbers,
+            foreground_color=self._update_line_numbers,
             font_context=self._update_font,
             font_family=self._update_font,
             font_name=self._update_font,
             font_size=self._update_font,
-            foreground_color=self._update_line_numbers,
             padding=self._update_line_numbers,
         )
 

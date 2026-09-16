@@ -1,0 +1,8 @@
+{{ DOC }}
+
+If True, the text is rendered using :class:`~kivy.core.text.markup.MarkupLabel`,
+allowing style changes through markup tags.
+
+See :mod:`kivy.core.text.markup` for supported tags and formatting rules.
+
+§ extract default value ¶

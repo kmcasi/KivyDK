@@ -10,7 +10,7 @@ __all__ = (
 #//|>--------------------------------------------------------<|
 MAJOR: int = 0
 MINOR: int = 0
-MICRO: int = 7
+MICRO: int = 8
 VERSION_STRING: str = f"{MAJOR}.{MINOR}.{MICRO}"
 
 

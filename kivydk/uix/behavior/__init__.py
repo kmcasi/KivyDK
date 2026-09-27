@@ -32,9 +32,10 @@ the standard widgets.
     both of which use the :class:`kivy ButtonBehavior <kivy.uix.behaviors.button.ButtonBehavior>` method,
     the resulting class may not work properly.
 """
-__all__ = ("ClickBehavior", "HoverBehavior")
+__all__ = ("ClickBehavior", "HoverBehavior", "PressBehavior")
 
 
 #// IMPORT
 from .click import ClickBehavior
 from .hover import HoverBehavior
+from .press import PressBehavior

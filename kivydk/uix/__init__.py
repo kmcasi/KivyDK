@@ -8,11 +8,6 @@ higher-level abstractions designed specifically for editor-style applications.
 
 These components are intended to be used directly when building interfaces for editors, tools and applications
 within the KivyDK ecosystem. They are designed to be flexible, composable and consistent across the entire framework.
-
-.. attention::
-    The :mod:`kivydk.uix.manager` module is an internal component and is not intended for direct use.
-    Developers typically should not need to import this module. Its functionality is reserved for the framework’s
-    internal management of UI behavior.
 """
 
 #// IMPORT

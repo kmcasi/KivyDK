@@ -6,7 +6,7 @@ from kivydk.uix.behavior import ClickBehavior
 
 #// LOGIC
 class TestClick(ClickBehavior, Label):
-    """Each event updates the label text to reflect the current click state."""
+    """ Each event updates the label text to reflect the current click state. """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -16,7 +16,7 @@ class TestClick(ClickBehavior, Label):
         self.last_button_click = "-"
         self.last_button_double_click = "-"
 
-        # Initialize the label with default information
+        # Initialize the label text with default information
         self.update_text()
 
     def on_click(self, button, modifiers):
@@ -29,13 +29,8 @@ class TestClick(ClickBehavior, Label):
         self.last_button_double_click = button
         self.update_text()
 
-    def update_text(self, *args):
-        """
-        Update the label text to display the current click information.
-
-        :type args:     tuple[Any, ...]
-        :param args:    Unused arguments from event callbacks.
-        """
+    def update_text(self):
+        """ Update the label text to display the current click information. """
         single_click = f"Click's amount: %.2d" % self.count_click
         double_click = f"Double click's amount: %.2d" % self.count_double_click
         last_single_click = f"Last clicked button: %s" % self.last_button_click
@@ -46,7 +41,7 @@ class TestClick(ClickBehavior, Label):
 
 #// RUN FILE
 if __name__ == "__main__":
-    from kivy.app import App
+    from kivydk.app import App
 
     class Example(App):
         def build(self):

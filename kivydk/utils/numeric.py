@@ -66,7 +66,7 @@ def normalize_relative(*values: int|float, scale: int|float = 1, digits: int = 8
     § dropdown : Example ¶
         § evaluate : 1, 2, 3, 4, 5 ¶
         § evaluate : 1, 2, 3, 4, 5, scale=2 ¶
-        § evaluate : 1-1, -2, -3, -4, -5 ¶
+        § evaluate : -1, -2, -3, -4, -5 ¶
     """
     relative_max: int|float = max(values)
 
@@ -90,7 +90,7 @@ def remap_range(*values: int|float, actual: tuple[int|float, int|float], desired
     where values must be expressed in a different numeric domain.
 
     § parameters : values = Values to remap ¶
-    § param : actual = Source range (min, max), desired = Target range (min, max) ¶
+    § param : actual = Source range ``(min/, max)``, desired = Target range ``(min/, max)`` ¶
     § param : digits = Optional rounding precision ¶
 
     § dropdown : Example ¶

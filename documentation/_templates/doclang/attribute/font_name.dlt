@@ -3,8 +3,8 @@ Font name or file used to render the {{ DOC }}.
 .. dropdown:: Technical details
     :class-container: dk-default-value
 
-    The filename of the font to use. The path may be absolute or relative.
-    Relative paths are resolved using :func:`~kivy.resources.resource_find`.
+    The path may be absolute or relative. Relative paths are resolved using
+    :func:`~kivy.resources.resource_find`.
 
     .. warning::
         Depending on the active text provider, the specified font file may be

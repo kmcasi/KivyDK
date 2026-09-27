@@ -6,26 +6,26 @@ from kivydk.uix.behavior import HoverBehavior
 
 #// LOGIC
 class TestHover(HoverBehavior, Button):
-    """Each event updates the color and text to reflect the current hover state."""
+    """ Updates the Button's color and text to reflect the current hover state. """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # Initialize the button with default information
-        self.on_hover()
+        # Initialize the button style with default information
+        self.on_hover(self.hovered)
 
-    def on_hover(self, *args):
+    def on_hover(self, state):
         """
-        Update the label text and color to display the current hover state.
+        Update the label text and background color to reflect the current hover state.
 
-        :param args: Unused arguments from event callbacks.
+        :param state: ```True`` when the widget is hovered and ``False`` otherwise.
         """
-        self.background_color = [0.8, 0.4, 0.2, 1] if self.hovered else [1, 1, 1, 1]
-        self.text = "Hovered" if self.hovered else "Unhovered"
+        self.background_color = [0.8, 0.4, 0.2, 1.0] if state else [1.0, 1.0, 1.0, 1.0]
+        self.text = "Hovered" if state else "Unhovered"
 
 
 #// RUN FILE
 if __name__ == "__main__":
-    from kivy.app import App
+    from kivydk.app import App
 
     class Example(App):
         def build(self):

@@ -4,11 +4,11 @@
 
 #// IMPORT
 import inspect, importlib
-
-from kivy.properties import Property, AliasProperty, OptionProperty, VariableListProperty
 from types import ModuleType, FunctionType, MethodType
 
-from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, cmd_self_obj, _Template
+from kivy.properties import Property, AliasProperty, OptionProperty, VariableListProperty
+
+from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, _Template
 
 
 #// GLOBAL VARIABLES
@@ -29,8 +29,8 @@ def cmd_show_code(*args, language: str = "python", **kwargs) -> list[str]:
 
     Usage:
         - § show code : example.py ¶
-        - § show code : folder, example.py, language = cpp ¶
-        - § show code : path/to/example.py, language = cpp ¶
+        - § show code : folder, example.cpp, language = cpp ¶
+        - § show code : path/to/example.py, language = text ¶
     """
     return [
         f".. literalinclude:: /../examples/docs/{"/".join(args)}",
@@ -60,8 +60,92 @@ def cmd_show_image(*args, align: str = "center", **kwargs) -> list[str]:
 
 
 # noinspection PyUnusedLocal
+@Command.new("format")
+def cmd_format(context: str, *args, style: str = "Az", **kwargs) -> str:
+    """
+    Generates a formatted context.
+
+    The ``style`` option controls how the context is transformed:
+        - ``AZ`` or ``upper``       → UPPERCASE
+        - ``az`` or ``lower``       → lowercase
+        - ``Az`` or ``capitalize``  → Capitalized
+        - ``Az Az`` or ``camel``    → Camel Case (capitalize each word)
+
+    Usage:
+        - § format : my context ¶
+        - § format : my context, style = upper ¶
+        - § format : my context, style = None ¶
+    """
+    style_name: str = style.lower()
+
+    if style == "AZ" or style_name == "upper":
+        return context.upper()
+    elif style == "az" or style_name == "lower":
+        return context.lower()
+    elif style == "Az" or style_name == "capitalize":
+        return context.capitalize()
+    elif style == "Az Az" or style_name == "camel":
+        return " ".join([word.capitalize() for word in context.split(" ")])
+
+    return context
+
+
+# noinspection PyUnusedLocal
+@Command.new("dropdown")
+def cmd_dropdown(title: str = "dropdown", *args, style: str = "Az", **kwargs) -> list[str]:
+    """
+    Generates a simple RST dropdown content with CSS ``dk-default-value`` class for the container element.
+
+    The ``style`` option is passed directly to the ``format`` command.
+
+    Usage:
+        - § dropdown ¶
+        - § dropdown : custom title ¶
+        - § dropdown : custom title, style = upper ¶
+    """
+    return [
+        f".. dropdown:: {cmd_format(title, style=style)}",
+        f"{TAB}:class-container: dk-default-value"
+    ]
+
+
+# noinspection PyUnusedLocal
+@Command.new("code")
+def cmd_code(title: str = "", line: str = "", lang: str = "Python3", *args, style: str = "Az", **kwargs) -> list[str]:
+    """
+    Generates the header of an RST ``code-block`` directive.
+    It only produces the directive line and any configured options,
+    allowing the user to place the actual code on the following lines.
+
+    Parameters:
+        - ``title``     → Optional caption displayed above the code block.
+        - ``line``      → If provided, enables line numbering (``:linenos:``).
+        - ``lang``      → The syntax highlighting language for the code block.
+        - ``style``     → Formatting style applied to the caption.
+        - ``**kwargs``  → Additional code-block options.
+
+    Usage:
+        - § code ¶
+        - § code : my code, style = camel ¶
+        - § code : my code, lang = CPP ¶
+        - § code : my code, _, CPP ¶
+        - § code : lang = doscon, class = no-copybutton ¶
+    """
+    compute: list[str] = [f".. code-block:: {lang}"]
+
+    if title:
+        compute.append(f"{TAB}:caption: {cmd_format(title, style=style)}")
+    if line:
+        compute.append(f"{TAB}:linenos:")
+    for key, value in kwargs.items():
+        compute.append(f"{TAB}:{key}: {value}")
+
+    return compute
+
+
+# noinspection PyUnusedLocal
 @Command.new("parameters")
-def cmd_parameters_list(*args, title: str = "Parameters", **kwargs) -> list[str]:
+def cmd_parameters_list(*args, title: str = "parameters", style: str = "Az", **kwargs) -> list[str]:
     """
     Creates a **Parameters** dropdown panel.
 
@@ -72,8 +156,7 @@ def cmd_parameters_list(*args, title: str = "Parameters", **kwargs) -> list[str]
         - § parameters : param_1 = Some description., param_2 = Another description. ¶
     """
     return [
-        f".. dropdown:: {title}",
-        f"{TAB}:class-container: dk-default-value",
+        *cmd_dropdown(title, style=style),
         "",
         f"{TAB}.. list-table::"
         f"{TAB * 2}:header-rows: 0",
@@ -107,9 +190,9 @@ def cmd_variable_list_use(use: str = "default", *args, **kwargs) -> str:
 
     The ``use`` option controls how the context is computed to inform the
     amount of accepted values and the extended order of their use:
-        - ``h`` or ``horizontal``   ➜ two values [left, right]
-        - ``v`` or ``vertical``     ➜ two values [top, bottom]
-        - ``d`` or ``default``      ➜ four values [left, top, right, bottom]
+        - ``h`` or ``horizontal``   → two values ``[left, right]``
+        - ``v`` or ``vertical``     → two values ``[top, bottom]``
+        - ``d`` or ``default``      → four values ``[left, top, right, bottom]``
 
     Usage:
         - § variable list use ¶
@@ -147,8 +230,7 @@ def cmd_default_value(value: str, *args, **kwargs) -> list[str]:
         - § default value : '[July, 05, 2026]' ¶
     """
     return [
-        ".. code-block:: Python3",
-        f"{TAB}:caption: Default value",
+        *cmd_code("default value"),
         "",
         f"{TAB}{value}"
     ]
@@ -192,86 +274,91 @@ def cmd_extract_default_value(*args, **kwargs) -> list[str]:
     Usage:
         - § extract default value ¶
     """
-    # Import the class object
-    class_path: str = cmd_self_name("dotted name")
-    try:
-        module_name, class_name, attr_name = class_path.rsplit(".", 2)
-    except ValueError:
-        return []
-    module = __import__(module_name, fromlist=[class_name])
-    cls: type = getattr(module, class_name)
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  1  │ Make shore the default value can be safely computed
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
+    prop: object|None = _Template.OBJ        # DocLang 26.9.18
 
-    # Retrieve the attribute object
-    prop = getattr(cls, attr_name, None)
-
-    # Skip missing attributes, also skip AliasProperty (its default value cannot be safely computed)
     if prop is None or isinstance(prop, AliasProperty):
         return []
 
-    # Handle Kivy VariableListProperty
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  2  │ Special cases
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
+    # Kivy → VariableListProperty
     if isinstance(prop, VariableListProperty):
         try:
             default_length: int = max(1, len(prop.defaultvalue))
-            expanded: str = str([prop.defaultvalue[index % default_length] for index in range(prop.length)])
-            return cmd_default_value(value=expanded)
+            return cmd_default_value(
+                str([prop.defaultvalue[index % default_length]
+                     for index in range(prop.length)])
+            )
         except Exception:
-            return cmd_default_value(value=str(prop.defaultvalue))
+            return cmd_default_value(str(prop.defaultvalue))
 
-    # Handle Kivy OptionProperty
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  3  │ Common cases
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
+    # Reusable variable
+    extra_content: list[str] = []
+    default_value: str = ""
+
+    # Kivy → OptionProperty
     if isinstance(prop, OptionProperty):
-        options_prefix: str = f"\n{TAB}.. code-block:: Python3\n\n{TAB * 2}"
-        options: str = "".join([
-            f"{options_prefix}{f'"{option}"' if isinstance(option, str) else option}\n" for option in prop.options
-        ])
-        value: str = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
-        return [
-            f".. dropdown:: Options",
-            f"{TAB}:class-container: dk-default-value",
+        extra_content = [
+            *cmd_dropdown("options"),
             "",
             f"{TAB}Below are listed all the available options for this attribute.",
             "",
-            f"{options}",
-            "",
-            *cmd_default_value(value=value)
         ]
+        for option in prop.options:
+            extra_content.extend([
+                f"{TAB}.. code-block:: Python3",
+                "",
+                f'{TAB * 2}"{option}"' if isinstance(option, str) else f"{TAB * 2}{option}",
+                "",
+            ])
 
-    # Handle Kivy Property (general class)
+    # Kivy → Property (general class)
     if isinstance(prop, Property):
-        value: str = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
-        return cmd_default_value(value=value)
+        default_value = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
 
-    # Handle normal Python attribute
-    value: str = f'"{prop}"' if isinstance(prop, str) else str(prop)
-    return cmd_default_value(value=value)
+    # Python attribute
+    else:
+        default_value = f'"{prop}"' if isinstance(prop, str) else str(prop)
+
+    return [
+        *extra_content,
+        *cmd_default_value(default_value)
+    ]
 
 
 # noinspection PyUnusedLocal, PyBroadException
 @Command.new("extract events")
-def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
+def cmd_extract_events(*args, **kwargs) -> list[str]:
     """
     Extracts the list of events from the current object's class and generates
     a dropdown containing each event name and the first sentence of its docstring.
 
     Usage:
         - § extract events ¶
-        - § extract events : Custom Title ¶
     """
     events: dict[str, str] = {}
     class_path: str = cmd_self_name("dotted name")
 
-    #------------------------------------------------------------
-    # 1. Make shore the object type is a class
-    #------------------------------------------------------------
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  1  │ Make shore the object type is a class
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
     if not cmd_self_type() == "class":
         return [
-            f"{TAB}[ DocLang Warning | {title} ]",
+            f"{TAB}[ DocLang Warning | command → extract events ]",
             f"{TAB * 2}The object ``{cmd_self_name()}`` is a ``{cmd_self_type()}`` type.",
             f"\n{TAB * 2}The ``extract events`` command is designed to work only with objects of ``class`` type."
         ]
 
-    #------------------------------------------------------------
-    # 2. Import the class object from the dotted path
-    #------------------------------------------------------------
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  2  │ Import the class object from the dotted path
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
     try:
         module_name, class_name = class_path.rsplit(".", 1)
         module: ModuleType = importlib.import_module(module_name)
@@ -279,17 +366,17 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
     except Exception:
         return []
 
-    #------------------------------------------------------------
-    # 3. Read __events__ from the class
-    #------------------------------------------------------------
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  3  │ Read ``__events__`` from the class
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
     available_events: list[str] | tuple[str] = cls.__dict__.get("__events__", [])
 
     if not isinstance(available_events, (list, tuple)):
         return []
 
-    #------------------------------------------------------------
-    # 4. Extract first sentence of each event method's docstring
-    #------------------------------------------------------------
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  4  │ Extract first sentence of each event method's docstring
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
     for event_name in available_events:
         method: FunctionType | MethodType | None = getattr(cls, event_name, None)
 
@@ -305,13 +392,12 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
 
         events[event_name] = first_sentence
 
-    #------------------------------------------------------------
-    # 5. Build the dropdown output
-    #------------------------------------------------------------
+    #|>────┐----------------------------------------------------------------------------------------------------------<|
+    #│  5  │ Build the dropdown output
+    #|>────┘----------------------------------------------------------------------------------------------------------<|
     if events:
         return [
-            f".. dropdown:: {title}",
-            f"{TAB}:class-container: dk-default-value",
+            *cmd_dropdown("events"),
             "",
             f"{TAB}.. TODO::",
             f"{TAB * 2}The current event implementation relies on ``__events__`` being defined as a class attribute.",
@@ -327,19 +413,27 @@ def cmd_extract_events(title: str = "Events", *args, **kwargs) -> list[str]:
     return []
 
 
-@Command.new("dropdown")
-def cmd_dropdown(title: str = "Dropdown", *args, **kwargs) -> str:
-    return f".. dropdown:: {title}\n{TAB}:class-container: dk-default-value"
-
-
 @Command.new("evaluate")
 def cmd_evaluate(*args, _end_: str="", **kwargs) -> list[str]:
+    """
+    Evaluate the current documentation object with the given arguments and
+    return a formatted code block showing both the call and its evaluated result.
+
+    The ``_end_`` option is used to append text after the result line.
+
+    Usage:
+        - § evaluate : some, arguments ¶
+        - § evaluate : related, arguments, _end_ = some appended information ¶
+    """
     arguments: str = ', '.join([*args, *[f"{k}={w}" for k,w in kwargs.items()]])
-    sim = eval(f"OBJ({arguments})", {"OBJ": _Template.OBJ})
-    # return f"\n{cmd_self_name()}({arguments})\n# {sim}\n"
     return [
         ".. code-block:: Python3",
         "",
         f"{TAB}{cmd_self_name()}({arguments})",
-        f"{TAB}# {sim}{TAB if _end_ else ''}{_end_}",
+        f"{TAB}# {eval(
+            f"OBJ({arguments})", {
+                "OBJ": _Template.OBJ
+            }
+        )}"
+        f"{TAB if _end_ else ''}{_end_}",
     ]

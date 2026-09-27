@@ -25,12 +25,12 @@ class TooltipBehavior:
     """
 
     tooltip_widget: ObjectProperty = ObjectProperty(None, allownone=True)
-    """Custom widget class or instance used to render the tooltip."""
+    """ Custom widget class or instance used to render the tooltip. """
 
     tooltip_position: OptionProperty = OptionProperty(None, allownone=True, options=[
         ["cursor"], ["left"], ["top"], ["right"], ["bottom"],
 
-        ["cursor", "left"], ["left", "cursor"],
+        ["cursor", "left"],     ["left", "cursor"],
         ["cursor", "top"],      ["top",     "cursor"],
         ["cursor", "right"],    ["right",   "cursor"],
         ["cursor", "bottom"],   ["bottom",  "cursor"],
@@ -47,4 +47,4 @@ class TooltipBehavior:
     """
 
     tooltip_text: StringProperty = StringProperty()
-    """Text displayed inside the tooltip."""
+    """ Text displayed inside the tooltip. """

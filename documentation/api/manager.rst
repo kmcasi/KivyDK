@@ -1,7 +1,7 @@
 Manager
 =======
 
-.. automodule:: kivydk.uix.manager
+.. automodule:: kivydk.manager
 	:ignore-module-all:
 
 .. toctree::

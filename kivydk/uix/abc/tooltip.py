@@ -17,7 +17,7 @@ from kivy.uix.widget import Widget
 
 
 #// LOGIC
-class TooltipWidgetABC(Widget):
+class TooltipWidgetABC:
     """
     Abstract interface for tooltip widgets.
 
@@ -25,10 +25,13 @@ class TooltipWidgetABC(Widget):
     a consistent way. Custom tooltip widgets must provide the required methods, so
     they can be positioned, updated and shown correctly within the tooltip system.
     """
+    def __init__(self, **kwargs):
+        if self.__class__ == TooltipWidgetABC:
+            raise NotImplementedError("class TooltipWidgetABC is abstract")
 
     @abstractmethod
     def update_text(self, text: str) -> None:
-        """Update the tooltip's displayed text."""
+        """ Update the tooltip's displayed text. """
         pass
 
     @abstractmethod

@@ -1,81 +1,48 @@
 #// IMPORT
-from kivy.core.window import Window
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.codeinput import CodeInput
+from kivy.uix.scrollview import ScrollView
 
-from kivydk.uix.behavior.hover import HoverBehavior
-from kivydk.uix.behavior.tooltip import TooltipBehavior
-from kivydk.uix.widgets.tooltip import Tooltip
+from kivydk.uix import LineNumber
 
 
 #// LOGIC
-class CustomButton(HoverBehavior, TooltipBehavior, Button):
+class TestLineNumber(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-
-class TestTooltip(FloatLayout):
-    """Each event updates the label text to reflect the current click state."""
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        # Local variables
-        self.tooltip_w = None
-        self.anchors = {
-            "top-left":      (0.25, 0.75),
-            "top-center":    (0.50, 0.75),
-            "top-right":     (0.75, 0.75),
-            "center-left":   (0.25, 0.50),
-            "center":        (0.50, 0.50),
-            "center-right":  (0.75, 0.50),
-            "bottom-left":   (0.25, 0.25),
-            "bottom-center": (0.50, 0.25),
-            "bottom-right":  (0.75, 0.25),
-        }
-
-        # Create the buttons
-        for name, (ax, ay) in self.anchors.items():
-            btn = CustomButton(
-                text=name,
-                size_hint=(None, None),
-                size=(120, 40),
-                tooltip_widget=Tooltip,
-                tooltip_text=f"Tooltip of the {name!r}.",
-                pos_hint={"center_x": ax, "center_y": ay},
-            )
-            btn.bind(on_hover=lambda i,s:self._handle_tooltip(i,s))
-            self.add_widget(btn)
-
-    def _handle_tooltip(self, instance:CustomButton, show):
-        if not self.tooltip_w:
-            self.tooltip_w:Tooltip = instance.tooltip_widget()
-        self.tooltip_w.update_text(instance.tooltip_text)
-        self.tooltip_w.update_size()
-        self.tooltip_w.update_position(
-            instance.x + instance.width // 2 - self.tooltip_w.width // 2,
-            instance.y + instance.height + 4
+        # Components
+        self.scroll_view = ScrollView(scroll_type=['bars', 'content'], bar_width="11dp")
+        self.text_input = CodeInput(size_hint_y=None)
+        self.line_number = LineNumber(
+            self.text_input,
+            background_color=[0.3,0.3,0.3, 1.0], foreground_color=[1.0,1.0,1.0, 1.0], width_min=32
         )
 
-        if show:
-            if self.tooltip_w not in Window.children:
-                self.tooltip_w.on_show()
-                Window.add_widget(self.tooltip_w)
-        else:
-            if self.tooltip_w in Window.children:
-                Window.remove_widget(self.tooltip_w)
+        # Packing
+        self.scroll_view.add_widget(self.text_input)
+
+        self.add_widget(self.line_number)
+        self.add_widget(self.scroll_view)
+
+        # Binds
+        self.text_input.bind(text=self._update_text_height)
+        self.scroll_view.bind(size=self._update_text_height)
+
+    def _update_text_height(self, *args):
+        height = len(self.text_input._lines_rects) * self.text_input.line_height
+        height += self.text_input.padding[1] + self.text_input.padding[3]
+
+        self.text_input.height = max(height, self.scroll_view.height)
+        self.line_number.refresh(0)
 
 
 #// RUN FILE
 if __name__ == "__main__":
-    from kivy.app import App
-    from kivy.core.window import Window
+    from kivydk.app import App
 
     class Example(App):
-        def __init__(self, **kwargs):
-            super().__init__(**kwargs)
-            Window.size = 512, 512-32
-
         def build(self):
-            return TestTooltip()
+            return TestLineNumber()
 
     Example().run()

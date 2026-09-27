@@ -3,7 +3,7 @@
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 """
 Provides a pointer‑based click detection behavior for widgets. ClickBehavior listens to
-pointer release events routed through :class:`~kivydk.uix.manager.pointer.PointerManager`
+pointer release events routed through the KiviDK :class:`~kivydk.manager.pointer.PointerManager`
 and implements a consistent model for single‑click and double‑click recognition.
 
 § section : example ¶
@@ -18,21 +18,22 @@ __all__ = ("ClickBehavior",)
 
 #// IMPORT
 from kivy.clock import Clock
+from kivy.input.motionevent import MotionEvent
 from kivy.properties import NumericProperty
-from kivy.uix.widget import Widget
-
-from kivydk.uix.manager.pointer import PointerManager
 
 
 #// LOGIC
 class ClickBehavior:
     """
-    A mixin that adds lightweight click and double click detection to any widget.
+    A mixin that adds click and double‑click detection to any widget.
+
+    A click is recognized when a pointer is pressed and released inside the widget without leaving its bounds.
+    Two valid clicks of the same pointer within :attr:`click_interval` form a double‑click.
 
     .. note::
-        This behavior does not fire ``on_press`` or ``on_release`` events.
-        If you require those callbacks, inherit them from Kivy’s
-        :class:`~kivy.uix.behaviors.button.ButtonBehavior`.
+        This behavior does not provide ``on_press`` or ``on_release`` callbacks.
+        If you require those events, inherit from Kivy’s :class:`~kivy.uix.behaviors.button.ButtonBehavior`
+        or KivyDK's :class:`~kivydk.uix.behavior.press.PressBehavior`.
     """
 
     click_interval: NumericProperty = NumericProperty(0.25)
@@ -48,48 +49,85 @@ class ClickBehavior:
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
+        self.register_for_motion_event("kdk_pointer")
+
         # Private variables
-        self.__last_button: str = ""
-        self.__clock: Clock = Clock.create_trigger(self._reset_last_button, self.click_interval)
+        self.__allow_dispatch: bool = True
+        self.__pressed_button: dict[str, str|None] = {"last": None, "prev": None}
+        self.__clock: Clock = Clock.create_trigger(self._reset_pressed_button, self.click_interval)
 
-        self.fbind("parent", self._auto_register)
-
-    def on_click(self, button:str, modifiers:list[str]) -> None:
+    def on_click(self, button: str|None, modifiers: list[str]) -> None:
         """
         Called when the widget receives a valid pointer click.
 
-        § parameters : button = The name of the pointer button that triggered the event. ¶
+        § parameters : button = The name of the pointer button that triggered the event|, or ``None``. ¶
         § param : modifiers = A list of active modifier keys (e.g. ``alt``|, ``ctrl``|, ``shift``|, ``numlock``). ¶
         """
         pass
 
-    def on_double_click(self, button:str, modifiers:list[str]) -> None:
+    def on_double_click(self, button: str|None, modifiers: list[str]) -> None:
         """
-        Called when two consecutive pointer clicks occur within :attr:`click_interval`.
+        Called when two consecutive valid clicks occur within :attr:`click_interval`.
 
-        § parameters : button = The name of the pointer button that triggered the event. ¶
+        § parameters : button = The name of the pointer button that triggered the event|, or ``None``. ¶
         § param : modifiers = A list of active modifier keys (e.g. ``alt``|, ``ctrl``|, ``shift``|, ``numlock``). ¶
         """
         pass
-
-    @staticmethod
-    def _auto_register(instance:Widget, parent:Widget|None) -> None:
-        if parent is None:
-            PointerManager.unregister(instance)
-        else:
-            PointerManager.register(instance)
-
-    # noinspection PyUnresolvedReferences
-    def _do_pointer_release(self, button:str, modifiers:list[str]) -> None:
-        if button == self.__last_button:
-            self.__clock.cancel()
-            self.__last_button = ""
-            self.dispatch("on_double_click", button, modifiers)
-        else:
-            self.__clock()
-            self.__last_button = button
-            self.dispatch("on_click", button, modifiers)
 
     # noinspection PyUnusedLocal
-    def _reset_last_button(self, *args) -> None:
-        self.__last_button = ""
+    def _kdk_pointer_press(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
+        """
+        Called when a mouse button is pressed or when an equivalent device action is triggered.
+
+        :param button:      The button that triggered the press or ``None``.
+        :param modifiers:   List of active keyboard modifiers at the moment of press.
+        :param event:       The MotionEvent associated with this call.
+        """
+        self.__pressed_button["last"] = button
+
+    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    def _kdk_pointer_release(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
+        """
+        Called when a mouse button is released or when an equivalent device action is triggered.
+
+        :param button:      The button that triggered the release or ``None``.
+        :param modifiers:   List of active keyboard modifiers at the moment of release.
+        :param event:       The MotionEvent associated with this call.
+        """
+        if self.__allow_dispatch and button == self.__pressed_button["last"]:
+            if self.__clock.is_triggered:
+                self.__clock.cancel()
+
+                if button == self.__pressed_button["prev"]:
+                    self.dispatch("on_double_click", button, modifiers)
+
+                self._reset_pressed_button()
+
+            else:
+                self.__pressed_button["prev"] = button
+                self.dispatch("on_click", button, modifiers)
+                self.__clock()
+
+        else:
+            self.__clock.cancel()
+            self._reset_pressed_button()
+
+    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    def _kdk_pointer_hold(self, buttons: list[str], modifiers: list[str], event: MotionEvent):
+        """
+        Called when the pointer moves while at least one button is pressed
+        or when an equivalent device action is triggered.
+
+        :param buttons:     List of all currently held buttons or an empty list.
+        :param modifiers:   List of active keyboard modifiers during movement.
+        :param event:       The MotionEvent associated with this call.
+        """
+        if self.__allow_dispatch and not self.collide_point(*event.pos):
+            self.__allow_dispatch = False
+
+    # noinspection PyUnusedLocal
+    def _reset_pressed_button(self, *args) -> None:
+        """ Resets the internal button tracking state. """
+        self.__allow_dispatch = True
+        for key in self.__pressed_button.keys():
+            self.__pressed_button[key] = None

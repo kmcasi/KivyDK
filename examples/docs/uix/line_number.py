@@ -12,8 +12,8 @@ class TestLineNumber(BoxLayout):
         super().__init__(**kwargs)
 
         # Components
-        self.scroll_view = ScrollView(scroll_type=["bars"], bar_width="11dp")
-        self.text_input = CodeInput(size_hint=(None, None))
+        self.scroll_view = ScrollView(scroll_type=['bars', 'content'], bar_width="11dp")
+        self.text_input = CodeInput(size_hint_y=None)
         self.line_number = LineNumber(
             self.text_input,
             background_color=[0.3,0.3,0.3, 1.0], foreground_color=[1.0,1.0,1.0, 1.0]
@@ -34,13 +34,12 @@ class TestLineNumber(BoxLayout):
         height += self.text_input.padding[1] + self.text_input.padding[3]
 
         self.text_input.height = max(height, self.scroll_view.height)
-        self.text_input.width = self.scroll_view.width
         self.line_number.refresh()
 
 
 #// RUN FILE
 if __name__ == "__main__":
-    from kivy.app import App
+    from kivydk.app import App
 
     class Example(App):
         def build(self):

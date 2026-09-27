@@ -60,13 +60,13 @@ class LineNumber(Widget):
     """
 
     align: OptionProperty = OptionProperty("right", options=["left", "center", "right"])
-    """Horizontal alignment of the line numbers."""
+    """ Horizontal alignment of the line numbers. """
 
     background_color: ColorProperty = ColorProperty()
-    """Tint color applied to the :attr:`background_texture`."""
+    """ Tint color applied to the :attr:`background_texture`. """
 
     background_texture: StringProperty = StringProperty("atlas://data/images/defaulttheme/textinput")
-    """Background image applied to the entire widget."""
+    """ Background image applied to the entire widget. """
 
     background_border: VariableListProperty = VariableListProperty([4])
     """
@@ -147,7 +147,8 @@ class LineNumber(Widget):
         )
 
     def refresh(self, delay: int|float = -1) -> None:
-        """Schedule a re-render of the line numbers.
+        """
+        Schedule a re-render of the line numbers.
 
         § parameters: delay = Delays the refresh by the given number of seconds. ¶
 
@@ -158,7 +159,7 @@ class LineNumber(Widget):
         Clock.schedule_once(self._update_line_numbers, delay)
 
     def _sync_scroll(self, instance: TextInput, parent) -> None:
-        """Used to bind the scroll event for updating the line numbers."""
+        """ Used to bind the scroll event for updating the line numbers. """
         # Kivy’s unbind method is designed to quietly fail if the event handler doesn't exist
         instance.unbind(scroll_y=self._update_line_numbers)
         try:
@@ -173,7 +174,7 @@ class LineNumber(Widget):
             instance.bind(scroll_y=self._update_line_numbers)
 
     def _update_font(self, *_) -> None:
-        """Used to calculate the maximum width need it to draw one number."""
+        """ Used to calculate the maximum width need it to draw one number. """
         sizes: list[int] = []
 
         for number in range(10):
@@ -186,7 +187,7 @@ class LineNumber(Widget):
         self._update_line_numbers()
 
     def __draw_line_number(self, number: int, y: float, y_min_render: float, y_max_render: float) -> None:
-        """Used to draw one line number."""
+        """ Used to draw one line number. """
         # Make texture
         label: Label = Label(text=str(number), color=self.foreground_color, font_size=self.font_size,
                              font_name=self.font_name, font_family=self.font_family, font_context=self.font_context)
@@ -226,7 +227,7 @@ class LineNumber(Widget):
         Rectangle(texture=texture, pos=(x, y), size=size, tex_coords=uv)
 
     def __count_wrapped_lines(self, arg: list[int, int]) -> int:
-        """Used to count the amount of wrapped lines with multithreading."""
+        """ Used to count the amount of wrapped lines with multithreading. """
         wrapped: int = 0
 
         try:
@@ -240,7 +241,7 @@ class LineNumber(Widget):
         return wrapped
 
     def _update_line_numbers(self, *_) -> None:
-        """Update the visible line numbers"""
+        """ Update the visible line numbers. """
 
         # Draw the background
         with self.canvas.before:

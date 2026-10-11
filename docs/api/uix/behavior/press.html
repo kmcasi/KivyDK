@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Widgets" href="../widgets.html"><link rel="prev" title="Hover" href="hover.html">
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Tooltip" href="tooltip.html"><link rel="prev" title="Hover" href="hover.html">
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Press - KivyDK 0.0.9.dev1</title>
+        <title>Press - KivyDK 0.10.1.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.0.9.dev1</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.10.1.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.9.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.1.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -228,6 +228,7 @@
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../manager.html">Manager</a><input aria-label="Toggle navigation of Manager" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../manager/pointer.html">Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../manager/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="../../uix.html">UIX</a><input aria-label="Toggle navigation of UIX" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -239,15 +240,14 @@
 <li class="toctree-l4"><a class="reference internal" href="click.html">Click</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hover.html">Hover</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">Press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../widgets/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../utils/numeric.html">Numeric</a></li>
 </ul>
 </li>
@@ -319,23 +319,23 @@ indicating whether the release occurred within the widget’s bounds.</p>
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="c1">#// LOGIC</span>
 <span class="linenos"> 8</span><span class="k">class</span><span class="w"> </span><span class="nc">TestPress</span><span class="p">(</span><span class="n">PressBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
-<span class="linenos"> 9</span><span class="w">    </span><span class="sd">&quot;&quot;&quot; Each event updates the label text to reflect the current press state. &quot;&quot;&quot;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="sd">""" Each event updates the label text to reflect the current press state. """</span>
 <span class="linenos">10</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="linenos">11</span>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>        <span class="c1"># Provide the default label context</span>
-<span class="linenos">14</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Press Example&quot;</span>
-<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span> <span class="o">=</span> <span class="s2">&quot;18 dp&quot;</span>
+<span class="linenos">14</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Press Example"</span>
+<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span> <span class="o">=</span> <span class="s2">"18 dp"</span>
 <span class="linenos">16</span>
 <span class="linenos">17</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
-<span class="linenos">18</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">button</span><span class="si">!r}</span><span class="s2"> button was pressed.&quot;</span>
+<span class="linenos">18</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"The </span><span class="si">{</span><span class="n">button</span><span class="si">!r}</span><span class="s2"> button was pressed."</span>
 <span class="linenos">19</span>
 <span class="linenos">20</span>    <span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">inside</span><span class="p">):</span>
-<span class="linenos">21</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">button</span><span class="si">!r}</span><span class="s2"> button was released </span><span class="si">{</span><span class="s1">&#39;inside&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">inside</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;outside&#39;</span><span class="si">}</span><span class="s2">.&quot;</span>
+<span class="linenos">21</span>        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"The </span><span class="si">{</span><span class="n">button</span><span class="si">!r}</span><span class="s2"> button was released </span><span class="si">{</span><span class="s1">'inside'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">inside</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'outside'</span><span class="si">}</span><span class="s2">."</span>
 <span class="linenos">22</span>
 <span class="linenos">23</span>
 <span class="linenos">24</span><span class="c1">#// RUN FILE</span>
-<span class="linenos">25</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">25</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
 <span class="linenos">26</span>    <span class="kn">from</span><span class="w"> </span><span class="nn">kivydk.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 <span class="linenos">27</span>
 <span class="linenos">28</span>    <span class="k">class</span><span class="w"> </span><span class="nc">Example</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
@@ -353,7 +353,7 @@ indicating whether the release occurred within the widget’s bounds.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.press.PressBehavior">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PressBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivydk.uix.behavior.press.PressBehavior" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A mixin that adds basic press and release detection to any widget.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -379,7 +379,7 @@ and updating the DocLang command to support dynamically registered events.</p>
 </div>
 </details><dl class="py method">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.press.PressBehavior.on_press">
-<span class="sig-name descname"><span class="pre">on_press</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.press.PressBehavior.on_press" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">on_press</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.press.PressBehavior.on_press" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Fired when a pointer button is pressed.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
@@ -404,7 +404,7 @@ and updating the DocLang command to support dynamically registered events.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.press.PressBehavior.on_release">
-<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.press.PressBehavior.on_release" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.behavior.press.PressBehavior.on_release" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Fired when a pointer button is released.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
@@ -439,12 +439,12 @@ and updating the DocLang command to support dynamically registered events.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../widgets.html">
+          <a class="next-page" href="tooltip.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Widgets</div>
+                <div class="title">Tooltip</div>
               </div>
               <svg class="furo-related-icon"></svg>
             </a>
@@ -513,7 +513,7 @@ and updating the DocLang command to support dynamically registered events.</p>
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=2436c87f"></script>
+</div><script src="../../../_static/documentation_options.js?v=0afe0e4a"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -1,5 +1,5 @@
 #// IMPORT
-from kivy.app import App
+from kivydk.app import App
 from kivydk.examples.ButtonIcon import ButtonIcon
 
 

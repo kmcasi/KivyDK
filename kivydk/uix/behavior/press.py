@@ -62,7 +62,7 @@ class PressBehavior:
         """
         pass
 
-    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    # noinspection PyUnusedParameter, PyUnresolvedReferences
     def _kdk_pointer_press(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
         """
         Called when a mouse button is pressed or when an equivalent device action is triggered.
@@ -73,7 +73,7 @@ class PressBehavior:
         """
         self.dispatch("on_press", button, modifiers)
 
-    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    # noinspection PyUnusedParameter, PyUnresolvedReferences
     def _kdk_pointer_release(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
         """
         Called when a mouse button is released or when an equivalent device action is triggered.

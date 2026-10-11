@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Fonts - KivyDK 0.0.9.dev1</title>
+        <title>Fonts - KivyDK 0.10.1.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.0.9.dev1</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.10.1.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.9.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.1.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -228,6 +228,7 @@
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../manager.html">Manager</a><input aria-label="Toggle navigation of Manager" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../manager/pointer.html">Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../manager/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../uix.html">UIX</a><input aria-label="Toggle navigation of UIX" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -239,15 +240,14 @@
 <li class="toctree-l4"><a class="reference internal" href="../../uix/behavior/click.html">Click</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../uix/behavior/hover.html">Hover</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../uix/behavior/press.html">Press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../uix/behavior/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../uix/widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../uix/widgets/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../uix/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../uix/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../utils/numeric.html">Numeric</a></li>
 </ul>
 </li>
@@ -311,14 +311,14 @@ and other internal fonts ensuring that text rendering behaves the same on every 
 </section>
 <dl class="py function">
 <dt class="sig sig-object py" id="kivydk.core.resources.fonts.get_registered_fonts">
-<span class="sig-name descname"><span class="pre">get_registered_fonts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kivydk.core.resources.fonts.get_registered_fonts" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">get_registered_fonts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kivydk.core.resources.fonts.get_registered_fonts" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Returns the names of all fonts that have been successfully registered with Kivy’s text provider.
 Useful for introspection, debugging or presenting available font options to the user.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kivydk.core.resources.fonts.get_supported_font_styles">
-<span class="sig-name descname"><span class="pre">get_supported_font_styles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kivydk.core.resources.fonts.get_supported_font_styles" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">get_supported_font_styles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kivydk.core.resources.fonts.get_supported_font_styles" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Inspects the registered font entry and reports which style variants are actually backed by distinct font files.
 This allows callers to determine whether italic, bold or bold‑italic styles are available or whether the
 regular style will be used as a fallback.</p>
@@ -329,7 +329,7 @@ can be used as a simple validity check without raising errors or warnings.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>font_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of a font that has already been registered.</p>
+<dd class="field-odd"><p><strong>font_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – The name of a font that has already been registered.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary with boolean flags for <strong>regular</strong>, <strong>italic</strong>, <strong>bold</strong> and <strong>bolditalic</strong>,
@@ -415,7 +415,7 @@ indicating which styles the font supports.</p>
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=2436c87f"></script>
+</div><script src="../../../_static/documentation_options.js?v=0afe0e4a"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo_kivydk.png" as="image">
 
-    <link rel="shortcut icon" href="_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - KivyDK 0.0.9.dev1</title>
+    <link rel="shortcut icon" href="_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - KivyDK 0.10.1.dev1</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">KivyDK 0.0.9.dev1</div></a>
+      <a href="index.html"><div class="brand">KivyDK 0.10.1.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.9.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.1.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -226,6 +226,7 @@
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/manager.html">Manager</a><input aria-label="Toggle navigation of Manager" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/manager/pointer.html">Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/manager/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/uix.html">UIX</a><input aria-label="Toggle navigation of UIX" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -237,15 +238,14 @@
 <li class="toctree-l4"><a class="reference internal" href="api/uix/behavior/click.html">Click</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/uix/behavior/hover.html">Hover</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/uix/behavior/press.html">Press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/uix/behavior/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="api/uix/widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/uix/widgets/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/uix/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/uix/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/utils/numeric.html">Numeric</a></li>
 </ul>
 </li>
@@ -703,7 +703,7 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.AlienOutline">AlienOutline (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.align">align (LineNumber attribute)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.align">align (LineNumber attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.AlignHorizontalCenter">AlignHorizontalCenter (Icon attribute)</a>
 </li>
@@ -1044,6 +1044,8 @@
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Angularjs">Angularjs (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Animation">Animation (Icon attribute)</a>
+</li>
+        <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.animation_time">animation_time (TooltipManager attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.AnimationOutline">AnimationOutline (Icon attribute)</a>
 </li>
@@ -1705,12 +1707,24 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Backburger">Backburger (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.background_border">background_border (LineNumber attribute)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.background_border">background_border (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.background_border">(Tooltip attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.background_color">background_color (LineNumber attribute)</a>
+        </ul></li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.background_color">background_color (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.background_color">(Tooltip attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.background_texture">background_texture (LineNumber attribute)</a>
+        </ul></li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.background_texture">background_texture (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.background_texture">(Tooltip attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Backspace">Backspace (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.BackspaceOutline">BackspaceOutline (Icon attribute)</a>
@@ -2225,10 +2239,10 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.BlenderSoftware">BlenderSoftware (Icon attribute)</a>
 </li>
-        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Blinds">Blinds (Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Blinds">Blinds (Icon attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.BlindsHorizontal">BlindsHorizontal (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.BlindsHorizontalClosed">BlindsHorizontalClosed (Icon attribute)</a>
@@ -5043,6 +5057,8 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.DecimalIncrease">DecimalIncrease (Icon attribute)</a>
 </li>
+        <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.delay_time">delay_time (TooltipManager attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Delete">Delete (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.DeleteAlert">DeleteAlert (Icon attribute)</a>
@@ -5210,7 +5226,11 @@
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.DishwasherOff">DishwasherOff (Icon attribute)</a>
 </li>
         <li><a href="api/manager/pointer.html#kivydk.manager.pointer.PointerManager.dispatch">dispatch() (PointerManager method)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.dispatch">(TooltipManager method)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Disqus">Disqus (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.DistributeHorizontalCenter">DistributeHorizontalCenter (Icon attribute)</a>
@@ -5450,6 +5470,8 @@
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.EarthPlus">EarthPlus (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.EarthRemove">EarthRemove (Icon attribute)</a>
+</li>
+        <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.edge_offset">edge_offset (TooltipManager attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Egg">Egg (Icon attribute)</a>
 </li>
@@ -6489,14 +6511,14 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FlipHorizontal">FlipHorizontal (Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FlipToBack">FlipToBack (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FlipToFront">FlipToFront (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FlipVertical">FlipVertical (Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FloorLamp">FloorLamp (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FloorLampDual">FloorLampDual (Icon attribute)</a>
@@ -6749,14 +6771,30 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FolderZipOutline">FolderZipOutline (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.font_context">font_context (LineNumber attribute)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.font_context">font_context (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.font_context">(Tooltip attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.font_family">font_family (LineNumber attribute)</a>
+        </ul></li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.font_family">font_family (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.font_family">(Tooltip attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.font_name">font_name (LineNumber attribute)</a>
+        </ul></li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.font_name">font_name (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.font_name">(Tooltip attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.font_size">font_size (LineNumber attribute)</a>
+        </ul></li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.font_size">font_size (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.font_size">(Tooltip attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FontAwesome">FontAwesome (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Food">Food (Icon attribute)</a>
@@ -6811,8 +6849,12 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.FootPrint">FootPrint (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.foreground_color">foreground_color (LineNumber attribute)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.foreground_color">foreground_color (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.foreground_color">(Tooltip attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Forest">Forest (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ForestOutline">ForestOutline (Icon attribute)</a>
@@ -7791,6 +7833,8 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HeatWave">HeatWave (Icon attribute)</a>
 </li>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.height_max">height_max (Tooltip attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Helicopter">Helicopter (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Help">Help (Icon attribute)</a>
@@ -7825,10 +7869,10 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HexagonOutline">HexagonOutline (Icon attribute)</a>
 </li>
-        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HexagonSlice1">HexagonSlice1 (Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HexagonSlice1">HexagonSlice1 (Icon attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HexagonSlice2">HexagonSlice2 (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.HexagonSlice3">HexagonSlice3 (Icon attribute)</a>
@@ -8153,6 +8197,8 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.IdeogramCjkVariant">IdeogramCjkVariant (Icon attribute)</a>
 </li>
+        <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.idle_time">idle_time (TooltipManager attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Image">Image (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageAlbum">ImageAlbum (Icon attribute)</a>
@@ -8245,10 +8291,10 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageSizeSelectActual">ImageSizeSelectActual (Icon attribute)</a>
 </li>
-        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageSizeSelectLarge">ImageSizeSelectLarge (Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageSizeSelectLarge">ImageSizeSelectLarge (Icon attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageSizeSelectSmall">ImageSizeSelectSmall (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.ImageSync">ImageSync (Icon attribute)</a>
@@ -8507,12 +8553,12 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.KeyStar">KeyStar (Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.KeyVariant">KeyVariant (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.KeyWireless">KeyWireless (Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Khanda">Khanda (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Kickstarter">Kickstarter (Icon attribute)</a>
@@ -8594,6 +8640,13 @@
 </li>
         </ul></li>
         <li>
+    kivydk.manager.tooltip
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#module-kivydk.manager.tooltip">module</a>
+</li>
+        </ul></li>
+        <li>
     kivydk.uix
 
         <ul>
@@ -8643,17 +8696,24 @@
 </li>
         </ul></li>
         <li>
-    kivydk.uix.widgets
+    kivydk.uix.behavior.tooltip
 
         <ul>
-          <li><a href="api/uix/widgets.html#module-kivydk.uix.widgets">module</a>
+          <li><a href="api/uix/behavior/tooltip.html#module-kivydk.uix.behavior.tooltip">module</a>
 </li>
         </ul></li>
         <li>
-    kivydk.uix.widgets.line_number
+    kivydk.uix.line_number
 
         <ul>
-          <li><a href="api/uix/widgets/line_number.html#module-kivydk.uix.widgets.line_number">module</a>
+          <li><a href="api/uix/line_number.html#module-kivydk.uix.line_number">module</a>
+</li>
+        </ul></li>
+        <li>
+    kivydk.uix.tooltip
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#module-kivydk.uix.tooltip">module</a>
 </li>
         </ul></li>
         <li>
@@ -9002,7 +9062,7 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.LightSwitchOff">LightSwitchOff (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber">LineNumber (class in kivydk.uix.widgets.line_number)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber">LineNumber (class in kivydk.uix.line_number)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.LineScan">LineScan (Icon attribute)</a>
 </li>
@@ -9618,10 +9678,10 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.MicrosoftXboxControllerBatteryUnknown">MicrosoftXboxControllerBatteryUnknown (Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.MicrosoftXboxControllerMenu">MicrosoftXboxControllerMenu (Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.MicrosoftXboxControllerOff">MicrosoftXboxControllerOff (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.MicrosoftXboxControllerView">MicrosoftXboxControllerView (Icon attribute)</a>
@@ -9708,6 +9768,8 @@
 </li>
           <li><a href="api/manager/pointer.html#module-kivydk.manager.pointer">kivydk.manager.pointer</a>
 </li>
+          <li><a href="api/manager/tooltip.html#module-kivydk.manager.tooltip">kivydk.manager.tooltip</a>
+</li>
           <li><a href="api/uix.html#module-kivydk.uix">kivydk.uix</a>
 </li>
           <li><a href="api/uix/abc.html#module-kivydk.uix.abc">kivydk.uix.abc</a>
@@ -9722,9 +9784,11 @@
 </li>
           <li><a href="api/uix/behavior/press.html#module-kivydk.uix.behavior.press">kivydk.uix.behavior.press</a>
 </li>
-          <li><a href="api/uix/widgets.html#module-kivydk.uix.widgets">kivydk.uix.widgets</a>
+          <li><a href="api/uix/behavior/tooltip.html#module-kivydk.uix.behavior.tooltip">kivydk.uix.behavior.tooltip</a>
 </li>
-          <li><a href="api/uix/widgets/line_number.html#module-kivydk.uix.widgets.line_number">kivydk.uix.widgets.line_number</a>
+          <li><a href="api/uix/line_number.html#module-kivydk.uix.line_number">kivydk.uix.line_number</a>
+</li>
+          <li><a href="api/uix/tooltip.html#module-kivydk.uix.tooltip">kivydk.uix.tooltip</a>
 </li>
           <li><a href="api/utils.html#module-kivydk.utils">kivydk.utils</a>
 </li>
@@ -10555,8 +10619,6 @@
 </li>
         <li><a href="api/uix/behavior/click.html#kivydk.uix.behavior.click.ClickBehavior.on_click">on_click() (ClickBehavior method)</a>
 </li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC.on_close">on_close() (TooltipWidgetABC method)</a>
-</li>
         <li><a href="api/uix/behavior/click.html#kivydk.uix.behavior.click.ClickBehavior.on_double_click">on_double_click() (ClickBehavior method)</a>
 </li>
         <li><a href="api/uix/behavior/hover.html#kivydk.uix.behavior.hover.HoverBehavior.on_hover">on_hover() (HoverBehavior method)</a>
@@ -10565,11 +10627,13 @@
 </li>
         <li><a href="api/uix/behavior/hover.html#kivydk.uix.behavior.hover.HoverBehavior.on_hover_leave">on_hover_leave() (HoverBehavior method)</a>
 </li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.on_pre_tooltip">on_pre_tooltip() (TooltipBehavior method)</a>
+</li>
         <li><a href="api/uix/behavior/press.html#kivydk.uix.behavior.press.PressBehavior.on_press">on_press() (PressBehavior method)</a>
 </li>
         <li><a href="api/uix/behavior/press.html#kivydk.uix.behavior.press.PressBehavior.on_release">on_release() (PressBehavior method)</a>
 </li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC.on_show">on_show() (TooltipWidgetABC method)</a>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.on_tooltip">on_tooltip() (TooltipBehavior method)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Onepassword">Onepassword (Icon attribute)</a>
 </li>
@@ -10655,8 +10719,12 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.PacMan">PacMan (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.padding">padding (LineNumber attribute)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.padding">padding (LineNumber attribute)</a>
+
+        <ul>
+          <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.padding">(Tooltip attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.PageFirst">PageFirst (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.PageLast">PageLast (Icon attribute)</a>
@@ -11779,7 +11847,7 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Refresh">Refresh (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.refresh">refresh() (LineNumber method)</a>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.refresh">refresh() (LineNumber method)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.RefreshAuto">RefreshAuto (Icon attribute)</a>
 </li>
@@ -12755,6 +12823,8 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.SitemapOutline">SitemapOutline (Icon attribute)</a>
 </li>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.size_max">size_max (Tooltip attribute)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.SizeL">SizeL (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.SizeM">SizeM (Icon attribute)</a>
@@ -13336,7 +13406,11 @@
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Stop">Stop (Icon attribute)</a>
 </li>
         <li><a href="api/manager/pointer.html#kivydk.manager.pointer.PointerManager.stop">stop() (PointerManager method)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.stop">(TooltipManager method)</a>
 </li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.StopCircle">StopCircle (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.StopCircleOutline">StopCircleOutline (Icon attribute)</a>
@@ -14033,8 +14107,6 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerCheck">TimerCheck (Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerCheckOutline">TimerCheckOutline (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerCog">TimerCog (Icon attribute)</a>
@@ -14047,6 +14119,8 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerLock">TimerLock (Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerLockOpen">TimerLockOpen (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TimerLockOpenOutline">TimerLockOpenOutline (Icon attribute)</a>
@@ -14147,9 +14221,43 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Tools">Tools (Icon attribute)</a>
 </li>
-        <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Tooltip">Tooltip (Icon attribute)</a>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip">Tooltip (class in kivydk.uix.tooltip)</a>
+
+        <ul>
+          <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Tooltip">(Icon attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_interact">tooltip_interact (TooltipBehavior attribute)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.tooltip_interact">(TooltipManager attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_markup">tooltip_markup (TooltipBehavior attribute)</a>
+</li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_offset">tooltip_offset (TooltipBehavior attribute)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.tooltip_offset">(TooltipManager attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_side">tooltip_side (TooltipBehavior attribute)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.tooltip_side">(TooltipManager attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_template">tooltip_template (TooltipBehavior attribute)</a>
+
+        <ul>
+          <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager.tooltip_template">(TooltipManager attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text">tooltip_text (TooltipBehavior attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipAccount">TooltipAccount (Icon attribute)</a>
+</li>
+        <li><a href="api/uix/behavior/tooltip.html#kivydk.uix.behavior.tooltip.TooltipBehavior">TooltipBehavior (class in kivydk.uix.behavior.tooltip)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipCellphone">TooltipCellphone (Icon attribute)</a>
 </li>
@@ -14164,6 +14272,8 @@
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipImage">TooltipImage (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipImageOutline">TooltipImageOutline (Icon attribute)</a>
+</li>
+        <li><a href="api/manager/tooltip.html#kivydk.manager.tooltip.TooltipManager">TooltipManager (class in kivydk.manager.tooltip)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipMinus">TooltipMinus (Icon attribute)</a>
 </li>
@@ -14183,11 +14293,11 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipRemoveOutline">TooltipRemoveOutline (Icon attribute)</a>
 </li>
+        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipTemplate">TooltipTemplate (class in kivydk.uix.abc.tooltip)</a>
+</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipText">TooltipText (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TooltipTextOutline">TooltipTextOutline (Icon attribute)</a>
-</li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC">TooltipWidgetABC (class in kivydk.uix.abc.tooltip)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Tooth">Tooth (Icon attribute)</a>
 </li>
@@ -14509,8 +14619,6 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.TwoFactorAuthentication">TwoFactorAuthentication (Icon attribute)</a>
 </li>
-        <li><a href="api/manager/pointer.html#kivydk.manager.pointer.PointerManager.type_ids">type_ids (PointerManager attribute)</a>
-</li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Typewriter">Typewriter (Icon attribute)</a>
 </li>
     </ul></td>
@@ -14579,12 +14687,18 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Update">Update (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC.update_position">update_position() (TooltipWidgetABC method)</a>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.update_size">update_size() (Tooltip method)</a>
+
+        <ul>
+          <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipTemplate.update_size">(TooltipTemplate method)</a>
 </li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC.update_size">update_size() (TooltipWidgetABC method)</a>
+        </ul></li>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.update_text">update_text() (Tooltip method)</a>
+
+        <ul>
+          <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipTemplate.update_text">(TooltipTemplate method)</a>
 </li>
-        <li><a href="api/uix/abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipWidgetABC.update_text">update_text() (TooltipWidgetABC method)</a>
-</li>
+        </ul></li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Upload">Upload (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.UploadLock">UploadLock (Icon attribute)</a>
@@ -15177,10 +15291,10 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.WeatherWindyVariant">WeatherWindyVariant (Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Web">Web (Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.WebBox">WebBox (Icon attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Webcam">Webcam (Icon attribute)</a>
@@ -15247,7 +15361,9 @@
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.WidgetsOutline">WidgetsOutline (Icon attribute)</a>
 </li>
-        <li><a href="api/uix/widgets/line_number.html#kivydk.uix.widgets.line_number.LineNumber.width_min">width_min (LineNumber attribute)</a>
+        <li><a href="api/uix/tooltip.html#kivydk.uix.tooltip.Tooltip.width_max">width_max (Tooltip attribute)</a>
+</li>
+        <li><a href="api/uix/line_number.html#kivydk.uix.line_number.LineNumber.width_min">width_min (LineNumber attribute)</a>
 </li>
         <li><a href="api/core/mapping/icons.html#kivydk.core.mapping.icons.Icon.Wifi">Wifi (Icon attribute)</a>
 </li>
@@ -15542,7 +15658,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=2436c87f"></script>
+</div><script src="_static/documentation_options.js?v=0afe0e4a"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

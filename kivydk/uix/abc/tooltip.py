@@ -9,15 +9,17 @@ size, position and visibility in a consistent and predictable way.
 The interface does not impose any visual style or layout. Applications may provide their
 own tooltip widget implementations as long as the required methods are implemented.
 """
-__all__ = ("TooltipWidgetABC",)
+__all__ = ("TooltipTemplate",)
 
 #// IMPORT
 from abc import abstractmethod
+
+from kivy.properties import BooleanProperty
 from kivy.uix.widget import Widget
 
 
 #// LOGIC
-class TooltipWidgetABC:
+class TooltipTemplate(Widget):
     """
     Abstract interface for tooltip widgets.
 
@@ -25,20 +27,21 @@ class TooltipWidgetABC:
     a consistent way. Custom tooltip widgets must provide the required methods, so
     they can be positioned, updated and shown correctly within the tooltip system.
     """
+
     def __init__(self, **kwargs):
-        if self.__class__ == TooltipWidgetABC:
-            raise NotImplementedError("class TooltipWidgetABC is abstract")
+        if self.__class__ is TooltipTemplate:
+            raise NotImplementedError("'TooltipTemplate' is abstract and cannot be instantiated.")
+
+        super().__init__(**kwargs)
 
     @abstractmethod
-    def update_text(self, text: str) -> None:
-        """ Update the tooltip's displayed text. """
-        pass
-
-    @abstractmethod
-    def update_position(self, x: float, y: float) -> None:
+    def update_text(self, text: str, markup: bool = False) -> None:
         """
-        Move the tooltip to the given window coordinates.
-        TooltipManager ensures the coordinates are already resolved according to the chosen anchor and widget's size.
+        Update the tooltip's displayed text.
+
+        Implementations should apply the text and prepare any internal layout changes required before sizing.
+
+        Called whenever TooltipManager resolves a tooltip message for the hovered widget.
         """
         pass
 
@@ -46,22 +49,10 @@ class TooltipWidgetABC:
     def update_size(self) -> None:
         """
         Recalculate the widget’s size based on its current content.
-        Called whenever TooltipManager requires the widget’s actual size to be updated.
-        """
-        pass
 
-    @abstractmethod
-    def on_show(self, *args) -> None:
-        """
-        Called when the tooltip becomes visible.
-        Implementations may perform layout adjustments or prepare internal state before rendering.
-        """
-        pass
+        Implementations must update ``width`` and ``height`` to reflect the actual rendered size.
 
-    @abstractmethod
-    def on_close(self, *args) -> None:
-        """
-        Called when the tooltip is hidden.
-        Implementations may release resources or reset internal state before removal.
+        TooltipManager calls this after updating the text, so it can compute
+        the correct placement for the tooltip before making it visible.
         """
         pass

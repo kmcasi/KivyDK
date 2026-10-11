@@ -15,6 +15,16 @@ The LineNumber widget handles automatic sizing, vertical alignment and
 scroll synchronization, ensuring that the displayed line numbers always match
 the visible portion of the associated TextInput.
 
+§ dropdown : history, style = AZ ¶
+
+    The LineNumber widget was originally developed in September 2022 as a proof‑of‑concept.
+    Early versions rendered all line numbers regardless of visibility, which caused significant
+    performance issues when testing with large documents (40,000+ lines).
+
+    In 2024, the widget was redesigned using a visibility‑based rendering strategy, reducing update
+    times from several minutes to a few seconds. The current implementation is fully optimized and
+    integrated into KiviDK, replacing the deprecated standalone repository.
+
 § section : example ¶
 
 Sample demonstrating how ``LineNumber`` can be used to draw the line numbers.
@@ -30,15 +40,27 @@ from os import cpu_count
 from concurrent.futures import ThreadPoolExecutor as Threads
 
 from kivy.clock import Clock
-from kivy.core.text import Label, DEFAULT_FONT
-from kivy.graphics import Color, Rectangle, BorderImage
+from kivy.core.text import (
+    DEFAULT_FONT,   # noqa
+    Label,
+    LabelBase,
+)
+from kivy.graphics import (
+    BorderImage,
+    Color,
+    Rectangle,
+)
 from kivy.graphics.texture import Texture
 from kivy.uix.widget import Widget
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
-
-from kivy.properties import StringProperty, NumericProperty, ColorProperty
-from kivy.properties import OptionProperty, VariableListProperty
+from kivy.properties import (
+    ColorProperty,
+    NumericProperty,
+    OptionProperty,
+    StringProperty,
+    VariableListProperty,
+)
 
 
 #// LOGIC
@@ -68,7 +90,7 @@ class LineNumber(Widget):
     background_texture: StringProperty = StringProperty("atlas://data/images/defaulttheme/textinput")
     """ Background image applied to the entire widget. """
 
-    background_border: VariableListProperty = VariableListProperty([4])
+    background_border: VariableListProperty = VariableListProperty(4)
     """
     Border definition used when rendering :attr:`background_texture`.
     This controls how the texture is sliced, allowing custom backgrounds to be applied.
@@ -91,11 +113,11 @@ class LineNumber(Widget):
     #: line numbers
     font_size: NumericProperty = NumericProperty("15sp")
 
-    padding: VariableListProperty = VariableListProperty([4], length=2)
+    padding: VariableListProperty = VariableListProperty(4, length=2)
     """
     Horizontal padding applied to the line numbers.
     
-    § variable list use : H ¶
+    § variable list use ¶
     """
 
     width_min: NumericProperty = NumericProperty("18sp")
@@ -146,6 +168,7 @@ class LineNumber(Widget):
             text=self._update_line_numbers,
         )
 
+    # noinspection GrazieInspection
     def refresh(self, delay: int|float = -1) -> None:
         """
         Schedule a re-render of the line numbers.
@@ -173,13 +196,14 @@ class LineNumber(Widget):
         else:
             instance.bind(scroll_y=self._update_line_numbers)
 
-    def _update_font(self, *_) -> None:
+    # noinspection PyUnusedParameter
+    def _update_font(self, *args) -> None:
         """ Used to calculate the maximum width need it to draw one number. """
         sizes: list[int] = []
 
         for number in range(10):
-            label = Label(text=str(number), font_size=self.font_size, font_name=self.font_name,
-                          font_family=self.font_family, font_context=self.font_context)
+            label: LabelBase = Label(text=str(number), font_size=self.font_size, font_name=self.font_name,
+                                     font_family=self.font_family, font_context=self.font_context)
             label.refresh()
             sizes.append(label.texture.size[0])
 
@@ -189,7 +213,7 @@ class LineNumber(Widget):
     def __draw_line_number(self, number: int, y: float, y_min_render: float, y_max_render: float) -> None:
         """ Used to draw one line number. """
         # Make texture
-        label: Label = Label(text=str(number), color=self.foreground_color, font_size=self.font_size,
+        label: LabelBase = Label(text=str(number), color=self.foreground_color, font_size=self.font_size,
                              font_name=self.font_name, font_family=self.font_family, font_context=self.font_context)
         label.refresh()
 
@@ -226,7 +250,8 @@ class LineNumber(Widget):
         # Draw the line number
         Rectangle(texture=texture, pos=(x, y), size=size, tex_coords=uv)
 
-    def __count_wrapped_lines(self, arg: list[int, int]) -> int:
+    # noinspection PyProtectedMember
+    def __count_wrapped_lines(self, arg: list[int]) -> int:
         """ Used to count the amount of wrapped lines with multithreading. """
         wrapped: int = 0
 
@@ -240,7 +265,8 @@ class LineNumber(Widget):
 
         return wrapped
 
-    def _update_line_numbers(self, *_) -> None:
+    # noinspection PyUnusedParameter, PyProtectedMember
+    def _update_line_numbers(self, *args) -> None:
         """ Update the visible line numbers. """
 
         # Draw the background

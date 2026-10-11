@@ -18,7 +18,10 @@ __all__ = ("HoverBehavior",)
 
 #// IMPORT
 from kivy.input.motionevent import MotionEvent
-from kivy.properties import AliasProperty, BooleanProperty
+from kivy.properties import (
+    AliasProperty,
+    BooleanProperty,
+)
 
 
 #// LOGIC
@@ -66,7 +69,7 @@ class HoverBehavior:
         """ Called when the pointer stops hovering over the widget. """
         pass
 
-    # noinspection PyUnusedLocal, PyTypeChecker
+    # noinspection PyUnusedParameter, PyTypeChecker
     def _kdk_pointer_enter(self, event: MotionEvent) -> None:
         """
         Called when the pointer enters the widget's area.
@@ -75,7 +78,7 @@ class HoverBehavior:
         """
         self._hover_state = True
 
-    # noinspection PyUnusedLocal, PyTypeChecker
+    # noinspection PyUnusedparameter, PyTypeChecker
     def _kdk_pointer_leave(self, event: MotionEvent) -> None:
         """
         Called when the pointer leaves the widget's area.
@@ -84,7 +87,7 @@ class HoverBehavior:
         """
         self._hover_state = False
 
-    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    # noinspection PyUnusedParameter, PyUnresolvedReferences
     def _dispatch_hover_changes(self, *args) -> None:
         """ Dispatches hover-related events based on the current hover state. """
         self.dispatch("on_hover", self._hover_state)

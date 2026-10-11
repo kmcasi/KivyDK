@@ -1,7 +1,6 @@
 Font name or file used to render the {{ DOC }}.
 
-.. dropdown:: Technical details
-    :class-container: dk-default-value
+§ dropdown : technical details ¶
 
     The path may be absolute or relative. Relative paths are resolved using
     :func:`~kivy.resources.resource_find`.

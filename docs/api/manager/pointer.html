@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="UIX" href="../uix.html"><link rel="prev" title="Manager" href="../manager.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Tooltip" href="tooltip.html"><link rel="prev" title="Manager" href="../manager.html">
         <link rel="prefetch" href="../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Pointer - KivyDK 0.0.9.dev1</title>
+        <title>Pointer - KivyDK 0.10.1.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">KivyDK 0.0.9.dev1</div></a>
+      <a href="../../index.html"><div class="brand">KivyDK 0.10.1.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.9.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.1.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -228,6 +228,7 @@
 </li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="../manager.html">Manager</a><input aria-label="Toggle navigation of Manager" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tooltip.html">Tooltip</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../uix.html">UIX</a><input aria-label="Toggle navigation of UIX" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -239,15 +240,14 @@
 <li class="toctree-l4"><a class="reference internal" href="../uix/behavior/click.html">Click</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../uix/behavior/hover.html">Hover</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../uix/behavior/press.html">Press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uix/behavior/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../uix/widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../uix/widgets/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uix/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uix/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../utils/numeric.html">Numeric</a></li>
 </ul>
 </li>
@@ -311,7 +311,7 @@ drag operations and future custom pointer‑driven UI components.</p>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">&#10070;</a></h2>
 <p>Widgets participate in pointer routing only if they explicitly register for the <code class="docutils literal notranslate"><span class="pre">kdk_pointer</span></code> MotionEvent type.</p>
-<div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">register_for_motion_event</span><span class="p">(</span><span class="s2">&quot;kdk_pointer&quot;</span><span class="p">)</span>
+<div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">register_for_motion_event</span><span class="p">(</span><span class="s2">"kdk_pointer"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Once registered, the PointerManager will call pointer‑related callbacks on the widget whenever
@@ -327,36 +327,36 @@ presses a widget, it will no longer receive hover callbacks until the pointer is
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">begin</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_enter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Called when the pointer enters the widget&#39;s area.</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Called when the pointer enters the widget's area.</span>
 
 <span class="sd">    :param event: The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ ENTER ]&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ ENTER ]"</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">end</span><a class="headerlink" href="#id3" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_leave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Called when the pointer leaves the widget&#39;s area.</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Called when the pointer leaves the widget's area.</span>
 
 <span class="sd">    :param event: The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ LEAVE ]&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ LEAVE ]"</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">update</span><a class="headerlink" href="#id4" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Called when the pointer moves while hovering over the widget.</span>
 
 <span class="sd">    :param event: The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ MOVE ]&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ MOVE ]"</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -377,43 +377,43 @@ MotionEvent instances. Do not rely on these MotionEvent objects for anything oth
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text">begin</span><a class="headerlink" href="#id5" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Called when a mouse button is pressed or when an equivalent device action is triggered.</span>
 
 <span class="sd">    :param button:      The button that triggered the press, or ``None``.</span>
 <span class="sd">    :param modifiers:   List of active keyboard modifiers at the moment of press.</span>
 <span class="sd">    :param event:       The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ PRESS ]&quot;</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ PRESS ]"</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text">end</span><a class="headerlink" href="#id6" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Called when a mouse button is released or when an equivalent device action is triggered.</span>
 
 <span class="sd">    :param button:      The button that triggered the release, or ``None``.</span>
 <span class="sd">    :param modifiers:   List of active keyboard modifiers at the moment of release.</span>
 <span class="sd">    :param event:       The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ RELEASE ]&quot;</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ RELEASE ]"</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-text">update</span><a class="headerlink" href="#id7" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_kdk_pointer_hold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttons</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Called when the pointer moves while at least one button is pressed</span>
 <span class="sd">    or when an equivalent device action is triggered.</span>
 
 <span class="sd">    :param buttons:     List of all currently held buttons or an empty list.</span>
 <span class="sd">    :param modifiers:   List of active keyboard modifiers during movement.</span>
 <span class="sd">    :param event:       The MotionEvent associated with this call.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[ HOLD ]&quot;</span><span class="p">,</span> <span class="n">buttons</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"[ HOLD ]"</span><span class="p">,</span> <span class="n">buttons</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -431,34 +431,21 @@ MotionEvent instances. Do not rely on these MotionEvent objects for anything oth
 widget and locking pointer interaction to that widget once a press occurs.</p>
 <p>It dispatches pointer-related callbacks with forwarded MotionEvent objects,
 ensuring consistent pointer behavior across mouse and other supported devices.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kivydk.manager.pointer.PointerManager.type_ids">
-<span class="sig-name descname"><span class="pre">type_ids</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('touch',</span> <span class="pre">'hover')</span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.type_ids" title="Link to this definition">&#10070;</a></dt>
-<dd><p>The MotionEvent types this manager processes.
-Only events with these type IDs are routed through the pointer system for handling.</p>
-<div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id8" title="Link to this code">&#10070;</a></div>
-<div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;touch&#39;</span><span class="p">,</span> <span class="s1">&#39;hover&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.manager.pointer.PointerManager.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.start" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.start" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Activate the manager and bind the necessary Window callbacks.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.manager.pointer.PointerManager.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.stop" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.stop" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Deactivate the manager, clear pointer state and unbind Window callbacks.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivydk.manager.pointer.PointerManager.dispatch">
-<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mEvent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="(in Kivy v2.3.1)"><span class="pre">MotionEvent</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.dispatch" title="Link to this definition">&#10070;</a></dt>
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">etype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">me</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="(in Kivy v2.3.1)"><span class="pre">MotionEvent</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#kivydk.manager.pointer.PointerManager.dispatch" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Dispatch the MotionEvent to the appropriate widget in the window.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
@@ -469,14 +456,11 @@ Only events with these type IDs are routed through the pointer system for handli
 <tr class="row-odd"><td><p class="sd-card-text">Name</p></td>
 <td><p class="sd-card-text">Description</p></td>
 </tr>
-<tr class="row-even"><td><p class="sd-card-text">eType</p></td>
+<tr class="row-even"><td><p class="sd-card-text">etype</p></td>
 <td><p class="sd-card-text">One of <code class="docutils literal notranslate"><span class="pre">begin</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code> or <code class="docutils literal notranslate"><span class="pre">end</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p class="sd-card-text">mEvent</p></td>
+<tr class="row-odd"><td><p class="sd-card-text">me</p></td>
 <td><p class="sd-card-text">The MotionEvent currently being dispatched.</p></td>
-</tr>
-<tr class="row-even"><td><p class="sd-card-text">RETURN</p></td>
-<td><p class="sd-card-text">Always <code class="docutils literal notranslate"><span class="pre">False</span></code> to allow other managers and widgets to process their own event logic.</p></td>
 </tr>
 </tbody>
 </table>
@@ -493,12 +477,12 @@ Only events with these type IDs are routed through the pointer system for handli
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../uix.html">
+          <a class="next-page" href="tooltip.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">UIX</div>
+                <div class="title">Tooltip</div>
               </div>
               <svg class="furo-related-icon"></svg>
             </a>
@@ -552,7 +536,6 @@ Only events with these type IDs are routed through the pointer system for handli
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#reference">Reference</a></li>
 <li><a class="reference internal" href="#kivydk.manager.pointer.PointerManager"><span class="slt-type slt-obj-class"></span><code class="docutils literal notranslate"><span class="pre">PointerManager</span></code></a><ul>
-<li><a class="reference internal" href="#kivydk.manager.pointer.PointerManager.type_ids"><span class="slt-type slt-obj-attribute"></span><code class="docutils literal notranslate"><span class="pre">type_ids</span></code></a></li>
 <li><a class="reference internal" href="#kivydk.manager.pointer.PointerManager.start"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">start</span></code></a></li>
 <li><a class="reference internal" href="#kivydk.manager.pointer.PointerManager.stop"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">stop</span></code></a></li>
 <li><a class="reference internal" href="#kivydk.manager.pointer.PointerManager.dispatch"><span class="slt-type slt-obj-method"></span><code class="docutils literal notranslate"><span class="pre">dispatch</span></code></a></li>
@@ -569,7 +552,7 @@ Only events with these type IDs are routed through the pointer system for handli
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=2436c87f"></script>
+</div><script src="../../_static/documentation_options.js?v=0afe0e4a"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

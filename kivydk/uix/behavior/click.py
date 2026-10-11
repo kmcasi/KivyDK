@@ -17,7 +17,10 @@ Sample demonstrating how ``ClickBehavior`` can be used to detect and handle clic
 __all__ = ("ClickBehavior",)
 
 #// IMPORT
-from kivy.clock import Clock
+from kivy.clock import (
+    Clock,
+    ClockEvent,
+)
 from kivy.input.motionevent import MotionEvent
 from kivy.properties import NumericProperty
 
@@ -38,9 +41,9 @@ class ClickBehavior:
 
     click_interval: NumericProperty = NumericProperty(0.25)
     """
-    Maximum time ``(seconds)`` in which a second click is considered part of a double‑click.
+    Maximum time ``(in seconds)`` in which a second click is considered part of a double‑click.
     
-    The sweet spot is between ``0.2`` and ``0.3``.
+    § sweet spot : 0.2, 0.3 ¶
     """
 
     __events__ = ["on_click", "on_double_click"]
@@ -54,7 +57,7 @@ class ClickBehavior:
         # Private variables
         self.__allow_dispatch: bool = True
         self.__pressed_button: dict[str, str|None] = {"last": None, "prev": None}
-        self.__clock: Clock = Clock.create_trigger(self._reset_pressed_button, self.click_interval)
+        self.__clock: ClockEvent = Clock.create_trigger(self._reset_pressed_button, self.click_interval)
 
     def on_click(self, button: str|None, modifiers: list[str]) -> None:
         """
@@ -74,7 +77,7 @@ class ClickBehavior:
         """
         pass
 
-    # noinspection PyUnusedLocal
+    # noinspection PyUnusedParameter
     def _kdk_pointer_press(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
         """
         Called when a mouse button is pressed or when an equivalent device action is triggered.
@@ -85,7 +88,7 @@ class ClickBehavior:
         """
         self.__pressed_button["last"] = button
 
-    # noinspection PyUnusedLocal, PyUnresolvedReferences
+    # noinspection PyUnusedParameter, PyUnresolvedReferences
     def _kdk_pointer_release(self, button: str|None, modifiers: list[str], event: MotionEvent) -> None:
         """
         Called when a mouse button is released or when an equivalent device action is triggered.
@@ -112,8 +115,8 @@ class ClickBehavior:
             self.__clock.cancel()
             self._reset_pressed_button()
 
-    # noinspection PyUnusedLocal, PyUnresolvedReferences
-    def _kdk_pointer_hold(self, buttons: list[str], modifiers: list[str], event: MotionEvent):
+    # noinspection PyUnusedParameter, PyUnresolvedReferences
+    def _kdk_pointer_hold(self, buttons: list[str], modifiers: list[str], event: MotionEvent) -> None:
         """
         Called when the pointer moves while at least one button is pressed
         or when an equivalent device action is triggered.
@@ -125,7 +128,7 @@ class ClickBehavior:
         if self.__allow_dispatch and not self.collide_point(*event.pos):
             self.__allow_dispatch = False
 
-    # noinspection PyUnusedLocal
+    # noinspection PyUnusedParameter
     def _reset_pressed_button(self, *args) -> None:
         """ Resets the internal button tracking state. """
         self.__allow_dispatch = True

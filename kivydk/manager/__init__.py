@@ -11,7 +11,3 @@ complex interactions work consistently across the framework without requiring ma
     These modules are not intended for direct use. All managers are created and controlled internally by KivyDK
     and developers typically never need to interact with them directly.
 """
-__all__ = ("PointerManager",)
-
-#// IMPORT
-from .pointer import PointerManager

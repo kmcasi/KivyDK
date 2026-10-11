@@ -20,7 +20,10 @@ root_conf: str = os.path.abspath(os.path.dirname(__file__))
 root_project: str = os.path.abspath(os.path.join(root_conf, ".."))
 
 dir_images: str = "/_images"
-dir_examples: str = os.path.join(root_project, "examples", "docs")
+dir_examples: str = os.path.relpath(
+    os.path.join(root_project, "examples", "docs"),
+    start=root_conf
+)
 
 
 # Sphinx calls this functions when it initializes the build process.
@@ -56,7 +59,7 @@ project_copyright = f"%Y. All rights are reserved by {author}."
 
 # The major project version.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.
-version = "0.0.9.dev1"
+version = "0.10.1.dev1"
 
 # The full project version, used also in the HTML templates.
 # If project does not draw a meaningful distinction between a ‘full’ and ‘major’ version, set both to the same value.

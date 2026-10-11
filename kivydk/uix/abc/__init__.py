@@ -8,7 +8,7 @@ for components that rely on specific widget behaviors, ensuring that custom widg
 can integrate cleanly with the framework. Concrete implementations are expected to
 inherit from these interfaces and supply the required functionality.
 """
-__all__ = ("TooltipWidgetABC",)
+__all__ = ("TooltipTemplate",)
 
 #// IMPORT
-from .tooltip import TooltipWidgetABC
+from .tooltip import TooltipTemplate

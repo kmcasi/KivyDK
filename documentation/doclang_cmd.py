@@ -4,11 +4,22 @@
 
 #// IMPORT
 import inspect, importlib
-from types import ModuleType, FunctionType, MethodType
+from types import (
+    ModuleType,
+    FunctionType,
+    MethodType
+)
 
-from kivy.properties import Property, AliasProperty, OptionProperty, VariableListProperty
+from kivy.properties import (
+    AliasProperty,
+    ObjectProperty,
+    OptionProperty,
+    Property,
+    ReferenceListProperty,
+    VariableListProperty
+)
 
-from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, _Template
+from sphinx_doclang.commands import Command, cmd_self_name, cmd_self_type, cmd_self_doc, _Template  # noqa
 
 
 #// GLOBAL VARIABLES
@@ -18,7 +29,7 @@ TAB: str = " " * 4
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 #//| KivyDK DocLang Commands
 #//|>-----------------------------------------------------------------------------------------------------------------<|
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("show code")
 def cmd_show_code(*args, language: str = "python", **kwargs) -> list[str]:
     """
@@ -39,7 +50,7 @@ def cmd_show_code(*args, language: str = "python", **kwargs) -> list[str]:
     ]
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("show image")
 def cmd_show_image(*args, align: str = "center", **kwargs) -> list[str]:
     """
@@ -59,7 +70,7 @@ def cmd_show_image(*args, align: str = "center", **kwargs) -> list[str]:
     ]
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("format")
 def cmd_format(context: str, *args, style: str = "Az", **kwargs) -> str:
     """
@@ -90,7 +101,7 @@ def cmd_format(context: str, *args, style: str = "Az", **kwargs) -> str:
     return context
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("dropdown")
 def cmd_dropdown(title: str = "dropdown", *args, style: str = "Az", **kwargs) -> list[str]:
     """
@@ -109,7 +120,7 @@ def cmd_dropdown(title: str = "dropdown", *args, style: str = "Az", **kwargs) ->
     ]
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("code")
 def cmd_code(title: str = "", line: str = "", lang: str = "Python3", *args, style: str = "Az", **kwargs) -> list[str]:
     """
@@ -143,7 +154,7 @@ def cmd_code(title: str = "", line: str = "", lang: str = "Python3", *args, styl
     return compute
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("parameters")
 def cmd_parameters_list(*args, title: str = "parameters", style: str = "Az", **kwargs) -> list[str]:
     """
@@ -167,7 +178,7 @@ def cmd_parameters_list(*args, title: str = "parameters", style: str = "Az", **k
     ]
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("param")
 def cmd_parameters_item(*args, **kwargs) -> list[str]:
     """
@@ -182,17 +193,37 @@ def cmd_parameters_item(*args, **kwargs) -> list[str]:
     return [f"{TAB * 2}* - {f'\n{TAB * 2}  - '.join(kw)}{'' if kw[1].endswith('.') else '.'}" for kw in kwargs.items()]
 
 
-# noinspection PyUnusedLocal
-@Command.new("variable list use")
-def cmd_variable_list_use(use: str = "default", *args, **kwargs) -> str:
+# noinspection PyUnusedParameter
+@Command.new("sweet spot")
+def cmd_sweet_spot(minimum: str, maximum: str, *args, **kwargs) -> str:
     """
-    Generates a description for the use case of a Kivy VariableListProperty.
+    Describe the recommended numeric range for a parameter.
+
+    Usage:
+        - § sweet spot : 0.2, 0.3 ¶
+    """
+    return f"The sweet spot is between ``{minimum}`` and ``{maximum}``."
+
+
+# noinspection PyUnusedParameter, PyUnresolvedReferences
+@Command.new("variable list use")
+def cmd_variable_list_use(use: str = "auto", *args, **kwargs) -> str:
+    """
+    Generates a contextual description for the usage pattern of a
+    :class:`~kivy.properties.VariableListProperty`.
 
     The ``use`` option controls how the context is computed to inform the
     amount of accepted values and the extended order of their use:
+        - ``a`` or ``auto``         → automatically detect the usage
+        - ``d`` or ``default``      → four values ``[left, top, right, bottom]``
         - ``h`` or ``horizontal``   → two values ``[left, right]``
         - ``v`` or ``vertical``     → two values ``[top, bottom]``
-        - ``d`` or ``default``      → four values ``[left, top, right, bottom]``
+
+    Auto-detection mode:
+        When ``auto`` is selected, the command inspects the property's declared
+        length and searches the developer documentation for semantic hints.
+        If the documentation contains the words “horizontal” or “vertical”, the
+        corresponding usage mode is selected. Otherwise, it behaves like ``default``.
 
     Usage:
         - § variable list use ¶
@@ -204,6 +235,17 @@ def cmd_variable_list_use(use: str = "default", *args, **kwargs) -> str:
     values: str = "one %s values"
     expanded: str = "These are expanded into a list of %s values: ``[%s]``"
 
+    # Auto usage detection
+    if use_short == "A" or use_long == "auto":
+        list_size: int = _Template.OBJ.length if isinstance(_Template.OBJ, VariableListProperty) else 0
+
+        if list_size == 2:
+            dev_doc: str = cmd_self_doc().lower()
+            use_short = "H" if ("horizontal" in dev_doc) else "V" if ("vertical" in dev_doc) else "D"
+        else:
+            use_short = "D"
+
+    # Provided usage
     if use_short == "D" or use_long == "default":
         values = values % ", two or four"
         expanded = expanded % ("four", "left, top, right, bottom")
@@ -219,7 +261,7 @@ def cmd_variable_list_use(use: str = "default", *args, **kwargs) -> str:
     return f"The :attr:`{cmd_self_name()}` may be specified as {values}. {expanded}."
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("default value")
 def cmd_default_value(value: str, *args, **kwargs) -> list[str]:
     """
@@ -230,13 +272,13 @@ def cmd_default_value(value: str, *args, **kwargs) -> list[str]:
         - § default value : '[July, 05, 2026]' ¶
     """
     return [
-        *cmd_code("default value"),
+        *cmd_code("default value", **kwargs),
         "",
         f"{TAB}{value}"
     ]
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedParameter
 @Command.new("alias property value")
 def cmd_alias_property_value(cls: str, value: str, *args, **kwargs) -> list[str]:
     """
@@ -259,7 +301,7 @@ def cmd_alias_property_value(cls: str, value: str, *args, **kwargs) -> list[str]
     ]
 
 
-# noinspection PyUnusedLocal, PyBroadException
+# noinspection PyUnusedParameter, PyBroadException
 @Command.new("extract default value")
 def cmd_extract_default_value(*args, **kwargs) -> list[str]:
     """
@@ -288,11 +330,21 @@ def cmd_extract_default_value(*args, **kwargs) -> list[str]:
     # Kivy → VariableListProperty
     if isinstance(prop, VariableListProperty):
         try:
-            default_length: int = max(1, len(prop.defaultvalue))
-            return cmd_default_value(
-                str([prop.defaultvalue[index % default_length]
-                     for index in range(prop.length)])
-            )
+            if isinstance(prop.defaultvalue, (list, tuple, set)):
+                default_length: int = max(1, len(prop.defaultvalue))
+                return cmd_default_value(
+                    str([
+                        prop.defaultvalue[index % default_length]
+                        for index in range(prop.length)
+                    ])
+                )
+            else:
+                return cmd_default_value(
+                    str([
+                        prop.defaultvalue
+                        for _ in range(prop.length)
+                    ])
+                )
         except Exception:
             return cmd_default_value(str(prop.defaultvalue))
 
@@ -301,14 +353,15 @@ def cmd_extract_default_value(*args, **kwargs) -> list[str]:
     #|>────┘----------------------------------------------------------------------------------------------------------<|
     # Reusable variable
     extra_content: list[str] = []
-    default_value: str = ""
+    default_value: str = f'"{prop}"' if isinstance(prop, str) else str(prop)    # noqa
+    custom_kwargs: dict[str, str] = {}
 
     # Kivy → OptionProperty
     if isinstance(prop, OptionProperty):
         extra_content = [
             *cmd_dropdown("options"),
             "",
-            f"{TAB}Below are listed all the available options for this attribute.",
+            f"{TAB}This attribute accepts only the following options:",
             "",
         ]
         for option in prop.options:
@@ -319,21 +372,33 @@ def cmd_extract_default_value(*args, **kwargs) -> list[str]:
                 "",
             ])
 
-    # Kivy → Property (general class)
-    if isinstance(prop, Property):
-        default_value = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
+    # Kivy → ObjectProperty
+    elif isinstance(prop, ObjectProperty):
+        # Make it pretty, compared with: "none", "text" or "console"
+        custom_kwargs["lang"] = "css"       # <class 'kivydk.uix.line_number.LineNumber'>
 
-    # Python attribute
-    else:
-        default_value = f'"{prop}"' if isinstance(prop, str) else str(prop)
+    # Kivy → ReferenceListProperty
+    if isinstance(prop, ReferenceListProperty):
+        extra_content = [
+            *cmd_dropdown("references"),
+            "",
+            f"{TAB}This attribute groups the following referenced properties:",
+            "",
+            *[f"{TAB}- :attr:`{prop_ref.name}`" for prop_ref in prop.defaultvalue]
+        ]
+        default_value = f"({', '.join([str(prop_ref.defaultvalue) for prop_ref in prop.defaultvalue])})"
+
+    # Kivy → Property (general class)
+    elif isinstance(prop, Property):
+        default_value = f'"{prop.defaultvalue}"' if isinstance(prop.defaultvalue, str) else str(prop.defaultvalue)
 
     return [
         *extra_content,
-        *cmd_default_value(default_value)
+        *cmd_default_value(default_value, **custom_kwargs)
     ]
 
 
-# noinspection PyUnusedLocal, PyBroadException
+# noinspection PyUnusedParameter, PyBroadException
 @Command.new("extract events")
 def cmd_extract_events(*args, **kwargs) -> list[str]:
     """

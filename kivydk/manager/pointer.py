@@ -1,7 +1,7 @@
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 #//| Copyright (c) 12 Sep 2026. All rights are reserved by ASI
 #//|>-----------------------------------------------------------------------------------------------------------------<|
-# noinspection PyUnresolvedReferences
+# noinspection PyUnresolvedReferences, SpellCheckingInspection
 """
 This manager provides a unified pointer routing layer primarily designed for mouse devices
 and adapted to support other MotionEvent‑based devices such as touch and stylus.
@@ -109,7 +109,7 @@ __all__ = ("PointerManager",)
 #// IMPORT
 from typing import Callable, Any
 
-from kivy.core.window import Window
+from kivy.core.window import WindowBase
 from kivy.eventmanager import EventManagerBase
 from kivy.input.motionevent import MotionEvent
 from kivy.uix.widget import Widget
@@ -125,14 +125,11 @@ class PointerManager(EventManagerBase):
     ensuring consistent pointer behavior across mouse and other supported devices.
     """
 
-    type_ids: tuple[str] = ("touch", "hover")
-    """
-    The MotionEvent types this manager processes.
-    Only events with these type IDs are routed through the pointer system for handling.
-    """
-
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
+
+        # The MotionEvent types this manager processes
+        self.type_ids = ("touch", "hover")
 
         # Private variables
         self.__interest_widget: Widget|None = None
@@ -165,76 +162,76 @@ class PointerManager(EventManagerBase):
         for key, method in self.__binds.items():
             self.window.funbind(key, method)
 
-    def dispatch(self, eType: str, mEvent: MotionEvent) -> bool:
+    # noinspection SpellCheckingInspection
+    def dispatch(self, etype: str, me: MotionEvent) -> bool:
         """
         Dispatch the MotionEvent to the appropriate widget in the window.
 
-        § parameters : eType = One of ``"begin"``/, ``"update"`` or ``"end"`` ¶
-        § param : mEvent = The MotionEvent currently being dispatched ¶
-        § param : RETURN = Always ``False`` to allow other managers and widgets to process their own event logic ¶
+        § parameters : etype = One of ``"begin"``/, ``"update"`` or ``"end"`` ¶
+        § param : me = The MotionEvent currently being dispatched ¶
         """
         # MotionEvent.begin often reports (0.0, 0.0) → use Window provider coordinates all the time
-        self.__last_mEvent = mEvent
-        mEvent.pos = self.window.mouse_pos
-        mEvent.x, mEvent.y = mEvent.pos
+        self.__last_mEvent = me
+        me.pos = self.window.mouse_pos
+        me.x, me.y = me.pos
 
-        if mEvent.type_id == "hover":
+        if me.type_id == "hover":
             # Pointer left the window boundaries
-            if eType == "end":
+            if etype == "end":
                 self.__invalidate_last_hover_widget()
-                return False
+                return True
 
             # Resolve the widget currently under the pointer
-            self.__solve_interest_widget("kdk_pointer", mEvent)
+            self.__interest_widget = self.__search_interest_widget("kdk_pointer", me)
 
             # Hover target changed → dispatch leave/enter
             if self.__interest_widget is not self.__last_hover_widget:
                 if self.__last_hover_widget:
-                    self.__call_pointer_method("leave", self.__last_hover_widget, mEvent)
+                    self.__call_pointer_method("leave", self.__last_hover_widget, me)
 
                 if self.__interest_widget:
-                    self.__call_pointer_method("enter", self.__interest_widget, mEvent)
+                    self.__call_pointer_method("enter", self.__interest_widget, me)
 
                 # Update the local reference for the hovered widget
                 self.__last_hover_widget = self.__interest_widget
 
             # Hover target unchanged → dispatch update
             elif self.__interest_widget:
-                self.__call_pointer_method("move", self.__interest_widget, mEvent)
+                self.__call_pointer_method("move", self.__interest_widget, me)
 
         else:
             # MouseMotionEvent simulates touch and cannot represent multiple buttons.
             # Skip MotionEvent‑based touch logic for mouse devices and rely on Window
             # provider events to handle multi‑button input correctly.
-            if mEvent.device == "mouse":
-                return False
+            if me.device == "mouse":
+                return True
 
             # Update the active touch target using the last hovered widget
-            if eType == "begin":
+            if etype == "begin":
                 self.__last_touch_widget = self.__last_hover_widget
 
             # Non-mouse devices → dispatch pointer-related callbacks
             if self.__last_touch_widget:
-                btn: list|str|None = mEvent.button if (eType != "update") else [mEvent.button] if mEvent.button else []
-                self.__call_pointer_method(self.__touch_method[eType], self.__last_touch_widget,
-                                           btn, self.window.modifiers, mEvent
+                btn: list|str|None = me.button if (etype != "update") else [me.button] if me.button else []
+                self.__call_pointer_method(self.__touch_method[etype], self.__last_touch_widget,
+                                           btn, self.window.modifiers, me
                                            )
 
             # Clear the active touch target reference
-            if eType == "end":
+            if etype == "end":
                 self.__last_touch_widget = None
 
-        return False
+        return True
 
-    # noinspection PyUnusedLocal
-    def _do_pointer_begin(self, instance: Window, x: float, y: float, button: str, modifiers: list[str]) -> None:
+    # noInspection PyUnusedParameter
+    def _do_pointer_begin(self, inst: WindowBase, x: float, y: float, button: str, modifiers: list[str]) -> None:
         """
         Handle the beginning of a pointer press triggered by the Window provider.
 
         The last hovered widget becomes the active touch target.
         If a widget is currently hovered, its pointer‑press callback is invoked.
 
-        :param instance:    Window instance emitting the event.
+        :param inst:        Window instance emitting the event.
         :param x:           Pointer X coordinate in window space.
         :param y:           Pointer Y coordinate in window space.
         :param button:      Mouse button identifier (e.g. ``"left"``, ``"right"``).
@@ -253,15 +250,15 @@ class PointerManager(EventManagerBase):
                                        button, modifiers, self.__last_mEvent
                                        )
 
-    # noinspection PyUnusedLocal
-    def _do_pointer_end(self, instance: Window, x: float, y: float, button: str, modifiers: list[str]) -> None:
+    # noInspection PyUnusedParameter
+    def _do_pointer_end(self, inst: WindowBase, x: float, y: float, button: str, modifiers: list[str]) -> None:
         """
         Handle the ending of a pointer press triggered by the Window provider.
 
         If a widget was previously marked as the active touch target, its
         pointer‑release callback is invoked.
 
-        :param instance:    Window instance emitting the event.
+        :param inst:        Window instance emitting the event.
         :param x:           Pointer X coordinate in window space.
         :param y:           Pointer Y coordinate in window space.
         :param button:      Mouse button identifier (e.g. ``"left"``, ``"right"``).
@@ -280,15 +277,15 @@ class PointerManager(EventManagerBase):
             if len(self.__hold_buttons) == 0:
                 self.__last_touch_widget = None
 
-    # noinspection PyUnusedLocal
-    def _do_pointer_update(self, instance: Window, x: float, y: float, modifiers: list[str]) -> None:
+    # noInspection PyUnusedParameter
+    def _do_pointer_update(self, inst: WindowBase, x: float, y: float, modifiers: list[str]) -> None:
         """
         Handle the movement of a pointer press triggered by the Window provider.
 
         If a widget was previously marked as the active touch target, its
         pointer‑hold callback is invoked.
 
-        :param instance:    Window instance emitting the event.
+        :param inst:        Window instance emitting the event.
         :param x:           Pointer X coordinate in window space.
         :param y:           Pointer Y coordinate in window space.
         :param modifiers:   List of active keyboard modifiers at the moment of press.
@@ -305,14 +302,12 @@ class PointerManager(EventManagerBase):
 
         The search is pruned using the widget's ``motion_filter`` so only subtrees
         containing widgets registered for ``type_id`` are evaluated.
-        Collision checks are performed in window‑space coordinates.
+        Collision checks are performed in window-space coordinates.
 
         :param widget:  Root widget of the subtree being evaluated.
         :param type_id: MotionEvent type identifier (e.g. ``"hover"``, ``"touch"``).
         :param point:   Pointer position in window coordinates (x, y).
         """
-        # TODO: Extra filtering optimization could be done here for shore...
-
         # Skip entire subtree if no child cares about this `type_id` event type
         filters: dict[str, list[Widget]] = widget.motion_filter
         if type_id not in filters:
@@ -326,7 +321,10 @@ class PointerManager(EventManagerBase):
         for child in widget.children:
             found_widget: Widget|None = self.__deep_search_widget(child, type_id, point)
             if found_widget:
-                return found_widget
+                if found_widget.disabled:
+                    break
+                else:
+                    return found_widget
 
         # If this widget itself registered for the type, return it
         if widget in filters.get(type_id, []):
@@ -334,9 +332,9 @@ class PointerManager(EventManagerBase):
 
         return None
 
-    def __solve_interest_widget(self, type_id: str, mEvent: MotionEvent) -> None:
+    def __search_interest_widget(self, type_id: str, me: MotionEvent) -> Widget|None:
         """
-        Resolve the widget that should receive the current pointer call.
+        Search the widget that should receive the current pointer call.
 
         If the MotionEvent is grabbed, the grabbed widget takes priority regardless
         of pointer position. Otherwise, the search begins from each top‑level window
@@ -344,17 +342,18 @@ class PointerManager(EventManagerBase):
         interested in ``type_id``.
 
         :param type_id: MotionEvent type identifier (e.g. ``"hover"``, ``"touch"``).
-        :param mEvent:  The MotionEvent instance currently processed.
+        :param me:      The MotionEvent instance currently processed.
         """
-        if self.__last_touch_widget and self.__last_touch_widget.collide_point(*mEvent.pos):
-            self.__interest_widget = None
+        if self.__last_touch_widget and self.__last_touch_widget.collide_point(*me.pos):
             return None
 
         for window_child in self.window.children:
-            self.__interest_widget = self.__deep_search_widget(window_child, type_id, mEvent.pos)
+            found_widget: Widget|None = self.__deep_search_widget(window_child, type_id, me.pos)
 
-            if self.__interest_widget:
-                break
+            if found_widget:
+                return found_widget
+
+        return None
 
     def __invalidate_last_hover_widget(self) -> None:
         """ Clear the previously hovered widget reference and dispatch its pointer-leave callback. """
@@ -372,6 +371,7 @@ class PointerManager(EventManagerBase):
 
         self.__last_touch_widget = None
 
+    # noinspection SpellCheckingInspection
     @staticmethod
     def __call_pointer_method(name: str, widget: Widget, *args, **kwargs) -> None:
         """
@@ -387,4 +387,4 @@ class PointerManager(EventManagerBase):
         pointer_method: Callable[..., Any]|None = getattr(widget, f"_kdk_pointer_{name}", None)
 
         if callable(pointer_method):
-            pointer_method(*args, **kwargs)
+            pointer_method(*args, **kwargs)     # noqa

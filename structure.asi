@@ -7,30 +7,40 @@
 
 KivyDK/
 │
-├── core/                     # Common framework layer
+├─▶ core/                     # Common framework layer
 │   ├── graphics/             # Atlas, glyphs, rendering helpers
 │   ├── window/               # New windows, popups
 │   ├── themes/               # Colors, fonts, styles
 │   ├─◆ resources/            # registrations, availability
 │   └── utils/                # Helpers, math, file utils
 │
-├── data/                     # Reusable data
+├─▶ data/                     # Reusable data
 │   ├── atlas/                # borders, fonts, icons
 │   ├─◆ fonts/                # font files
 │   └─▶ mapping/              # icon names, cursor types
 │
-├── tools/                    # Debuggers framework
-│   ├─▶ monkey/               # monkey patches
+├─▶ manager/                  # Custom managers
+│   ├── drag & drop/
+│   ├── docking/
+│   ├─▶ pointer/              # pointer routing
+│   └── tooltip/
+│
+├─▶ tools/                    # Debuggers core
+│   ├─▶ monkey/               # monkey patches                                                     [ UNUSED | DISABLED ]
 │   └── sandbox/              # virtual environments
 │
-├── uix/                      # Reusable UI framework layer
-│   ├─◆ behavior/             # click, hover
-│   ├── layouts/              # Custom layouts, splitters, docking
-│   ├─◆ manager/              # Custom managers (i.e. hover)
-│   ├─▶ widgets/              # tooltip, backgrounds, etc.
+├─▶ uix/                      # Reusable UI framework layer
+│   ├─◆ behavior/             # click, hover, press, etc.
+│   ├── layouts/              # Custom layouts, splitters, etc.
 │   └─◆ __init__.py           # expose all `widgets` for users comfort
 │
-├── editors/                  # All editors live here
+├── editor/                   # All editors live here
+│   │
+│   ├── common/               # Sharable content across all editors
+│   │   ├── core/
+│   │   ├── widgets/
+│   │   └── __init__.py
+│   │
 │   ├── audio_editor/
 │   │   ├── core/             # Waveform, FFT, editing logic
 │   │   ├── widgets/          # Timeline, spectrogram
@@ -63,10 +73,14 @@ KivyDK/
 │       ├── widgets/          # Palette, hierarchy, designer, details
 │       └── __init__.py
 │
+├─◆ app.py                    # Auto-registration (mainly the managers)
 ├─◆ logger.py                 # Basic logger for framework info
-└─◆ __init__.py
+├─◆ version.py                # Version track
+└─◆ __init__.py               # global attributes, font registration, etc.
 
 #//|>-----------------------------------------------------------------------------------------------------------------<|
+#//| Project workspace (only an idea)
+#//|>--------------------------------------------------------<|
 
 Project/
 │

@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="ABC" href="uix/abc.html"><link rel="prev" title="Pointer" href="manager/pointer.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="ABC" href="uix/abc.html"><link rel="prev" title="Tooltip" href="manager/tooltip.html">
         <link rel="prefetch" href="../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>UIX - KivyDK 0.0.9.dev1</title>
+        <title>UIX - KivyDK 0.10.1.dev1</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">KivyDK 0.0.9.dev1</div></a>
+      <a href="../index.html"><div class="brand">KivyDK 0.10.1.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.0.9.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.1.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -228,6 +228,7 @@
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="manager.html">Manager</a><input aria-label="Toggle navigation of Manager" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="manager/pointer.html">Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manager/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">UIX</a><input aria-label="Toggle navigation of UIX" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -239,15 +240,14 @@
 <li class="toctree-l4"><a class="reference internal" href="uix/behavior/click.html">Click</a></li>
 <li class="toctree-l4"><a class="reference internal" href="uix/behavior/hover.html">Hover</a></li>
 <li class="toctree-l4"><a class="reference internal" href="uix/behavior/press.html">Press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uix/behavior/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="uix/widgets.html">Widgets</a><input aria-label="Toggle navigation of Widgets" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="uix/widgets/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uix/line_number.html">Line Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uix/tooltip.html">Tooltip</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="utils.html">Utils</a><input aria-label="Toggle navigation of Utils" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="utils/numeric.html">Numeric</a></li>
 </ul>
 </li>
@@ -299,9 +299,12 @@
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">&#10070;</a></h2>
-<p>This module contains the reusable user-interface components that form the visual layer of the KivyDK framework.
-These widgets and layouts extend Kivy’s own UI system with additional behavior, interaction models and
-higher-level abstractions designed specifically for editor-style applications.</p>
+<p>This module contains the reusable UI components provided by KivyDK. Each widget is self‑contained and focuses on
+a single responsibility providing, offering small, interactive elements used throughout the framework.</p>
+<p>All public widgets are implemented entirely in Python (no KV language) to provide a clean, consistent and fully
+code‑driven development experience. This approach keeps the API intuitive for developers who prefer Python‑only
+workflows and avoids the structural complexity often introduced by KV‑based widget bundles.
+Developers who wish to style these widgets using KV language are still free to do so.</p>
 <p>These components are intended to be used directly when building interfaces for editors, tools and applications
 within the KivyDK ecosystem. They are designed to be flexible, composable and consistent across the entire framework.</p>
 </section>
@@ -313,7 +316,8 @@ within the KivyDK ecosystem. They are designed to be flexible, composable and co
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="uix/abc.html">ABC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uix/behavior.html">Behavior</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uix/widgets.html">Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uix/line_number.html">Line Number</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uix/tooltip.html">Tooltip</a></li>
 </ul>
 </div>
 </section>
@@ -332,14 +336,14 @@ within the KivyDK ecosystem. They are designed to be flexible, composable and co
               </div>
               <svg class="furo-related-icon"></svg>
             </a>
-          <a class="prev-page" href="manager/pointer.html">
+          <a class="prev-page" href="manager/tooltip.html">
               <svg class="furo-related-icon"></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Pointer</div>
+                <div class="title">Tooltip</div>
                 
               </div>
             </a>
@@ -391,7 +395,7 @@ within the KivyDK ecosystem. They are designed to be flexible, composable and co
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=2436c87f"></script>
+</div><script src="../_static/documentation_options.js?v=0afe0e4a"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -18,8 +18,8 @@ __all__ = ("DIR_ROOT", "DIR_DATA", "DIR_FONTS")
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 #//| KivyDK directories
 #//|>-----------------------------------------------------------------------------------------------------------------<|
-from importlib.resources import files  # noqa: E402
-from importlib.resources.abc import Traversable  # noqa: E402
+from importlib.resources import files               # noqa: E402
+from importlib.resources.abc import Traversable     # noqa: E402
 
 #: The root directory of the KivyDK package.
 DIR_ROOT: Traversable = files(__name__)
@@ -43,6 +43,6 @@ _auto_register_fonts(DIR_FONTS)
 #//| KivyDK initialization log
 #//|>-----------------------------------------------------------------------------------------------------------------<|
 from kivydk._version import VERSION_STRING  # noqa: E402
-from kivydk.logger import Logger  # noqa: E402
+from kivydk.logger import Logger            # noqa: E402
 
 Logger.InfoS(version=VERSION_STRING, root_directory=DIR_ROOT)

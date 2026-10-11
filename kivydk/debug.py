@@ -1,48 +1,63 @@
-#// IMPORT
+from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.codeinput import CodeInput
-from kivy.uix.scrollview import ScrollView
 
-from kivydk.uix import LineNumber
+from kivydk.uix.behavior.tooltip import TooltipBehavior
+from kivydk.uix.tooltip import Tooltip
 
 
-#// LOGIC
-class TestLineNumber(BoxLayout):
+class MyButton(TooltipBehavior, Button):
+    def on_tooltip(self, show: bool):
+        # print(f"[ on_tooltip | {show}]", self.tooltip_text)
+        pass
+
+
+class ExampleLayout(BoxLayout):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(orientation="vertical", spacing=16, padding=16, **kwargs)
 
-        # Components
-        self.scroll_view = ScrollView(scroll_type=['bars', 'content'], bar_width="11dp")
-        self.text_input = CodeInput(size_hint_y=None)
-        self.line_number = LineNumber(
-            self.text_input,
-            background_color=[0.3,0.3,0.3, 1.0], foreground_color=[1.0,1.0,1.0, 1.0], width_min=32
+        # Default tooltip
+        self.add_widget(
+            MyButton(
+                text="Default tooltip",
+                tooltip_text="This is a simple tooltip",
+            )
         )
 
-        # Packing
-        self.scroll_view.add_widget(self.text_input)
+        # Tooltip on the left
+        self.add_widget(
+            MyButton(
+                text="Left tooltip",
+                tooltip_text="Tooltip shown on the left side",
+                tooltip_side="left",
+                pos_hint={"x":0.33, "y":1.0},
+                size_hint_x=0.33
+            )
+        )
 
-        self.add_widget(self.line_number)
-        self.add_widget(self.scroll_view)
+        # Custom tooltip widget
+        custom = Tooltip(
+            background_color=[0.2, 0.2, 0.2, 1.0],
+            foreground_color=[0.9, 0.9, 0.9, 1.0],
+            font_size="32sp",
+            size_max=(100, 100)
+        )
 
-        # Binds
-        self.text_input.bind(text=self._update_text_height)
-        self.scroll_view.bind(size=self._update_text_height)
-
-    def _update_text_height(self, *args):
-        height = len(self.text_input._lines_rects) * self.text_input.line_height
-        height += self.text_input.padding[1] + self.text_input.padding[3]
-
-        self.text_input.height = max(height, self.scroll_view.height)
-        self.line_number.refresh(0)
+        self.add_widget(
+            MyButton(
+                text="Custom tooltip",
+                tooltip_text="This tooltip uses a custom widget",
+                tooltip_template=custom,
+                # tooltip_offset="16sp",
+            )
+        )
 
 
-#// RUN FILE
 if __name__ == "__main__":
     from kivydk.app import App
 
     class Example(App):
         def build(self):
-            return TestLineNumber()
+            return ExampleLayout()
 
     Example().run()
+    

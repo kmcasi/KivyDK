@@ -179,7 +179,7 @@ class PointerManager(EventManagerBase):
             # Pointer left the window boundaries
             if etype == "end":
                 self.__invalidate_last_hover_widget()
-                return True
+                return False
 
             # Resolve the widget currently under the pointer
             self.__interest_widget = self.__search_interest_widget("kdk_pointer", me)
@@ -204,7 +204,7 @@ class PointerManager(EventManagerBase):
             # Skip MotionEvent‑based touch logic for mouse devices and rely on Window
             # provider events to handle multi‑button input correctly.
             if me.device == "mouse":
-                return True
+                return False
 
             # Update the active touch target using the last hovered widget
             if etype == "begin":
@@ -221,7 +221,7 @@ class PointerManager(EventManagerBase):
             if etype == "end":
                 self.__last_touch_widget = None
 
-        return True
+        return False
 
     # noInspection PyUnusedParameter
     def _do_pointer_begin(self, inst: WindowBase, x: float, y: float, button: str, modifiers: list[str]) -> None:

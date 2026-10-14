@@ -35,6 +35,9 @@ from kivydk.uix.abc.tooltip import TooltipTemplate
 from kivydk.uix.tooltip import Tooltip
 from kivydk.utils.numeric import clamp
 
+# [ Debug ]
+from kivy.graphics import Color, Ellipse, Rectangle
+
 
 #// LOGIC
 class TooltipManager(EventManagerBase, EventDispatcher):
@@ -56,11 +59,15 @@ class TooltipManager(EventManagerBase, EventDispatcher):
     )
     """ Default preferred placement side for positioning the tooltip relative to the hovered widget. """
 
-    tooltip_interact: BooleanProperty = BooleanProperty(False)
+    tooltip_interactive: BooleanProperty = BooleanProperty(False)
     """
     Enable interactive tooltips instead of auto‑hiding hover hints.
     
-    .. warning:: This feature is not implemented yet.
+    .. warning::
+        Tooltip interaction is only partially implemented.
+    
+        The ``"cursor"`` tooltip side is not yet supported, and ``"auto"`` may
+        select ``"cursor"`` internally, resulting in same incomplete behavior.
     """
 
     tooltip_offset: NumericProperty = NumericProperty(0)
@@ -119,9 +126,11 @@ class TooltipManager(EventManagerBase, EventDispatcher):
 
         self.__is_custom_tooltip: bool = False
         self.__is_tooltip_from_class: bool = False
+        self.__is_tooltip_interactive: bool = False
         self.__event_canceled: bool = False
 
         self.__last_tooltip_side: str = ""
+        self.__tooltip_distance: float = 0.0
         self.__last_pointer: Vector = Vector(-1.0, -1.0)
 
         self.__idle_timer: ClockEvent = Clock.create_trigger(self._cb_search_tooltip, self.idle_time, True)
@@ -155,9 +164,9 @@ class TooltipManager(EventManagerBase, EventDispatcher):
                 # [ Active mode ] When interested widget is hovered
                 if self.__hovered_widget:
                     if not self.__hovered_widget.collide_point(*self.window.mouse_pos):
-                        # if self.__tooltip_widget is None or not self.__tooltip_widget.collide_point(*self.window.mouse_pos):
-                        self.__make_tooltip_visible(False)
-                        self.__hovered_widget = None
+                        if not self.__is_tooltip_hovered_or_interactive:
+                            self.__make_tooltip_visible(False)
+                            self.__hovered_widget = None
 
                 # [ Idle mode ] When no interested widget is hovered
                 elif not self.__idle_timer.is_triggered:
@@ -170,14 +179,16 @@ class TooltipManager(EventManagerBase, EventDispatcher):
         else:
             # [ Stop ] When a mouse button is pressed or when an equivalent device action is triggered
             if etype == "begin":
-                self.__make_tooltip_visible(False)
-                self.__event_canceled = True
+                # [ Stop ] When the tooltip is not interactive or when the mouse cursor is outside the tooltip
+                if not self.__is_tooltip_hovered_or_interactive:
+                    self.__make_tooltip_visible(False)
+                    self.__event_canceled = True
 
             # [ Idle mode ] When a mouse button is released or when an equivalent device action is triggered
             elif etype == "end":
                 self.__event_canceled = False
 
-        return True
+        return False
 
     # noinspection PyUnusedParameter
     def _cb_search_tooltip(self, dt: float) -> None:
@@ -224,6 +235,59 @@ class TooltipManager(EventManagerBase, EventDispatcher):
             still_show: bool = self.__last_pointer.distance(self.window.mouse_pos) < self.__MOVE_THRESHOLD
             self.__make_tooltip_visible(still_show)
 
+    def __deep_check_tooltip_side(
+            self, wanted: str, mirror: bool = True, cross: bool = True, cross_mirror: bool = True
+    ) -> str:
+        """
+        Validate the requested tooltip side and resolve a fallback if needed.
+
+        The method checks whether the tooltip fits on the requested side.
+        If not, it tries the mirrored side (*left* ↔ *right*, *top* ↔ *bottom*) and then
+        the cross‑axis sides (*horizontal* ↔ *vertical*) depending on the fallback flags.
+        """
+        tooltip: TooltipTemplate|None = self.__next_tooltip_widget or self.__tooltip_widget
+
+        if tooltip is None:
+            return self.__SIDE_FALLBACK_ZERO
+
+        # Direct fit check
+        match wanted:
+            # Pick the side with the most available space
+            case "auto":
+                biggest_side: str = max(("left", "top", "right", "bottom"), key=lambda s: self.__get_side_size(s))
+                checked_side: str = self.__deep_check_tooltip_side(biggest_side, False, False)
+                return "cursor" if (checked_side == self.__SIDE_FALLBACK) else checked_side
+
+            case "left" | "right":
+                if tooltip.width <= self.__get_side_size(wanted):
+                    return wanted
+
+            case "top" | "bottom":
+                if tooltip.height <= self.__get_side_size(wanted):
+                    return wanted
+
+            case "cursor":
+                return wanted
+
+            # Don't bother with unexpected sides
+            case _:
+                return self.__SIDE_FALLBACK
+
+        # No fallback allowed
+        if mirror or cross:
+            # Try mirror or cross fallback
+            for cross_point, sides in self.__AXIS_MAP.items():
+                if wanted not in sides:
+                    continue
+
+                if mirror:
+                    mirror_side = sides[1] if wanted == sides[0] else sides[0]
+                    return self.__deep_check_tooltip_side(mirror_side, False, cross, cross_mirror)
+
+                return self.__deep_check_tooltip_side(cross_point, cross_mirror, False)
+
+        return self.__SIDE_FALLBACK
+
     def __deep_search_widget(self, widget: Widget, type_id: str, x: float, y: float) -> Widget|None:
         """
         Recursively locate the deepest widget interested in a specific MotionEvent type.
@@ -259,6 +323,34 @@ class TooltipManager(EventManagerBase, EventDispatcher):
 
         return None
 
+    def __get_side_size(self, wanted: str) -> int|float:
+        """ Compute available space for the tooltip on the given side. """
+        # Local variables
+        hovered: Widget|None = self.__hovered_widget
+
+        if hovered is None:
+            return 0
+
+        hovered_offset: int|float|None = hovered.tooltip_offset
+        tooltip_offset: int|float = hovered_offset if (hovered_offset is not None) else self.tooltip_offset
+
+        match wanted:
+            case "left":
+                return hovered.x - self.edge_offset[0] - tooltip_offset
+            case "top":
+                return self.window.height - hovered.top - self.edge_offset[1] - tooltip_offset
+            case "right":
+                return self.window.width - hovered.right - self.edge_offset[2] - tooltip_offset
+            case "bottom":
+                return hovered.y - self.edge_offset[3] - tooltip_offset
+
+            case self.__SIDE_MAX_WIDTH:
+                return self.window.width - self.edge_offset[0] - self.edge_offset[2]
+            case self.__SIDE_MAX_HEIGHT:
+                return self.window.height - self.edge_offset[1] - self.edge_offset[3]
+
+        return 0
+
     def __get_tooltip_instance(self, ref: TooltipTemplate|type) -> TooltipTemplate|None:
         """
         Resolve a tooltip reference into an instance.
@@ -277,6 +369,39 @@ class TooltipManager(EventManagerBase, EventDispatcher):
             return cast(TooltipTemplate, ref)
 
         return None
+
+    @property
+    def __is_tooltip_hovered_or_interactive(self) -> bool:
+        if self.__is_tooltip_interactive:
+            # If the tooltip is valid and visible
+            if self.__tooltip_widget and self.__tooltip_widget.opacity > 0.0:
+                pointer: tuple[float, float] = self.window.mouse_pos
+
+                # If the pointer is hovering the tooltip, we are already interacting with it
+                if self.__tooltip_widget.collide_point(*pointer):
+                    return True
+
+                # Otherwise, check if the pointer is in a safe distance near the tooltip
+                else:
+                    safe: Vector = Vector(*self.__tooltip_widget.pos)
+
+                    # Solve safe position X
+                    match self.__last_tooltip_side:
+                        case "left":
+                            safe.x = self.__tooltip_widget.right
+                        case "top" | "bottom":
+                            safe.x = clamp(pointer[0], (self.__tooltip_widget.x, self.__tooltip_widget.right))
+
+                    # Solve safe position Y
+                    match self.__last_tooltip_side:
+                        case "bottom":
+                            safe.y = self.__tooltip_widget.top
+                        case "left" | "right":
+                            safe.y = clamp(pointer[1], (self.__tooltip_widget.y, self.__tooltip_widget.top))
+
+                    return safe.distance(pointer) < self.__tooltip_distance
+
+        return False
 
     def __make_tooltip_visible(self, state: bool = True) -> None:
         """ Change the visibility of the tooltip widget. """
@@ -365,6 +490,12 @@ class TooltipManager(EventManagerBase, EventDispatcher):
         # [ Idle mode ] Interested widget is already valid and hovered
         self.__idle_timer.cancel()
 
+        # Solve initial tooltip interactive flag
+        if hovered.tooltip_interactive is None:
+            self.__is_tooltip_interactive = self.tooltip_interactive
+        else:
+            self.__is_tooltip_interactive = hovered.tooltip_interactive
+
         # Show the tooltip
         self.__solve_tooltip_side()
         self.__show_timer()
@@ -400,6 +531,11 @@ class TooltipManager(EventManagerBase, EventDispatcher):
         # Relevant tooltip offset
         hovered_offset: int|float|None = hovered.tooltip_offset
         tooltip_offset: int|float = hovered_offset if (hovered_offset is not None) else self.tooltip_offset
+
+        # Compute allowed tooltip distance
+        self.__tooltip_distance = tooltip_offset + self.__MOVE_THRESHOLD
+
+        # Local variables
         mouse_pos: tuple[float, float] = self.window.mouse_pos
 
         # Solve position X
@@ -481,84 +617,3 @@ class TooltipManager(EventManagerBase, EventDispatcher):
             self.__last_tooltip_side = self.__deep_check_tooltip_side(wanted_side)
 
         return None
-
-    def __deep_check_tooltip_side(
-            self, wanted: str, mirror: bool = True, cross: bool = True, cross_mirror: bool = True
-    ) -> str:
-        """
-        Validate the requested tooltip side and resolve a fallback if needed.
-
-        The method checks whether the tooltip fits on the requested side.
-        If not, it tries the mirrored side (*left* ↔ *right*, *top* ↔ *bottom*) and then
-        the cross‑axis sides (*horizontal* ↔ *vertical*) depending on the fallback flags.
-        """
-        tooltip: TooltipTemplate|None = self.__next_tooltip_widget or self.__tooltip_widget
-
-        if tooltip is None:
-            return self.__SIDE_FALLBACK_ZERO
-
-        # Direct fit check
-        match wanted:
-            # Pick the side with the most available space
-            case "auto":
-                biggest_side: str = max(("left", "top", "right", "bottom"), key=lambda s: self.__get_side_size(s))
-                checked_side: str = self.__deep_check_tooltip_side(biggest_side, False, False)
-                return "cursor" if (checked_side == self.__SIDE_FALLBACK) else checked_side
-
-            case "left" | "right":
-                if tooltip.width <= self.__get_side_size(wanted):
-                    return wanted
-
-            case "top" | "bottom":
-                if tooltip.height <= self.__get_side_size(wanted):
-                    return wanted
-
-            case "cursor":
-                return wanted
-
-            # Don't bother with unexpected sides
-            case _:
-                return self.__SIDE_FALLBACK
-
-        # No fallback allowed
-        if mirror or cross:
-            # Try mirror or cross fallback
-            for cross_point, sides in self.__AXIS_MAP.items():
-                if wanted not in sides:
-                    continue
-
-                if mirror:
-                    mirror_side = sides[1] if wanted == sides[0] else sides[0]
-                    return self.__deep_check_tooltip_side(mirror_side, False, cross, cross_mirror)
-
-                return self.__deep_check_tooltip_side(cross_point, cross_mirror, False)
-
-        return self.__SIDE_FALLBACK
-
-    def __get_side_size(self, wanted: str) -> int|float:
-        """ Compute available space for the tooltip on the given side. """
-        # Local variables
-        hovered: Widget|None = self.__hovered_widget
-
-        if hovered is None:
-            return 0
-
-        hovered_offset: int|float|None = hovered.tooltip_offset
-        tooltip_offset: int|float = hovered_offset if (hovered_offset is not None) else self.tooltip_offset
-
-        match wanted:
-            case "left":
-                return hovered.x - self.edge_offset[0] - tooltip_offset
-            case "top":
-                return self.window.height - hovered.top - self.edge_offset[1] - tooltip_offset
-            case "right":
-                return self.window.width - hovered.right - self.edge_offset[2] - tooltip_offset
-            case "bottom":
-                return hovered.y - self.edge_offset[3] - tooltip_offset
-
-            case self.__SIDE_MAX_WIDTH:
-                return self.window.width - self.edge_offset[0] - self.edge_offset[2]
-            case self.__SIDE_MAX_HEIGHT:
-                return self.window.height - self.edge_offset[1] - self.edge_offset[3]
-
-        return 0

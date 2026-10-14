@@ -47,7 +47,8 @@ class ExampleLayout(BoxLayout):
                 text="Custom tooltip",
                 tooltip_text="This tooltip uses a custom widget",
                 tooltip_template=custom,
-                # tooltip_offset="16sp",
+                tooltip_interactive=True,
+                tooltip_offset="16sp",
             )
         )
 

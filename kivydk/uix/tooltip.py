@@ -6,7 +6,7 @@ Implements the default tooltip widget used by KiviDK. This widget provides a
 ready‑to‑use tooltip suitable for general applications, allowing developers to
 benefit from tooltip functionality without creating a custom widget.
 
-The widget conforms to :class:`~kivydk.uix.abc.tooltip.TooltipWidgetABC` and is
+The widget conforms to :class:`~kivydk.uix.abc.tooltip.TooltipTemplate` and is
 fully compatible with TooltipManager. Developers may use it directly or
 substitute their own tooltip widget when custom styling or interaction is required.
 """
@@ -91,11 +91,8 @@ class Tooltip(TooltipTemplate):
         # Overwrite default values
         self.size_hint = None, None
 
-        # Local variables
-        self.__label_size: tuple[int, int] = (0, 0)
-
         # Components
-        self.__layout: ScrollView = ScrollView(size_hint=self.size_hint)
+        self.__layout: ScrollView = ScrollView(size_hint=self.size_hint, scroll_type=["content", "bars"])
         self.__label: Label = Label(size_hint=self.size_hint)
 
         # Initialization
@@ -134,6 +131,7 @@ class Tooltip(TooltipTemplate):
         self.__label.text_size = (None, None)
 
     def update_size(self) -> None:
+        """ Recalculate the widget’s size based on its current content. """
         self.__label.texture_update()
 
         padding_horizontal: float = self.padding[0] + self.padding[2]
@@ -163,7 +161,6 @@ class Tooltip(TooltipTemplate):
     def _update_background(self, *args) -> None:
         """ Called when the tooltip becomes visible. """
         self.__layout.pos = (self.x + self.padding[0], self.y + self.padding[3])
-        # self.__layout.pos = self.pos
 
         # Draw the background
         with self.canvas.before:

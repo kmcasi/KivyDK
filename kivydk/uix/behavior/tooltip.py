@@ -54,11 +54,15 @@ class TooltipBehavior:
     tooltip_template: ObjectProperty = ObjectProperty(None, allownone=True)
     """ Custom widget class or instance used to render the tooltip. """
 
-    tooltip_interact: BooleanProperty = BooleanProperty(None, allownone=True)
+    tooltip_interactive: BooleanProperty = BooleanProperty(None, allownone=True)
     """
     Enable interactive tooltip instead of auto‑hiding hover hints.
     
-    .. warning:: This feature is not implemented yet.
+    .. warning::
+        Tooltip interaction is only partially implemented.
+    
+        The ``"cursor"`` tooltip side is not yet supported, and ``"auto"`` may
+        select ``"cursor"`` internally, resulting in same incomplete behavior.
     """
 
     __events__ = ["on_tooltip", "on_pre_tooltip"]

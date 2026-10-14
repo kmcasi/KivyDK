@@ -302,7 +302,7 @@
 <p>Implements the default tooltip widget used by KiviDK. This widget provides a
 ready‑to‑use tooltip suitable for general applications, allowing developers to
 benefit from tooltip functionality without creating a custom widget.</p>
-<p>The widget conforms to <code class="xref py py-class docutils literal notranslate"><span class="pre">TooltipWidgetABC</span></code> and is
+<p>The widget conforms to <a class="reference internal" href="abc/tooltip.html#kivydk.uix.abc.tooltip.TooltipTemplate" title="kivydk.uix.abc.tooltip.TooltipTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">TooltipTemplate</span></code></a> and is
 fully compatible with TooltipManager. Developers may use it directly or
 substitute their own tooltip widget when custom styling or interaction is required.</p>
 </section>
@@ -544,9 +544,6 @@ This default is taken from <code class="xref py py-class docutils literal notran
 <dt class="sig sig-object py" id="kivydk.uix.tooltip.Tooltip.update_size">
 <span class="sig-name descname"><span class="pre">update_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#kivydk.uix.tooltip.Tooltip.update_size" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Recalculate the widget’s size based on its current content.</p>
-<p>Implementations must update <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> to reflect the actual rendered size.</p>
-<p>TooltipManager calls this after updating the text, so it can compute
-the correct placement for the tooltip before making it visible.</p>
 </dd></dl>
 
 </dd></dl>

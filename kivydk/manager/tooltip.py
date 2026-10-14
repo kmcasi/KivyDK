@@ -66,7 +66,7 @@ class TooltipManager(EventManagerBase, EventDispatcher):
     .. warning::
         Tooltip interaction is only partially implemented.
     
-        The ``"cursor"`` tooltip side is not yet supported, and ``"auto"`` may
+        The ``"cursor"`` tooltip side is partially supported, and ``"auto"`` may
         select ``"cursor"`` internally, resulting in same incomplete behavior.
     """
 

@@ -28,9 +28,10 @@ class ExampleLayout(BoxLayout):
             MyButton(
                 text="Left tooltip",
                 tooltip_text="Tooltip shown on the left side",
-                tooltip_side="left",
+                tooltip_side="cursor",
                 pos_hint={"x":0.33, "y":1.0},
-                size_hint_x=0.33
+                size_hint_x=0.33,
+                tooltip_interactive=True,
             )
         )
 

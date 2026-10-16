@@ -26,12 +26,13 @@ class ExampleLayout(BoxLayout):
         # Tooltip on the left
         self.add_widget(
             MyButton(
-                text="Left tooltip",
+                text="Cursor tooltip",
                 tooltip_text="Tooltip shown on the left side",
                 tooltip_side="cursor",
                 pos_hint={"x":0.33, "y":1.0},
                 size_hint_x=0.33,
                 tooltip_interactive=True,
+                tooltip_offset="16sp",
             )
         )
 

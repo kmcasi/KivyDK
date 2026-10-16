@@ -60,15 +60,7 @@ class TooltipManager(EventManagerBase, EventDispatcher):
     """ Default preferred placement side for positioning the tooltip relative to the hovered widget. """
 
     tooltip_interactive: BooleanProperty = BooleanProperty(False)
-    """
-    Enable interactive tooltips instead of auto‑hiding hover hints.
-    
-    .. warning::
-        Tooltip interaction is only partially implemented.
-    
-        The ``"cursor"`` tooltip side is partially supported, and ``"auto"`` may
-        select ``"cursor"`` internally, resulting in same incomplete behavior.
-    """
+    """ Default interactive mode applied when TooltipBehavior does not override it. """
 
     tooltip_offset: NumericProperty = NumericProperty(0)
     """ Default offset between the tooltip and the hovered widget. """
@@ -164,7 +156,7 @@ class TooltipManager(EventManagerBase, EventDispatcher):
                 # [ Active mode ] When interested widget is hovered
                 if self.__hovered_widget:
                     if not self.__hovered_widget.collide_point(*self.window.mouse_pos):
-                        if not self.__is_tooltip_hovered_or_interactive:
+                        if not self.__is_tooltip_interactive_or_near:
                             self.__make_tooltip_visible(False)
                             self.__hovered_widget = None
 
@@ -180,7 +172,7 @@ class TooltipManager(EventManagerBase, EventDispatcher):
             # [ Stop ] When a mouse button is pressed or when an equivalent device action is triggered
             if etype == "begin":
                 # [ Stop ] When the tooltip is not interactive or when the mouse cursor is outside the tooltip
-                if not self.__is_tooltip_hovered_or_interactive:
+                if not self.__is_tooltip_interactive_or_near:
                     self.__make_tooltip_visible(False)
                     self.__event_canceled = True
 
@@ -371,7 +363,8 @@ class TooltipManager(EventManagerBase, EventDispatcher):
         return None
 
     @property
-    def __is_tooltip_hovered_or_interactive(self) -> bool:
+    def __is_tooltip_interactive_or_near(self) -> bool:
+        """ Return True if the tooltip is interactive, visible, and the pointer is hovering or near it. """
         if self.__is_tooltip_interactive:
             # If the tooltip is valid and visible
             if self.__tooltip_widget and self.__tooltip_widget.opacity > 0.0:
@@ -381,25 +374,52 @@ class TooltipManager(EventManagerBase, EventDispatcher):
                 if self.__tooltip_widget.collide_point(*pointer):
                     return True
 
-                # Otherwise, check if the pointer is in a safe distance near the tooltip
-                else:
-                    safe: Vector = Vector(*self.__tooltip_widget.pos)
+                # Otherwise, check if the pointer is in a safe distance near the tooltip for special cases
+                match self.__last_tooltip_side:
+                    case "cursor":
+                        return self.__last_pointer.distance(pointer) < self.__tooltip_distance
 
-                    # Solve safe position X
-                    match self.__last_tooltip_side:
-                        case "left":
-                            safe.x = self.__tooltip_widget.right
-                        case "top" | "bottom":
-                            safe.x = clamp(pointer[0], (self.__tooltip_widget.x, self.__tooltip_widget.right))
+                    case self.__SIDE_FALLBACK | self.__SIDE_FALLBACK_ZERO:
+                        x: tuple[float, float, float] = (
+                            self.__last_pointer.x, self.__tooltip_widget.x, self.__tooltip_widget.right
+                        )
+                        y: tuple[float, float, float] = (
+                            self.__last_pointer.y, self.__tooltip_widget.y, self.__tooltip_widget.top
+                        )
+                        b_min: list[float] = [min(x), min(y)]
+                        b_max: list[float] = [max(x), max(y)]
 
-                    # Solve safe position Y
-                    match self.__last_tooltip_side:
-                        case "bottom":
-                            safe.y = self.__tooltip_widget.top
-                        case "left" | "right":
-                            safe.y = clamp(pointer[1], (self.__tooltip_widget.y, self.__tooltip_widget.top))
+                        # Add threshold around cursor
+                        if x[0] == b_max[0]:
+                            b_max[0] += self.__MOVE_THRESHOLD
+                        elif x[0] == b_min[0]:
+                            b_min[0] -= self.__MOVE_THRESHOLD
 
-                    return safe.distance(pointer) < self.__tooltip_distance
+                        if y[0] == b_max[1]:
+                            b_max[1] += self.__MOVE_THRESHOLD
+                        elif y[0] == b_min[1]:
+                            b_min[1] -= self.__MOVE_THRESHOLD
+
+                        return Vector.in_bbox(pointer, b_min, b_max)
+
+                # Otherwise, check if the pointer is in a safe distance near the tooltip for specific cases
+                safe: Vector = Vector(*self.__tooltip_widget.pos)
+
+                # Solve safe position X
+                match self.__last_tooltip_side:
+                    case "left":
+                        safe.x = self.__tooltip_widget.right
+                    case "top" | "bottom":
+                        safe.x = clamp(pointer[0], (self.__tooltip_widget.x, self.__tooltip_widget.right))
+
+                # Solve safe position Y
+                match self.__last_tooltip_side:
+                    case "bottom":
+                        safe.y = self.__tooltip_widget.top
+                    case "left" | "right":
+                        safe.y = clamp(pointer[1], (self.__tooltip_widget.y, self.__tooltip_widget.top))
+
+                return safe.distance(pointer) < self.__tooltip_distance
 
         return False
 

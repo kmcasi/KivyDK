@@ -186,7 +186,7 @@ class PointerManager(EventManagerBase):
 
             # Hover target changed → dispatch leave/enter
             if self.__interest_widget is not self.__last_hover_widget:
-                if self.__last_hover_widget:
+                if self.__last_hover_widget and (self.__last_hover_widget is not self.__last_touch_widget):
                     self.__call_pointer_method("leave", self.__last_hover_widget, me)
 
                 if self.__interest_widget:
@@ -219,6 +219,9 @@ class PointerManager(EventManagerBase):
 
             # Clear the active touch target reference
             if etype == "end":
+                if self.__last_touch_widget and not self.__last_touch_widget.collide_point(*me.pos):
+                    self.__call_pointer_method("leave", self.__last_touch_widget, me)
+
                 self.__last_touch_widget = None
 
         return False
@@ -275,6 +278,9 @@ class PointerManager(EventManagerBase):
 
             # Clear the active touch target reference
             if len(self.__hold_buttons) == 0:
+                if not self.__last_touch_widget.collide_point(x, y):
+                    self.__call_pointer_method("leave", self.__last_touch_widget, self.__last_mEvent)
+
                 self.__last_touch_widget = None
 
     # noInspection PyUnusedParameter
@@ -344,9 +350,6 @@ class PointerManager(EventManagerBase):
         :param type_id: MotionEvent type identifier (e.g. ``"hover"``, ``"touch"``).
         :param me:      The MotionEvent instance currently processed.
         """
-        if self.__last_touch_widget and self.__last_touch_widget.collide_point(*me.pos):
-            return None
-
         for window_child in self.window.children:
             found_widget: Widget|None = self.__deep_search_widget(window_child, type_id, me.pos)
 

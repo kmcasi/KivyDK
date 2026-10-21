@@ -1,11 +1,21 @@
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Rectangle
 
+from kivydk.uix.behavior.hover import HoverBehavior
 from kivydk.uix.behavior.tooltip import TooltipBehavior
 from kivydk.uix.tooltip import Tooltip
 
 
-class MyButton(TooltipBehavior, Button):
+class MyButton(TooltipBehavior, HoverBehavior, Label):
+    def on_hover(self, state: bool) -> None:
+        with self.canvas.before:
+            self.canvas.before.clear()
+            this_color: list[float] = [0.2, 0.4, 0.4, 1.0] if state else [0.2, 0.2, 0.2, 1.0]
+            Color(*this_color)
+            Rectangle(pos=self.pos, size=self.size)
+
     def on_tooltip(self, show: bool):
         # print(f"[ on_tooltip | {show}]", self.tooltip_text)
         pass

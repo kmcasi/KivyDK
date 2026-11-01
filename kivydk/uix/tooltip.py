@@ -132,25 +132,33 @@ class Tooltip(TooltipTemplate):
 
     def update_size(self) -> None:
         """ Recalculate the widget’s size based on its current content. """
+        # Make shore to update the label texture
         self.__label.texture_update()
 
+        # Local references
         padding_horizontal: float = self.padding[0] + self.padding[2]
         padding_vertical: float = self.padding[1] + self.padding[3]
         texture_size: list[float] = self.__label.texture_size
         texture_size_max: tuple[int, int] = (self.width_max - padding_horizontal, self.height_max - padding_vertical)
         this_size: list[float] = [texture_size[0] + padding_horizontal, texture_size[1] + padding_vertical]
 
+        # If the texture width is bigger then maximum allowed texture width
         if texture_size[0] > texture_size_max[0]:
+            # Constrain the width and render the label texture again
             self.__label.text_size = (texture_size_max[0], None)
             self.__label.texture_update()
 
-            this_size[0] = self.width_max
+            # Update local references
             texture_size = self.__label.texture_size
+            this_size[0] = self.width_max
+            this_size[1] = texture_size[1] + padding_vertical
 
+        # If the texture height is bigger then maximum allowed texture height
         if texture_size[1] > texture_size_max[1]:
             this_size[1] = self.height_max
 
-        self.__label.size = self.__label.texture_size
+        # Update the components size
+        self.__label.size = texture_size
         self.__layout.size = (
                 this_size[0] - padding_horizontal,
                 this_size[1] - padding_vertical
@@ -160,6 +168,7 @@ class Tooltip(TooltipTemplate):
     # noinspection PyUnusedParameter
     def _update_background(self, *args) -> None:
         """ Called when the tooltip becomes visible. """
+        # Update the layout position
         self.__layout.pos = (self.x + self.padding[0], self.y + self.padding[3])
 
         # Draw the background

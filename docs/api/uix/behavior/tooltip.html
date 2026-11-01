@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Tooltip - KivyDK 0.10.3.dev1</title>
+        <title>Tooltip - KivyDK 0.10.5.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.10.3.dev1</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.10.5.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.10.3.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.5.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -290,8 +290,8 @@
         <article role="main" id="furo-main-content">
           <section id="module-kivydk.uix.behavior.tooltip">
 <span id="tooltip"></span><h1>Tooltip<a class="headerlink" href="#module-kivydk.uix.behavior.tooltip" title="Link to this heading">&#10070;</a></h1>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id1" title="Link to this code">&#10070;</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kivydk</span><span class="o">.</span><span class="n">uix</span><span class="o">.</span><span class="n">behavior</span><span class="o">.</span><span class="n">tooltip</span>
 </pre></div>
 </div>
@@ -303,6 +303,77 @@
 exposes a small set of properties that describe how a tooltip should be rendered
 and positioned. TooltipManager reads these properties and applies the appropriate
 defaults or overrides when showing a tooltip for the widget.</p>
+</section>
+<hr class="docutils" />
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">&#10070;</a></h2>
+<p>Sample demonstrating how <code class="docutils literal notranslate"><span class="pre">TooltipBehavior</span></code> can be used to display contextual information while hovering a widget.</p>
+<img alt="../../../_images/TestTooltip.gif" class="align-center" src="../../../_images/TestTooltip.gif" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">#// IMPORT</span>
+<span class="linenos"> 2</span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span>
+<span class="linenos"> 3</span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.boxlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">from</span><span class="w"> </span><span class="nn">kivydk.uix.behavior.tooltip</span><span class="w"> </span><span class="kn">import</span> <span class="n">TooltipBehavior</span>
+<span class="linenos"> 6</span><span class="kn">from</span><span class="w"> </span><span class="nn">kivydk.uix.tooltip</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tooltip</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1">#// LOGIC</span>
+<span class="linenos">10</span><span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">TooltipBehavior</span><span class="p">,</span> <span class="n">Button</span><span class="p">):</span>
+<span class="linenos">11</span>    <span class="k">pass</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">class</span><span class="w"> </span><span class="nc">TestTooltip</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="linenos">15</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos">16</span>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>        <span class="c1"># Default tooltip</span>
+<span class="linenos">19</span>        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span>
+<span class="linenos">20</span>            <span class="n">MyButton</span><span class="p">(</span>
+<span class="linenos">21</span>                <span class="n">text</span><span class="o">=</span><span class="s2">"Default tooltip"</span><span class="p">,</span>
+<span class="linenos">22</span>                <span class="n">tooltip_text</span><span class="o">=</span><span class="s2">"This is a simple tooltip."</span><span class="p">,</span>
+<span class="linenos">23</span>            <span class="p">)</span>
+<span class="linenos">24</span>        <span class="p">)</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>        <span class="c1"># Tooltip on the cursor position</span>
+<span class="linenos">27</span>        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span>
+<span class="linenos">28</span>            <span class="n">MyButton</span><span class="p">(</span>
+<span class="linenos">29</span>                <span class="n">text</span><span class="o">=</span><span class="s2">"Cursor tooltip"</span><span class="p">,</span>
+<span class="linenos">30</span>                <span class="n">tooltip_text</span><span class="o">=</span><span class="s2">"Tooltip shown on the cursor side."</span><span class="p">,</span>
+<span class="linenos">31</span>                <span class="n">tooltip_side</span><span class="o">=</span><span class="s2">"cursor"</span><span class="p">,</span>
+<span class="linenos">32</span>            <span class="p">)</span>
+<span class="linenos">33</span>        <span class="p">)</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>        <span class="c1"># Custom tooltip widget</span>
+<span class="linenos">36</span>        <span class="n">custom_tooltip</span> <span class="o">=</span> <span class="n">Tooltip</span><span class="p">(</span>
+<span class="linenos">37</span>            <span class="n">background_color</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+<span class="linenos">38</span>            <span class="n">foreground_color</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+<span class="linenos">39</span>            <span class="n">font_size</span><span class="o">=</span><span class="s2">"24sp"</span><span class="p">,</span>
+<span class="linenos">40</span>            <span class="n">size_max</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+<span class="linenos">41</span>        <span class="p">)</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span>
+<span class="linenos">44</span>            <span class="n">MyButton</span><span class="p">(</span>
+<span class="linenos">45</span>                <span class="n">text</span><span class="o">=</span><span class="s2">"Custom tooltip"</span><span class="p">,</span>
+<span class="linenos">46</span>                <span class="n">tooltip_text</span><span class="o">=</span><span class="s2">"This tooltip is interactive and uses a custom widget."</span><span class="p">,</span>
+<span class="linenos">47</span>                <span class="n">tooltip_template</span><span class="o">=</span><span class="n">custom_tooltip</span><span class="p">,</span>
+<span class="linenos">48</span>                <span class="n">tooltip_side</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span>
+<span class="linenos">49</span>                <span class="n">tooltip_interactive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos">50</span>                <span class="n">tooltip_offset</span><span class="o">=</span><span class="s2">"24sp"</span><span class="p">,</span>
+<span class="linenos">51</span>            <span class="p">)</span>
+<span class="linenos">52</span>        <span class="p">)</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span><span class="c1">#// RUN FILE</span>
+<span class="linenos">56</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<span class="linenos">57</span>    <span class="kn">from</span><span class="w"> </span><span class="nn">kivydk.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span>    <span class="k">class</span><span class="w"> </span><span class="nc">Example</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="linenos">60</span>        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">61</span>            <span class="k">return</span> <span class="n">TestTooltip</span><span class="p">()</span>
+<span class="linenos">62</span>
+<span class="linenos">63</span>    <span class="n">Example</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="reference">
@@ -319,13 +390,6 @@ consistent global tooltip style and behavior across the application.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Events</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p class="sd-card-text">The current event implementation relies on <code class="docutils literal notranslate"><span class="pre">__events__</span></code> being defined as a class attribute.
-This works for now, but it overrides inherited Kivy events.</p>
-<p class="sd-card-text">When revisiting the event system, consider migrating to <code class="docutils literal notranslate"><span class="pre">register_event_type()</span></code>
-and updating the DocLang command to support dynamically registered events.</p>
-</div>
 <dl class="simple">
 <dt><a class="reference internal" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.on_tooltip" title="kivydk.uix.behavior.tooltip.TooltipBehavior.on_tooltip"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_tooltip</span></code></a></dt><dd><p class="sd-card-text">Called after the tooltip’s visibility state changes.</p>
 </dd>
@@ -337,8 +401,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 <dt class="sig sig-object py" id="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text">
 <span class="sig-name descname"><span class="pre">tooltip_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.3.1)"><span class="pre">StringProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Text content displayed inside the tooltip.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id3" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="s2">""</span>
 </pre></div>
 </div>
@@ -349,8 +413,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 <dt class="sig sig-object py" id="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_markup">
 <span class="sig-name descname"><span class="pre">tooltip_markup</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.3.1)"><span class="pre">BooleanProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_markup" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Whether <a class="reference internal" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text" title="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tooltip_text</span></code></a> should be interpreted as markup.</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id4" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id3" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
 </pre></div>
 </div>
@@ -385,8 +449,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 </pre></div>
 </div>
 </div>
-</details><div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id5" title="Link to this code">&#10070;</a></div>
+</details><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id4" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
@@ -397,8 +461,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 <dt class="sig sig-object py" id="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_offset">
 <span class="sig-name descname"><span class="pre">tooltip_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.3.1)"><span class="pre">NumericProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_offset" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Additional offset <code class="docutils literal notranslate"><span class="pre">(in</span> <span class="pre">pixels)</span></code> applied between the tooltip and its anchor position (widget or cursor).</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id6" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id5" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
@@ -409,8 +473,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 <dt class="sig sig-object py" id="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_template">
 <span class="sig-name descname"><span class="pre">tooltip_template</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.3.1)"><span class="pre">ObjectProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_template" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Custom widget class or instance used to render the tooltip.</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id7" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id6" title="Link to this code">&#10070;</a></div>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">None</span>
 </pre></div>
 </div>
@@ -420,15 +484,9 @@ and updating the DocLang command to support dynamically registered events.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_interactive">
 <span class="sig-name descname"><span class="pre">tooltip_interactive</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.3.1)"><span class="pre">BooleanProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_interactive" title="Link to this definition">&#10070;</a></dt>
-<dd><p>Enable interactive tooltip instead of auto‑hiding hover hints.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Tooltip interaction is only partially implemented.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;cursor&quot;</span></code> tooltip side is partially supported, and <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> may
-select <code class="docutils literal notranslate"><span class="pre">&quot;cursor&quot;</span></code> internally, resulting in same incomplete behavior.</p>
-</div>
-<div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id8" title="Link to this code">&#10070;</a></div>
+<dd><p>Enable interactive tooltips instead of auto‑hiding hover hints.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id7" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
@@ -544,6 +602,7 @@ select <code class="docutils literal notranslate"><span class="pre">&quot;cursor
     <ul>
 <li><a class="reference internal" href="#">Tooltip</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
 <li><a class="reference internal" href="#reference">Reference</a></li>
 <li><a class="reference internal" href="#kivydk.uix.behavior.tooltip.TooltipBehavior"><span class="slt-type slt-obj-class"></span><code class="docutils literal notranslate"><span class="pre">TooltipBehavior</span></code></a><ul>
 <li><a class="reference internal" href="#kivydk.uix.behavior.tooltip.TooltipBehavior.tooltip_text"><span class="slt-type slt-obj-attribute"></span><code class="docutils literal notranslate"><span class="pre">tooltip_text</span></code></a></li>
@@ -567,7 +626,7 @@ select <code class="docutils literal notranslate"><span class="pre">&quot;cursor
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=2a747fd6"></script>
+</div><script src="../../../_static/documentation_options.js?v=4beaed72"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

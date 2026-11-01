@@ -6,6 +6,14 @@ TooltipBehavior does not create or manage tooltip widgets directly. Instead, it
 exposes a small set of properties that describe how a tooltip should be rendered
 and positioned. TooltipManager reads these properties and applies the appropriate
 defaults or overrides when showing a tooltip for the widget.
+
+§ section : example ¶
+
+Sample demonstrating how ``TooltipBehavior`` can be used to display contextual information while hovering a widget.
+
+§ show image : uix, behavior, TestTooltip.gif ¶
+
+§ show code : uix, behavior, tooltip.py ¶
 """
 __all__ = ("TooltipBehavior",)
 

@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../../../_static/logo_kivydk.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/icon_kivydk.png"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Hover - KivyDK 0.10.3.dev1</title>
+        <title>Hover - KivyDK 0.10.5.dev1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">KivyDK 0.10.3.dev1</div></a>
+      <a href="../../../index.html"><div class="brand">KivyDK 0.10.5.dev1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -198,7 +198,7 @@
     <img class="sidebar-logo" src="../../../_static/logo_kivydk.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">KivyDK 0.10.3.dev1</span>
+  <span class="sidebar-brand-text">KivyDK 0.10.5.dev1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search" autocomplete="off">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search"
@@ -290,8 +290,8 @@
         <article role="main" id="furo-main-content">
           <section id="module-kivydk.uix.behavior.hover">
 <span id="hover"></span><h1>Hover<a class="headerlink" href="#module-kivydk.uix.behavior.hover" title="Link to this heading">&#10070;</a></h1>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Module path</span><a class="headerlink" href="#id1" title="Link to this code">&#10070;</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kivydk</span><span class="o">.</span><span class="n">uix</span><span class="o">.</span><span class="n">behavior</span><span class="o">.</span><span class="n">hover</span>
 </pre></div>
 </div>
@@ -357,13 +357,6 @@ or functionally to hover interactions, regardless of the input device.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3 dk-default-value">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Events</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p class="sd-card-text">The current event implementation relies on <code class="docutils literal notranslate"><span class="pre">__events__</span></code> being defined as a class attribute.
-This works for now, but it overrides inherited Kivy events.</p>
-<p class="sd-card-text">When revisiting the event system, consider migrating to <code class="docutils literal notranslate"><span class="pre">register_event_type()</span></code>
-and updating the DocLang command to support dynamically registered events.</p>
-</div>
 <dl class="simple">
 <dt><a class="reference internal" href="#kivydk.uix.behavior.hover.HoverBehavior.on_hover" title="kivydk.uix.behavior.hover.HoverBehavior.on_hover"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_hover</span></code></a></dt><dd><p class="sd-card-text">Called when the widget’s hover state changes.</p>
 </dd>
@@ -378,8 +371,8 @@ and updating the DocLang command to support dynamically registered events.</p>
 <span class="sig-name descname"><span class="pre">hovered</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.AliasProperty" title="(in Kivy v2.3.1)"><span class="pre">AliasProperty</span></a></span><a class="headerlink" href="#kivydk.uix.behavior.hover.HoverBehavior.hovered" title="Link to this definition">&#10070;</a></dt>
 <dd><p>Whether the widget is currently hovered.</p>
 <p><a class="reference internal" href="#kivydk.uix.behavior.hover.HoverBehavior.hovered" title="kivydk.uix.behavior.hover.HoverBehavior.hovered"><code class="xref py py-attr docutils literal notranslate"><span class="pre">hovered</span></code></a> is a read-only <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.AliasProperty" title="(in Kivy v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a> that returns a <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id3" title="Link to this code">&#10070;</a></div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Default value</span><a class="headerlink" href="#id2" title="Link to this code">&#10070;</a></div>
 <div class="highlight-Python3 notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
 </pre></div>
 </div>
@@ -506,7 +499,7 @@ and updating the DocLang command to support dynamically registered events.</p>
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=2a747fd6"></script>
+</div><script src="../../../_static/documentation_options.js?v=4beaed72"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

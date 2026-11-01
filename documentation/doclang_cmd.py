@@ -464,13 +464,6 @@ def cmd_extract_events(*args, **kwargs) -> list[str]:
         return [
             *cmd_dropdown("events"),
             "",
-            f"{TAB}.. TODO::",
-            f"{TAB * 2}The current event implementation relies on ``__events__`` being defined as a class attribute.",
-            f"{TAB * 2}This works for now, but it overrides inherited Kivy events.",
-            "",
-            f"{TAB * 2}When revisiting the event system, consider migrating to ``register_event_type()``",
-            f"{TAB * 2}and updating the DocLang command to support dynamically registered events.",
-            "",
             *[f"{TAB}:meth:`{f"`\n{TAB * 2}".join(event)}" for event in events.items()]
         ]
 
